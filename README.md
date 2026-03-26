@@ -2,6 +2,14 @@
 
 `tapd` is a TAPD command line client built on top of [`github.com/go-tapd/tapd`](https://github.com/go-tapd/tapd).
 
+## Install
+
+```bash
+go install github.com/go-tapd/cli/cmd/tapd@latest
+```
+
+This installs a binary named `tapd`.
+
 ## Current Commands
 
 - `tapd login`
@@ -18,25 +26,25 @@
 PAT:
 
 ```bash
-go run . login --auth-method pat
+go run ./cmd/tapd login --auth-method pat
 ```
 
 PAT with flag:
 
 ```bash
-go run . login --token "$TAPD_ACCESS_TOKEN"
+go run ./cmd/tapd login --token "$TAPD_ACCESS_TOKEN"
 ```
 
 Basic Authentication:
 
 ```bash
-go run . login --auth-method basic
+go run ./cmd/tapd login --auth-method basic
 ```
 
 Basic Authentication with flags:
 
 ```bash
-go run . login --client-id "$TAPD_CLIENT_ID" --client-secret "$TAPD_CLIENT_SECRET"
+go run ./cmd/tapd login --client-id "$TAPD_CLIENT_ID" --client-secret "$TAPD_CLIENT_SECRET"
 ```
 
 The login command validates credentials before saving them to:
@@ -61,10 +69,10 @@ export TAPD_CLIENT_SECRET=...
 ## Examples
 
 ```bash
-go run . auth status
-go run . workspace view --workspace-id 123456
-go run . workspace users --workspace-id 123456
-go run . story list --workspace-id 123456 --limit 20
-go run . bug list --workspace-id 123456 --owner alice
-go run . task list --workspace-id 123456 --creator bob --format json
+go run ./cmd/tapd auth status
+go run ./cmd/tapd workspace view --workspace-id 123456
+go run ./cmd/tapd workspace users --workspace-id 123456
+go run ./cmd/tapd story list --workspace-id 123456 --limit 20
+go run ./cmd/tapd bug list --workspace-id 123456 --owner alice
+go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 ```
