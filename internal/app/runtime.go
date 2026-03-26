@@ -1,7 +1,6 @@
 package app
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -111,15 +110,6 @@ func (r *Runtime) NewClient() (*tapd.Client, *ResolvedAuth, error) {
 	default:
 		return nil, nil, fmt.Errorf("unsupported auth method %q", resolved.Auth.Method)
 	}
-}
-
-func ValidateCredentials(ctx context.Context, client *tapd.Client) error {
-	_, _, err := client.UserService.GetRoles(ctx, &tapd.GetRolesRequest{})
-	if err != nil {
-		return fmt.Errorf("validate credentials: %w", err)
-	}
-
-	return nil
 }
 
 func valueOrDefault(values ...string) string {

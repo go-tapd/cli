@@ -29,6 +29,12 @@ PAT:
 go run ./cmd/tapd login --auth-method pat
 ```
 
+Validate at login time with a workspace:
+
+```bash
+go run ./cmd/tapd login --auth-method pat --workspace-id 123456
+```
+
 PAT with flag:
 
 ```bash
@@ -52,6 +58,8 @@ The login command validates credentials before saving them to:
 ```text
 ~/.tapd/config.json
 ```
+
+By default, `login` stores the credentials directly. If you want an API-side validation during login, pass `--workspace-id`.
 
 You can also skip local config and use environment variables directly:
 

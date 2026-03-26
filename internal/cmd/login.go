@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"context"
 	"fmt"
 	"strings"
 
@@ -15,6 +16,7 @@ func newLoginCmd(rt *app.Runtime) *cobra.Command {
 		token        string
 		clientID     string
 		clientSecret string
+		workspaceID  int
 	)
 
 	cmd := &cobra.Command{
@@ -33,8 +35,10 @@ func newLoginCmd(rt *app.Runtime) *cobra.Command {
 			if err != nil {
 				return err
 			}
-			if err := app.ValidateCredentials(cmd.Context(), client); err != nil {
-				return err
+			if workspaceID > 0 {
+				if err := validateLoginWithWorkspace(cmd.Context(), client, workspaceID); err != nil {
+					return err
+				}
 			}
 
 			cfg := &app.Config{
@@ -55,7 +59,23 @@ func newLoginCmd(rt *app.Runtime) *cobra.Command {
 				return err
 			}
 
-			fmt.Fprintf(cmd.OutOrStdout(), "Logged in with %s. Config saved to %s\n", method, rt.ConfigPath)
+			if workspaceID > 0 {
+				fmt.Fprintf(
+					cmd.OutOrStdout(),
+					"Logged in with %s and validated against workspace %d. Config saved to %s\n",
+					method,
+					workspaceID,
+					rt.ConfigPath,
+				)
+				return nil
+			}
+
+			fmt.Fprintf(
+				cmd.OutOrStdout(),
+				"Logged in with %s. Config saved to %s\n",
+				method,
+				rt.ConfigPath,
+			)
 			return nil
 		},
 	}
@@ -64,6 +84,7 @@ func newLoginCmd(rt *app.Runtime) *cobra.Command {
 	cmd.Flags().StringVar(&token, "token", "", "personal access token")
 	cmd.Flags().StringVar(&clientID, "client-id", "", "basic auth client ID")
 	cmd.Flags().StringVar(&clientSecret, "client-secret", "", "basic auth client secret")
+	cmd.Flags().IntVar(&workspaceID, "workspace-id", 0, "validate login against a workspace ID")
 
 	return cmd
 }
@@ -164,4 +185,15 @@ func loginBaseURL(override string) string {
 	}
 
 	return app.DefaultBaseURL
+}
+
+func validateLoginWithWorkspace(ctx context.Context, client *tapd.Client, workspaceID int) error {
+	_, _, err := client.UserService.GetRoles(ctx, &tapd.GetRolesRequest{
+		WorkspaceID: tapd.Ptr(workspaceID),
+	})
+	if err != nil {
+		return fmt.Errorf("validate credentials with workspace %d: %w", workspaceID, err)
+	}
+
+	return nil
 }
