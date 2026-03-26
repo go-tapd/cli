@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	ConfigDirName  = "tapd"
+	ConfigDirName  = ".tapd"
 	ConfigFileName = "config.json"
 )
 
@@ -33,12 +33,12 @@ type Config struct {
 }
 
 func DefaultConfigPath() (string, error) {
-	configDir, err := os.UserConfigDir()
+	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return "", fmt.Errorf("get user config dir: %w", err)
+		return "", fmt.Errorf("get user home dir: %w", err)
 	}
 
-	return filepath.Join(configDir, ConfigDirName, ConfigFileName), nil
+	return filepath.Join(homeDir, ConfigDirName, ConfigFileName), nil
 }
 
 func ResolveConfigPath(custom string) (string, error) {

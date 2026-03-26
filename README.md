@@ -50,7 +50,7 @@ go run ./cmd/tapd login --client-id "$TAPD_CLIENT_ID" --client-secret "$TAPD_CLI
 The login command validates credentials before saving them to:
 
 ```text
-~/.config/tapd/config.json
+~/.tapd/config.json
 ```
 
 You can also skip local config and use environment variables directly:
