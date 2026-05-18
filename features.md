@@ -175,10 +175,10 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 评论
 
-- [ ] `tapd comment create`
-- [ ] `tapd comment list`
-- [ ] `tapd comment count`
-- [ ] `tapd comment update`
+- [x] `tapd comment create`
+- [x] `tapd comment list`
+- [x] `tapd comment count`
+- [x] `tapd comment update`
 
 ### 报表
 
