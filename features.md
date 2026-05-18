@@ -42,14 +42,14 @@ The SDK coverage ledger lives in the sibling SDK repository:
 - [ ] `tapd story create`
 - [ ] `tapd story view`
 - [x] `tapd story list`
-- [ ] `tapd story count`
+- [x] `tapd story count`
 - [ ] `tapd story update`
 - [ ] `tapd story batch-update`
 - [ ] `tapd story categories`
 - [ ] `tapd story categories count`
 - [ ] `tapd story changes`
 - [ ] `tapd story changes count`
-- [ ] `tapd story fields`
+- [x] `tapd story fields`
 - [ ] `tapd story field-labels`
 - [ ] `tapd story templates`
 - [ ] `tapd story template-fields`
@@ -64,12 +64,12 @@ The SDK coverage ledger lives in the sibling SDK repository:
 - [ ] `tapd bug create`
 - [ ] `tapd bug view`
 - [x] `tapd bug list`
-- [ ] `tapd bug count`
+- [x] `tapd bug count`
 - [ ] `tapd bug update`
 - [ ] `tapd bug batch-update`
 - [ ] `tapd bug changes`
 - [ ] `tapd bug changes count`
-- [ ] `tapd bug fields`
+- [x] `tapd bug fields`
 - [ ] `tapd bug field-labels`
 - [ ] `tapd bug templates`
 - [ ] `tapd bug template-fields`
@@ -100,12 +100,12 @@ The SDK coverage ledger lives in the sibling SDK repository:
 - [ ] `tapd task create`
 - [ ] `tapd task view`
 - [x] `tapd task list`
-- [ ] `tapd task count`
+- [x] `tapd task count`
 - [ ] `tapd task update`
 - [ ] `tapd task batch-update`
 - [ ] `tapd task changes`
 - [ ] `tapd task changes count`
-- [ ] `tapd task fields`
+- [x] `tapd task fields`
 - [ ] `tapd task removed`
 - [ ] `tapd task by-view` SDK 暂未实现
 
