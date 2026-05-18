@@ -154,17 +154,17 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### Wiki
 
-- [ ] `tapd wiki create`
-- [ ] `tapd wiki list`
-- [ ] `tapd wiki count`
-- [ ] `tapd wiki update`
-- [ ] `tapd wiki drawio`
-- [ ] `tapd wiki followers`
-- [ ] `tapd wiki followers count`
-- [ ] `tapd wiki permissions`
-- [ ] `tapd wiki tags`
-- [ ] `tapd wiki tags count`
-- [ ] `tapd wiki attachments count`
+- [x] `tapd wiki create`
+- [x] `tapd wiki list`
+- [x] `tapd wiki count`
+- [x] `tapd wiki update`
+- [x] `tapd wiki drawio`
+- [x] `tapd wiki followers`
+- [x] `tapd wiki followers count`
+- [x] `tapd wiki permissions`
+- [x] `tapd wiki tags`
+- [x] `tapd wiki tags count`
+- [x] `tapd wiki attachments count`
 
 ### 看板
 
