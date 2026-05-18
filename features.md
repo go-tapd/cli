@@ -82,18 +82,18 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 迭代
 
-- [ ] `tapd iteration create`
-- [ ] `tapd iteration view`
-- [ ] `tapd iteration list`
-- [ ] `tapd iteration count`
-- [ ] `tapd iteration update`
-- [ ] `tapd iteration changes`
-- [ ] `tapd iteration fields`
-- [ ] `tapd iteration workitem-types`
-- [ ] `tapd iteration templates`
-- [ ] `tapd iteration template-fields`
-- [ ] `tapd iteration lock`
-- [ ] `tapd iteration unlock`
+- [x] `tapd iteration create`
+- [x] `tapd iteration view`
+- [x] `tapd iteration list`
+- [x] `tapd iteration count`
+- [x] `tapd iteration update`
+- [x] `tapd iteration changes`
+- [x] `tapd iteration fields`
+- [x] `tapd iteration workitem-types`
+- [x] `tapd iteration templates`
+- [x] `tapd iteration template-fields`
+- [x] `tapd iteration lock`
+- [x] `tapd iteration unlock`
 
 ### 任务
 

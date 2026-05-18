@@ -126,6 +126,14 @@ func strictIntMulti(name, csv string) (*tapd.Multi[int], error) {
 	return tapd.NewMulti(values...), nil
 }
 
+func strictStringMulti(name, csv string) (*tapd.Multi[string], error) {
+	items := splitCSV(csv)
+	if len(items) == 0 {
+		return nil, fmt.Errorf("%s cannot be empty", name)
+	}
+	return tapd.NewMulti(items...), nil
+}
+
 func splitCSV(csv string) []string {
 	if csv == "" {
 		return nil

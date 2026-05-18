@@ -54,6 +54,18 @@ This installs a binary named `tapd`.
 - `tapd bug unlink`
 - `tapd bug by-view`
 - `tapd bug convert-ids`
+- `tapd iteration create`
+- `tapd iteration view`
+- `tapd iteration list`
+- `tapd iteration count`
+- `tapd iteration update`
+- `tapd iteration changes`
+- `tapd iteration fields`
+- `tapd iteration workitem-types`
+- `tapd iteration templates`
+- `tapd iteration template-fields`
+- `tapd iteration lock`
+- `tapd iteration unlock`
 - `tapd task list`
 
 ## Login
@@ -125,6 +137,9 @@ go run ./cmd/tapd bug view 1111112222001000001 --workspace-id 123456
 go run ./cmd/tapd bug create --workspace-id 123456 --title "Login fails" --owner alice
 go run ./cmd/tapd bug changes --workspace-id 123456 --bug-ids 1111112222001000001
 go run ./cmd/tapd bug link --workspace-id 123456 --bug-id 1111112222001000001 --relate-bug-ids 1111112222001000002
+go run ./cmd/tapd iteration list --workspace-id 123456 --status open
+go run ./cmd/tapd iteration create --workspace-id 123456 --name "Sprint 1" --description "Sprint goal" --start-date 2026-06-01 --end-date 2026-06-14 --creator alice
+go run ./cmd/tapd iteration changes --workspace-id 123456 --iteration-id 1111112222001000001
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 ```
 
@@ -133,3 +148,4 @@ go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 - [Shell completion](docs/shell-completion.md)
 - [Story commands](docs/story.md)
 - [Bug commands](docs/bug.md)
+- [Iteration commands](docs/iteration.md)
