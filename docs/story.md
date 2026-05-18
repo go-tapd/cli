@@ -53,7 +53,7 @@ tapd story create \
   --creator alice \
   --priority-label High \
   --iteration-id 12345 \
-  --label cli|auth
+  --label "cli|auth"
 ```
 
 ### View a Story
@@ -303,12 +303,8 @@ tapd story removed -w 123456 --archived
 The story command implementation lives in:
 
 ```text
-internal/cmd/story/
+internal/cmd/story.go
 ```
-
-The parent command package only registers the module command. Keep new story
-subcommands inside `internal/cmd/story/` so the top-level command package stays
-small.
 
 When adding or renaming story commands:
 

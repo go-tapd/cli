@@ -36,7 +36,24 @@ This installs a binary named `tapd`.
 - `tapd story related-test-cases`
 - `tapd story by-view`
 - `tapd story convert-ids`
+- `tapd bug create`
+- `tapd bug view`
 - `tapd bug list`
+- `tapd bug count`
+- `tapd bug update`
+- `tapd bug batch-update`
+- `tapd bug changes`
+- `tapd bug changes count`
+- `tapd bug fields`
+- `tapd bug field-labels`
+- `tapd bug templates`
+- `tapd bug template-fields`
+- `tapd bug removed`
+- `tapd bug related-stories`
+- `tapd bug link`
+- `tapd bug unlink`
+- `tapd bug by-view`
+- `tapd bug convert-ids`
 - `tapd task list`
 
 ## Login
@@ -104,6 +121,10 @@ go run ./cmd/tapd story create --workspace-id 123456 --name "New story" --owner 
 go run ./cmd/tapd story changes --workspace-id 123456 --story-ids 1111112222001000001
 go run ./cmd/tapd story batch-update --workspace-id 123456 --file stories.json
 go run ./cmd/tapd bug list --workspace-id 123456 --owner alice
+go run ./cmd/tapd bug view 1111112222001000001 --workspace-id 123456
+go run ./cmd/tapd bug create --workspace-id 123456 --title "Login fails" --owner alice
+go run ./cmd/tapd bug changes --workspace-id 123456 --bug-ids 1111112222001000001
+go run ./cmd/tapd bug link --workspace-id 123456 --bug-id 1111112222001000001 --relate-bug-ids 1111112222001000002
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 ```
 
@@ -111,3 +132,4 @@ go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 
 - [Shell completion](docs/shell-completion.md)
 - [Story commands](docs/story.md)
+- [Bug commands](docs/bug.md)
