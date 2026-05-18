@@ -116,21 +116,22 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 测试
 
-- [ ] `tapd test-case create`
-- [ ] `tapd test-case list`
-- [ ] `tapd test-case count`
-- [ ] `tapd test-case update`
-- [ ] `tapd test-case categories`
-- [ ] `tapd test-case fields`
-- [ ] `tapd test-case results`
-- [ ] `tapd test-plan create`
-- [ ] `tapd test-plan list`
-- [ ] `tapd test-plan count`
-- [ ] `tapd test-plan update`
-- [ ] `tapd test-plan progress`
-- [ ] `tapd test-plan result`
-- [ ] `tapd test-plan related-bugs`
-- [ ] `tapd test-plan related-stories`
+- [x] `tapd test-case create`
+- [x] `tapd test-case list`
+- [x] `tapd test-case count`
+- [x] `tapd test-case update`
+- [x] `tapd test-case categories`
+- [x] `tapd test-case fields`
+- [x] `tapd test-case results`
+- [x] `tapd test-plan create`
+- [x] `tapd test-plan list`
+- [x] `tapd test-plan count`
+- [x] `tapd test-plan update`
+- [x] `tapd test-plan progress`
+- [x] `tapd test-plan result`
+- [x] `tapd test-plan related-bugs`
+- [x] `tapd test-plan related-stories`
+- [x] 测试说明：`docs/test.md`
 
 ### 发布
 

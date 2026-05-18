@@ -72,6 +72,21 @@ This installs a binary named `tapd`.
 - `tapd bug update-system-options`
 - `tapd bug by-view`
 - `tapd bug convert-ids`
+- `tapd test-case create`
+- `tapd test-case list`
+- `tapd test-case count`
+- `tapd test-case update`
+- `tapd test-case categories`
+- `tapd test-case fields`
+- `tapd test-case results`
+- `tapd test-plan create`
+- `tapd test-plan list`
+- `tapd test-plan count`
+- `tapd test-plan update`
+- `tapd test-plan progress`
+- `tapd test-plan result`
+- `tapd test-plan related-bugs`
+- `tapd test-plan related-stories`
 - `tapd iteration create`
 - `tapd iteration view`
 - `tapd iteration list`
@@ -220,6 +235,12 @@ go run ./cmd/tapd bug copy --workspace-id 123456 --source-bug-id 111111222200100
 go run ./cmd/tapd bug changes --workspace-id 123456 --bug-ids 1111112222001000001
 go run ./cmd/tapd bug links --workspace-id 123456 --bug-id 1111112222001000001
 go run ./cmd/tapd bug link --workspace-id 123456 --bug-id 1111112222001000001 --relate-bug-ids 1111112222001000002
+go run ./cmd/tapd test-case list --workspace-id 123456 --status normal
+go run ./cmd/tapd test-case create --workspace-id 123456 --name "Login regression" --creator alice
+go run ./cmd/tapd test-case results --workspace-id 123456 --test-plan-id 2222223333001000001 --test-case-id 1111112222001000001
+go run ./cmd/tapd test-plan list --workspace-id 123456 --status open
+go run ./cmd/tapd test-plan create --workspace-id 123456 --name "Release regression" --owner alice
+go run ./cmd/tapd test-plan progress --workspace-id 123456 --id 2222223333001000001
 go run ./cmd/tapd iteration list --workspace-id 123456 --status open
 go run ./cmd/tapd iteration create --workspace-id 123456 --name "Sprint 1" --description "Sprint goal" --start-date 2026-06-01 --end-date 2026-06-14 --creator alice
 go run ./cmd/tapd iteration changes --workspace-id 123456 --iteration-id 1111112222001000001
@@ -255,6 +276,7 @@ go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story -
 - [Shell completion](docs/shell-completion.md)
 - [Story commands](docs/story.md)
 - [Bug commands](docs/bug.md)
+- [Test commands](docs/test.md)
 - [Iteration commands](docs/iteration.md)
 - [Task commands](docs/task.md)
 - [Release commands](docs/release.md)
