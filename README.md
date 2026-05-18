@@ -84,3 +84,7 @@ go run ./cmd/tapd story list --workspace-id 123456 --limit 20
 go run ./cmd/tapd bug list --workspace-id 123456 --owner alice
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 ```
+
+## Documentation
+
+- [Shell completion](docs/shell-completion.md)

@@ -33,7 +33,7 @@ The SDK coverage ledger lives in the sibling SDK repository:
 - [x] `--config <path>` 指定配置文件
 - [x] `--base-url <url>` 覆盖 TAPD API 地址
 - [x] `--format table|json`
-- [ ] Shell completion 文档与安装说明
+- [x] Shell completion 文档与安装说明
 
 ## 研发协作 API
 
