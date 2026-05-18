@@ -181,10 +181,10 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 附件
 
-- [ ] `tapd attachment list`
-- [ ] `tapd attachment download-url`
-- [ ] `tapd attachment image-url`
-- [ ] `tapd attachment document-url`
+- [x] `tapd attachment list`
+- [x] `tapd attachment download-url`
+- [x] `tapd attachment image-url`
+- [x] `tapd attachment document-url`
 
 ### 度量
 

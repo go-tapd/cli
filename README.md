@@ -77,6 +77,10 @@ This installs a binary named `tapd`.
 - `tapd task fields`
 - `tapd task removed`
 - `tapd report list`
+- `tapd attachment list`
+- `tapd attachment download-url`
+- `tapd attachment image-url`
+- `tapd attachment document-url`
 
 ## Login
 
@@ -155,6 +159,8 @@ go run ./cmd/tapd task view 1111112222001000001 --workspace-id 123456
 go run ./cmd/tapd task changes --workspace-id 123456 --task-id 1111112222001000001
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 go run ./cmd/tapd report list --workspace-id 123456 --author alice
+go run ./cmd/tapd attachment list --workspace-id 123456 --entry-id 1111112222001000001
+go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
 ```
 
 ## Documentation
@@ -165,3 +171,4 @@ go run ./cmd/tapd report list --workspace-id 123456 --author alice
 - [Iteration commands](docs/iteration.md)
 - [Task commands](docs/task.md)
 - [Report commands](docs/report.md)
+- [Attachment commands](docs/attachment.md)
