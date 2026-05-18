@@ -59,6 +59,7 @@ func newRootCmd(rt *app.Runtime) *cobra.Command {
 		newMeasureCmd(rt),
 		newWorkflowCmd(rt),
 		newSettingCmd(rt),
+		newLabelCmd(rt),
 	)
 
 	return cmd

@@ -84,6 +84,10 @@ This installs a binary named `tapd`.
 - `tapd measure life-times`
 - `tapd workflow last-steps`
 - `tapd setting workspace`
+- `tapd label create`
+- `tapd label list`
+- `tapd label count`
+- `tapd label update`
 
 ## Login
 
@@ -167,6 +171,8 @@ go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
 go run ./cmd/tapd measure life-times --workspace-id 123456 --entity-type story --entity-id 1111112222001000001
 go run ./cmd/tapd workflow last-steps --workspace-id 123456 --group-key workitem_type_id
 go run ./cmd/tapd setting workspace --workspace-id 123456
+go run ./cmd/tapd label list --workspace-id 123456 --creator alice
+go run ./cmd/tapd label create --workspace-id 123456 --name backend --color 1 --creator alice
 ```
 
 ## Documentation
@@ -181,3 +187,4 @@ go run ./cmd/tapd setting workspace --workspace-id 123456
 - [Measure commands](docs/measure.md)
 - [Workflow commands](docs/workflow.md)
 - [Setting commands](docs/setting.md)
+- [Label commands](docs/label.md)

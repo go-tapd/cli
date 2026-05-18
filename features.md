@@ -227,10 +227,10 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 标签
 
-- [ ] `tapd label create`
-- [ ] `tapd label list`
-- [ ] `tapd label count`
-- [ ] `tapd label update`
+- [x] `tapd label create`
+- [x] `tapd label list`
+- [x] `tapd label count`
+- [x] `tapd label update`
 
 ### 用户
 
