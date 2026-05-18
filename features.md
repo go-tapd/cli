@@ -207,20 +207,20 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 - [x] `tapd workspace view`
 - [x] `tapd workspace users`
-- [ ] `tapd workspace roles`
-- [ ] `tapd workspace sub-workspaces`
-- [ ] `tapd workspace company-workspaces`
-- [ ] `tapd workspace participant-workspaces`
-- [ ] `tapd workspace add-member`
-- [ ] `tapd workspace update`
-- [ ] `tapd workspace custom-fields`
-- [ ] `tapd workspace documents`
-- [ ] `tapd workspace short-id convert`
-- [ ] `tapd workspace member-activity-log`
-- [ ] `tapd workspace calendar set-custom`
-- [ ] `tapd workspace calendar enable`
-- [ ] `tapd workspace calendar view-custom`
-- [ ] `tapd workspace calendar settings`
+- [x] `tapd workspace roles`
+- [x] `tapd workspace sub-workspaces`
+- [x] `tapd workspace company-workspaces`
+- [x] `tapd workspace participant-workspaces`
+- [x] `tapd workspace add-member`
+- [x] `tapd workspace update`
+- [x] `tapd workspace custom-fields`
+- [x] `tapd workspace documents`
+- [x] `tapd workspace short-id convert`
+- [x] `tapd workspace member-activity-log`
+- [x] `tapd workspace calendar set-custom`
+- [x] `tapd workspace calendar enable`
+- [x] `tapd workspace calendar view-custom`
+- [x] `tapd workspace calendar settings`
 
 ### 工作流
 

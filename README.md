@@ -17,6 +17,20 @@ This installs a binary named `tapd`.
 - `tapd auth logout`
 - `tapd workspace view`
 - `tapd workspace users`
+- `tapd workspace roles`
+- `tapd workspace sub-workspaces`
+- `tapd workspace company-workspaces`
+- `tapd workspace participant-workspaces`
+- `tapd workspace add-member`
+- `tapd workspace update`
+- `tapd workspace custom-fields`
+- `tapd workspace documents`
+- `tapd workspace short-id convert`
+- `tapd workspace member-activity-log`
+- `tapd workspace calendar set-custom`
+- `tapd workspace calendar enable`
+- `tapd workspace calendar view-custom`
+- `tapd workspace calendar settings`
 - `tapd story create`
 - `tapd story view`
 - `tapd story list`
@@ -191,6 +205,9 @@ export TAPD_CLIENT_SECRET=...
 go run ./cmd/tapd auth status
 go run ./cmd/tapd workspace view --workspace-id 123456
 go run ./cmd/tapd workspace users --workspace-id 123456
+go run ./cmd/tapd workspace roles --workspace-id 123456
+go run ./cmd/tapd workspace documents --workspace-id 123456
+go run ./cmd/tapd workspace short-id convert --workspace-id 123456 --entity-type story --short-ids "1001;1002"
 go run ./cmd/tapd story list --workspace-id 123456 --limit 20
 go run ./cmd/tapd story view 1111112222001000001 --workspace-id 123456
 go run ./cmd/tapd story create --workspace-id 123456 --name "New story" --owner alice
@@ -248,6 +265,7 @@ go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story -
 - [Timesheet commands](docs/timesheet.md)
 - [Comment commands](docs/comment.md)
 - [Board commands](docs/board.md)
+- [Workspace commands](docs/workspace.md)
 - [Workflow commands](docs/workflow.md)
 - [Setting commands](docs/setting.md)
 - [Label commands](docs/label.md)
