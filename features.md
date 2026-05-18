@@ -223,7 +223,7 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 配置
 
-- [ ] `tapd setting workspace`
+- [x] `tapd setting workspace`
 
 ### 标签
 
