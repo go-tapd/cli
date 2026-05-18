@@ -168,10 +168,10 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 看板
 
-- [ ] `tapd board card create`
-- [ ] `tapd board card list`
-- [ ] `tapd board card update`
-- [ ] `tapd board columns`
+- [x] `tapd board card create`
+- [x] `tapd board card list`
+- [x] `tapd board card update`
+- [x] `tapd board columns`
 
 ### 评论
 
