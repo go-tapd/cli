@@ -163,6 +163,10 @@ This installs a binary named `tapd`.
 - `tapd webhook serve`
 - `tapd webhook validate`
 - `tapd webhook inspect`
+- `tapd lite comment create`
+- `tapd lite comment list`
+- `tapd lite comment count`
+- `tapd lite comment update`
 
 ## Login
 
@@ -275,6 +279,8 @@ go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story -
 go run ./cmd/tapd webhook inspect --file payload.json
 go run ./cmd/tapd webhook validate --file payload.json
 go run ./cmd/tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
+go run ./cmd/tapd lite comment list --workspace-id 123456 --entry-id 1111112222001000001
+go run ./cmd/tapd lite comment create --workspace-id 123456 --entry-id 1111112222001000001 --author alice --description "Looks good"
 ```
 
 ## Documentation
@@ -300,3 +306,4 @@ go run ./cmd/tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 - [User commands](docs/user.md)
 - [Source commands](docs/source.md)
 - [Webhook commands](docs/webhook.md)
+- [Lite commands](docs/lite.md)

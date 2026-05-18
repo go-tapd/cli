@@ -251,7 +251,8 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ## 轻协作 API
 
-SDK 当前对轻协作 API 覆盖较少，CLI 暂不优先接入。
+SDK 当前对轻协作 API 覆盖较少。除评论可通过通用 CommentService
+的 `mini_items` 类型接入外，其余条目暂未发现对应 typed service。
 
 ### 工作项
 
@@ -269,10 +270,11 @@ SDK 当前对轻协作 API 覆盖较少，CLI 暂不优先接入。
 
 ### 评论
 
-- [ ] `tapd lite comment create`
-- [ ] `tapd lite comment list`
-- [ ] `tapd lite comment count`
-- [ ] `tapd lite comment update`
+- [x] `tapd lite comment create`
+- [x] `tapd lite comment list`
+- [x] `tapd lite comment count`
+- [x] `tapd lite comment update`
+- [x] 轻协作评论说明：`docs/lite.md`
 
 ### 附件
 
