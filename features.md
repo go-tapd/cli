@@ -97,16 +97,16 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 任务
 
-- [ ] `tapd task create`
-- [ ] `tapd task view`
+- [x] `tapd task create`
+- [x] `tapd task view`
 - [x] `tapd task list`
 - [x] `tapd task count`
-- [ ] `tapd task update`
-- [ ] `tapd task batch-update`
-- [ ] `tapd task changes`
-- [ ] `tapd task changes count`
+- [x] `tapd task update`
+- [x] `tapd task batch-update`
+- [x] `tapd task changes`
+- [x] `tapd task changes count`
 - [x] `tapd task fields`
-- [ ] `tapd task removed`
+- [x] `tapd task removed`
 - [ ] `tapd task by-view` SDK 暂未实现
 
 ### 测试

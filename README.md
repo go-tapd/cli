@@ -66,7 +66,16 @@ This installs a binary named `tapd`.
 - `tapd iteration template-fields`
 - `tapd iteration lock`
 - `tapd iteration unlock`
+- `tapd task create`
+- `tapd task view`
 - `tapd task list`
+- `tapd task count`
+- `tapd task update`
+- `tapd task batch-update`
+- `tapd task changes`
+- `tapd task changes count`
+- `tapd task fields`
+- `tapd task removed`
 
 ## Login
 
@@ -140,6 +149,9 @@ go run ./cmd/tapd bug link --workspace-id 123456 --bug-id 1111112222001000001 --
 go run ./cmd/tapd iteration list --workspace-id 123456 --status open
 go run ./cmd/tapd iteration create --workspace-id 123456 --name "Sprint 1" --description "Sprint goal" --start-date 2026-06-01 --end-date 2026-06-14 --creator alice
 go run ./cmd/tapd iteration changes --workspace-id 123456 --iteration-id 1111112222001000001
+go run ./cmd/tapd task create --workspace-id 123456 --name "Implement login" --owner alice
+go run ./cmd/tapd task view 1111112222001000001 --workspace-id 123456
+go run ./cmd/tapd task changes --workspace-id 123456 --task-id 1111112222001000001
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 ```
 
@@ -149,3 +161,4 @@ go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 - [Story commands](docs/story.md)
 - [Bug commands](docs/bug.md)
 - [Iteration commands](docs/iteration.md)
+- [Task commands](docs/task.md)
