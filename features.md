@@ -177,7 +177,7 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 报表
 
-- [ ] `tapd report list`
+- [x] `tapd report list`
 
 ### 附件
 

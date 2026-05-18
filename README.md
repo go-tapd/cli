@@ -76,6 +76,7 @@ This installs a binary named `tapd`.
 - `tapd task changes count`
 - `tapd task fields`
 - `tapd task removed`
+- `tapd report list`
 
 ## Login
 
@@ -153,6 +154,7 @@ go run ./cmd/tapd task create --workspace-id 123456 --name "Implement login" --o
 go run ./cmd/tapd task view 1111112222001000001 --workspace-id 123456
 go run ./cmd/tapd task changes --workspace-id 123456 --task-id 1111112222001000001
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
+go run ./cmd/tapd report list --workspace-id 123456 --author alice
 ```
 
 ## Documentation
@@ -162,3 +164,4 @@ go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 - [Bug commands](docs/bug.md)
 - [Iteration commands](docs/iteration.md)
 - [Task commands](docs/task.md)
+- [Report commands](docs/report.md)
