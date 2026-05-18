@@ -234,7 +234,7 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 用户
 
-- [ ] `tapd user roles`
+- [x] `tapd user roles`
 
 ## Webhook
 

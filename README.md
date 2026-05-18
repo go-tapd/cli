@@ -88,6 +88,7 @@ This installs a binary named `tapd`.
 - `tapd label list`
 - `tapd label count`
 - `tapd label update`
+- `tapd user roles`
 
 ## Login
 
@@ -173,6 +174,7 @@ go run ./cmd/tapd workflow last-steps --workspace-id 123456 --group-key workitem
 go run ./cmd/tapd setting workspace --workspace-id 123456
 go run ./cmd/tapd label list --workspace-id 123456 --creator alice
 go run ./cmd/tapd label create --workspace-id 123456 --name backend --color 1 --creator alice
+go run ./cmd/tapd user roles --workspace-id 123456
 ```
 
 ## Documentation
@@ -188,3 +190,4 @@ go run ./cmd/tapd label create --workspace-id 123456 --name backend --color 1 --
 - [Workflow commands](docs/workflow.md)
 - [Setting commands](docs/setting.md)
 - [Label commands](docs/label.md)
+- [User commands](docs/user.md)
