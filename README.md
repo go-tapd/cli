@@ -81,6 +81,7 @@ This installs a binary named `tapd`.
 - `tapd attachment download-url`
 - `tapd attachment image-url`
 - `tapd attachment document-url`
+- `tapd measure life-times`
 
 ## Login
 
@@ -161,6 +162,7 @@ go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 go run ./cmd/tapd report list --workspace-id 123456 --author alice
 go run ./cmd/tapd attachment list --workspace-id 123456 --entry-id 1111112222001000001
 go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
+go run ./cmd/tapd measure life-times --workspace-id 123456 --entity-type story --entity-id 1111112222001000001
 ```
 
 ## Documentation
@@ -172,3 +174,4 @@ go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
 - [Task commands](docs/task.md)
 - [Report commands](docs/report.md)
 - [Attachment commands](docs/attachment.md)
+- [Measure commands](docs/measure.md)

@@ -188,7 +188,7 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 度量
 
-- [ ] `tapd measure life-times`
+- [x] `tapd measure life-times`
 
 ### 工时
 
