@@ -62,6 +62,7 @@ The SDK coverage ledger lives in the sibling SDK repository:
 ### 缺陷
 
 - [x] `tapd bug create`
+- [x] `tapd bug copy`
 - [x] `tapd bug view`
 - [x] `tapd bug list`
 - [x] `tapd bug count`
@@ -70,15 +71,19 @@ The SDK coverage ledger lives in the sibling SDK repository:
 - [x] `tapd bug changes`
 - [x] `tapd bug changes count`
 - [x] `tapd bug fields`
+- [x] `tapd bug custom-field-settings`
 - [x] `tapd bug field-labels`
 - [x] `tapd bug templates`
 - [x] `tapd bug template-fields`
 - [x] `tapd bug removed`
 - [x] `tapd bug related-stories`
+- [x] `tapd bug links`
 - [x] `tapd bug link`
 - [x] `tapd bug unlink`
+- [x] `tapd bug update-system-options`
 - [x] `tapd bug by-view`
 - [x] `tapd bug convert-ids`
+- [x] 缺陷说明：`docs/bug.md`
 
 ### 迭代
 

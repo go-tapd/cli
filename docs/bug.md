@@ -57,6 +57,30 @@ tapd bug create \
   --label "cli|auth"
 ```
 
+The `--description` flag maps to TAPD's bug description field. Use JSON output
+when you need to inspect the full rich-text payload returned by TAPD.
+
+### Copy a Bug
+
+Copy a bug from one workspace to another:
+
+```bash
+tapd bug copy \
+  -w 123456 \
+  --source-bug-id 1111112222001000001 \
+  --dst-workspace-id 654321
+```
+
+Copy selected fields only:
+
+```bash
+tapd bug copy \
+  -w 123456 \
+  --source-bug-id 1111112222001000001 \
+  --dst-workspace-id 654321 \
+  --sync-fields title,description,severity,current_owner
+```
+
 ### View a Bug
 
 ```bash
@@ -186,6 +210,36 @@ Use JSON output to inspect full field options:
 tapd bug fields -w 123456 --format json
 ```
 
+### Custom Field Settings
+
+List custom field configuration:
+
+```bash
+tapd bug custom-field-settings -w 123456
+```
+
+Use JSON output to inspect raw options, extra configuration, and extension
+metadata:
+
+```bash
+tapd bug custom-field-settings -w 123456 --format json
+```
+
+### System Field Options
+
+Update system select field options:
+
+```bash
+tapd bug update-system-options -w 123456 --field bugtype --values defect,enhancement
+```
+
+This API overwrites the existing option list for the selected system field. Read
+the current field metadata first when you are not sure about the existing values:
+
+```bash
+tapd bug fields -w 123456 --format json
+```
+
 ### Templates
 
 List bug templates:
@@ -241,6 +295,16 @@ Multiple bug IDs are comma-separated:
 ```bash
 tapd bug related-stories -w 123456 --bug-ids 1111112222001000001,1111112222001000002
 ```
+
+### Linked Bugs
+
+List existing bug-to-bug link relations:
+
+```bash
+tapd bug links -w 123456 --bug-id 1111112222001000001
+```
+
+The `LinkID` column is used by `tapd bug unlink`.
 
 ### Link and Unlink Bugs
 

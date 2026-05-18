@@ -37,6 +37,7 @@ This installs a binary named `tapd`.
 - `tapd story by-view`
 - `tapd story convert-ids`
 - `tapd bug create`
+- `tapd bug copy`
 - `tapd bug view`
 - `tapd bug list`
 - `tapd bug count`
@@ -45,13 +46,16 @@ This installs a binary named `tapd`.
 - `tapd bug changes`
 - `tapd bug changes count`
 - `tapd bug fields`
+- `tapd bug custom-field-settings`
 - `tapd bug field-labels`
 - `tapd bug templates`
 - `tapd bug template-fields`
 - `tapd bug removed`
 - `tapd bug related-stories`
+- `tapd bug links`
 - `tapd bug link`
 - `tapd bug unlink`
+- `tapd bug update-system-options`
 - `tapd bug by-view`
 - `tapd bug convert-ids`
 - `tapd iteration create`
@@ -160,7 +164,9 @@ go run ./cmd/tapd story batch-update --workspace-id 123456 --file stories.json
 go run ./cmd/tapd bug list --workspace-id 123456 --owner alice
 go run ./cmd/tapd bug view 1111112222001000001 --workspace-id 123456
 go run ./cmd/tapd bug create --workspace-id 123456 --title "Login fails" --owner alice
+go run ./cmd/tapd bug copy --workspace-id 123456 --source-bug-id 1111112222001000001 --dst-workspace-id 654321
 go run ./cmd/tapd bug changes --workspace-id 123456 --bug-ids 1111112222001000001
+go run ./cmd/tapd bug links --workspace-id 123456 --bug-id 1111112222001000001
 go run ./cmd/tapd bug link --workspace-id 123456 --bug-id 1111112222001000001 --relate-bug-ids 1111112222001000002
 go run ./cmd/tapd iteration list --workspace-id 123456 --status open
 go run ./cmd/tapd iteration create --workspace-id 123456 --name "Sprint 1" --description "Sprint goal" --start-date 2026-06-01 --end-date 2026-06-14 --creator alice

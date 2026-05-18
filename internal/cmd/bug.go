@@ -24,16 +24,20 @@ func newBugCmd(rt *app.Runtime) *cobra.Command {
 		newBugListCmd(rt),
 		newBugCountCmd(rt),
 		newBugUpdateCmd(rt),
+		newBugCopyCmd(rt),
 		newBugBatchUpdateCmd(rt),
 		newBugChangesCmd(rt),
 		newBugFieldsCmd(rt),
+		newBugCustomFieldSettingsCmd(rt),
 		newBugFieldLabelsCmd(rt),
 		newBugTemplatesCmd(rt),
 		newBugTemplateFieldsCmd(rt),
 		newBugRemovedCmd(rt),
 		newBugRelatedStoriesCmd(rt),
+		newBugLinksCmd(rt),
 		newBugLinkCmd(rt),
 		newBugUnlinkCmd(rt),
+		newBugUpdateSystemOptionsCmd(rt),
 		newBugByViewCmd(rt),
 		newBugConvertIDsCmd(rt),
 	)
@@ -227,6 +231,46 @@ func newBugCountCmd(rt *app.Runtime) *cobra.Command {
 	return cmd
 }
 
+func newBugCopyCmd(rt *app.Runtime) *cobra.Command {
+	var (
+		workspaceID    int
+		sourceBugID    int64
+		dstWorkspaceID int
+		syncFields     string
+	)
+
+	cmd := &cobra.Command{
+		Use:   "copy",
+		Short: "Copy a bug to another workspace",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			client, _, err := rt.NewClient()
+			if err != nil {
+				return err
+			}
+
+			bug, _, err := client.BugService.CopyBug(cmd.Context(), &tapd.CopyBugRequest{
+				WorkspaceID:    tapd.Ptr(workspaceID),
+				SourceBugID:    tapd.Ptr(sourceBugID),
+				DstWorkspaceID: tapd.Ptr(dstWorkspaceID),
+				SyncFields:     fieldsMulti(syncFields),
+			})
+			if err != nil {
+				return err
+			}
+
+			return writeOutput(cmd, rt.OutputFormat, bugTableHeaders(), bugRows([]*tapd.Bug{bug}), bug)
+		},
+	}
+
+	newWorkspaceFlag(cmd, &workspaceID)
+	cmd.Flags().Int64Var(&sourceBugID, "source-bug-id", 0, "source bug ID")
+	cmd.Flags().IntVar(&dstWorkspaceID, "dst-workspace-id", 0, "destination workspace ID")
+	cmd.Flags().StringVar(&syncFields, "sync-fields", "", "comma separated fields to copy")
+	_ = cmd.MarkFlagRequired("source-bug-id")
+	_ = cmd.MarkFlagRequired("dst-workspace-id")
+	return cmd
+}
+
 func newBugFieldsCmd(rt *app.Runtime) *cobra.Command {
 	var (
 		workspaceID int
@@ -281,6 +325,56 @@ func newBugFieldsCmd(rt *app.Runtime) *cobra.Command {
 	return cmd
 }
 
+func newBugCustomFieldSettingsCmd(rt *app.Runtime) *cobra.Command {
+	var workspaceID int
+
+	cmd := &cobra.Command{
+		Use:   "custom-field-settings",
+		Short: "List bug custom field settings",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			client, _, err := rt.NewClient()
+			if err != nil {
+				return err
+			}
+
+			settings, _, err := client.BugService.GetBugCustomFieldsSettings(
+				cmd.Context(),
+				&tapd.GetBugCustomFieldsSettingsRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+			)
+			if err != nil {
+				return err
+			}
+
+			rows := make([][]string, 0, len(settings))
+			for _, item := range settings {
+				if item == nil {
+					continue
+				}
+				rows = append(rows, []string{
+					item.ID,
+					item.CustomField,
+					item.Name,
+					item.Type,
+					item.Enabled,
+					item.Freeze,
+					stringValue(item.Sort),
+				})
+			}
+
+			return writeOutput(
+				cmd,
+				rt.OutputFormat,
+				[]string{"ID", "CustomField", "Name", "Type", "Enabled", "Freeze", "Sort"},
+				rows,
+				settings,
+			)
+		},
+	}
+
+	newWorkspaceFlag(cmd, &workspaceID)
+	return cmd
+}
+
 func newBugUpdateCmd(rt *app.Runtime) *cobra.Command {
 	var flags bugMutationFlags
 
@@ -316,6 +410,62 @@ func newBugUpdateCmd(rt *app.Runtime) *cobra.Command {
 
 	newWorkspaceFlag(cmd, &flags.workspaceID)
 	addBugMutationFlags(cmd, &flags, true)
+	return cmd
+}
+
+func newBugUpdateSystemOptionsCmd(rt *app.Runtime) *cobra.Command {
+	var (
+		workspaceID int
+		field       string
+		values      string
+	)
+
+	cmd := &cobra.Command{
+		Use:   "update-system-options",
+		Short: "Update bug system select field options",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			items := splitCSV(values)
+			if len(items) == 0 {
+				return errors.New("values cannot be empty")
+			}
+
+			options := make([]*tapd.BugSystemSelectFieldOption, 0, len(items))
+			for _, item := range items {
+				options = append(options, &tapd.BugSystemSelectFieldOption{Value: tapd.Ptr(item)})
+			}
+
+			client, _, err := rt.NewClient()
+			if err != nil {
+				return err
+			}
+
+			ok, _, err := client.BugService.UpdateBugSystemSelectFieldOptions(
+				cmd.Context(),
+				&tapd.UpdateBugSystemSelectFieldOptionsRequest{
+					WorkspaceID: tapd.Ptr(workspaceID),
+					Field:       tapd.Ptr(field),
+					Options:     options,
+				},
+			)
+			if err != nil {
+				return err
+			}
+
+			rows := [][]string{{field, strconv.Itoa(len(options)), strconv.FormatBool(ok)}}
+			return writeOutput(
+				cmd,
+				rt.OutputFormat,
+				[]string{"Field", "Options", "Success"},
+				rows,
+				map[string]any{"field": field, "options": options, "success": ok},
+			)
+		},
+	}
+
+	newWorkspaceFlag(cmd, &workspaceID)
+	cmd.Flags().StringVar(&field, "field", "bugtype", "system select field name")
+	cmd.Flags().StringVar(&values, "values", "", "comma separated option values")
+	_ = cmd.MarkFlagRequired("values")
 	return cmd
 }
 
@@ -622,6 +772,57 @@ func newBugRemovedCmd(rt *app.Runtime) *cobra.Command {
 	cmd.Flags().StringVar(&created, "created", "", "filter by created time expression")
 	cmd.Flags().StringVar(&modified, "modified", "", "filter by removed time expression")
 	cmd.Flags().BoolVar(&includeAll, "include-all", false, "include moved, merged, and deleted bugs")
+	return cmd
+}
+
+func newBugLinksCmd(rt *app.Runtime) *cobra.Command {
+	var (
+		workspaceID int
+		bugID       int64
+	)
+
+	cmd := &cobra.Command{
+		Use:   "links",
+		Short: "List bug link relations",
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			client, _, err := rt.NewClient()
+			if err != nil {
+				return err
+			}
+
+			relations, _, err := client.BugService.GetBugLinkBugs(cmd.Context(), &tapd.GetBugLinkBugsRequest{
+				WorkspaceID: tapd.Ptr(workspaceID),
+				BugID:       tapd.Ptr(bugID),
+			})
+			if err != nil {
+				return err
+			}
+
+			rows := make([][]string, 0, len(relations))
+			for _, item := range relations {
+				rows = append(rows, []string{
+					item.LinkID,
+					item.ID,
+					item.Type,
+					item.ActAs,
+					item.WorkspaceID,
+					strconv.Itoa(item.LinkedWorkspaceID),
+				})
+			}
+
+			return writeOutput(
+				cmd,
+				rt.OutputFormat,
+				[]string{"LinkID", "BugID", "Type", "ActAs", "WorkspaceID", "LinkedWorkspaceID"},
+				rows,
+				relations,
+			)
+		},
+	}
+
+	newWorkspaceFlag(cmd, &workspaceID)
+	cmd.Flags().Int64Var(&bugID, "bug-id", 0, "bug ID")
+	_ = cmd.MarkFlagRequired("bug-id")
 	return cmd
 }
 
@@ -1250,6 +1451,13 @@ func stringEnum(csv string) *tapd.Enum[string] {
 		return nil
 	}
 	return tapd.NewEnum(items...)
+}
+
+func stringValue(value *string) string {
+	if value == nil {
+		return ""
+	}
+	return *value
 }
 
 func bugTableHeaders() []string {
