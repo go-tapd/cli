@@ -80,6 +80,17 @@ This installs a binary named `tapd`.
 - `tapd task changes count`
 - `tapd task fields`
 - `tapd task removed`
+- `tapd release create`
+- `tapd release view`
+- `tapd release list`
+- `tapd release count`
+- `tapd release update`
+- `tapd launch-form create`
+- `tapd launch-form list`
+- `tapd launch-form count`
+- `tapd launch-form fields`
+- `tapd launch-form templates`
+- `tapd launch-form logs`
 - `tapd report list`
 - `tapd attachment list`
 - `tapd attachment download-url`
@@ -188,6 +199,9 @@ go run ./cmd/tapd task create --workspace-id 123456 --name "Implement login" --o
 go run ./cmd/tapd task view 1111112222001000001 --workspace-id 123456
 go run ./cmd/tapd task changes --workspace-id 123456 --task-id 1111112222001000001
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
+go run ./cmd/tapd release list --workspace-id 123456 --status open
+go run ./cmd/tapd release create --workspace-id 123456 --name "v1.2.0" --start-date 2026-06-01 --end-date 2026-06-30
+go run ./cmd/tapd launch-form list --workspace-id 123456 --creator alice
 go run ./cmd/tapd report list --workspace-id 123456 --author alice
 go run ./cmd/tapd attachment list --workspace-id 123456 --entry-id 1111112222001000001
 go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
@@ -213,6 +227,7 @@ go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story -
 - [Bug commands](docs/bug.md)
 - [Iteration commands](docs/iteration.md)
 - [Task commands](docs/task.md)
+- [Release commands](docs/release.md)
 - [Report commands](docs/report.md)
 - [Attachment commands](docs/attachment.md)
 - [Measure commands](docs/measure.md)

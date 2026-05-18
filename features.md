@@ -134,17 +134,17 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 发布
 
-- [ ] `tapd release create`
-- [ ] `tapd release view`
-- [ ] `tapd release list`
-- [ ] `tapd release count`
-- [ ] `tapd release update`
-- [ ] `tapd launch-form create`
-- [ ] `tapd launch-form list`
-- [ ] `tapd launch-form count`
-- [ ] `tapd launch-form fields`
-- [ ] `tapd launch-form templates`
-- [ ] `tapd launch-form logs`
+- [x] `tapd release create`
+- [x] `tapd release view`
+- [x] `tapd release list`
+- [x] `tapd release count`
+- [x] `tapd release update`
+- [x] `tapd launch-form create`
+- [x] `tapd launch-form list`
+- [x] `tapd launch-form count`
+- [x] `tapd launch-form fields`
+- [x] `tapd launch-form templates`
+- [x] `tapd launch-form logs`
 
 ### 源码
 
