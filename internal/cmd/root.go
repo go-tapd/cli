@@ -61,6 +61,7 @@ func newRootCmd(rt *app.Runtime) *cobra.Command {
 		newSettingCmd(rt),
 		newLabelCmd(rt),
 		newUserCmd(rt),
+		newSourceCmd(rt),
 	)
 
 	return cmd

@@ -143,9 +143,9 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 源码
 
-- [ ] `tapd source commit add`
-- [ ] `tapd source commit list`
-- [ ] `tapd source commit objects`
+- [x] `tapd source commit add`
+- [x] `tapd source commit list`
+- [x] `tapd source commit objects`
 
 ### Wiki
 
