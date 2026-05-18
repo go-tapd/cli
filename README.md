@@ -86,6 +86,11 @@ This installs a binary named `tapd`.
 - `tapd attachment image-url`
 - `tapd attachment document-url`
 - `tapd measure life-times`
+- `tapd timesheet create`
+- `tapd timesheet list`
+- `tapd timesheet count`
+- `tapd timesheet update`
+- `tapd timesheet delete`
 - `tapd workflow last-steps`
 - `tapd setting workspace`
 - `tapd label create`
@@ -179,6 +184,8 @@ go run ./cmd/tapd report list --workspace-id 123456 --author alice
 go run ./cmd/tapd attachment list --workspace-id 123456 --entry-id 1111112222001000001
 go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
 go run ./cmd/tapd measure life-times --workspace-id 123456 --entity-type story --entity-id 1111112222001000001
+go run ./cmd/tapd timesheet list --workspace-id 123456 --owner alice
+go run ./cmd/tapd timesheet create --workspace-id 123456 --entity-type story --entity-id 1111112222001000001 --timespent 2h --owner alice
 go run ./cmd/tapd workflow last-steps --workspace-id 123456 --group-key workitem_type_id
 go run ./cmd/tapd setting workspace --workspace-id 123456
 go run ./cmd/tapd label list --workspace-id 123456 --creator alice
@@ -197,6 +204,7 @@ go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story -
 - [Report commands](docs/report.md)
 - [Attachment commands](docs/attachment.md)
 - [Measure commands](docs/measure.md)
+- [Timesheet commands](docs/timesheet.md)
 - [Workflow commands](docs/workflow.md)
 - [Setting commands](docs/setting.md)
 - [Label commands](docs/label.md)

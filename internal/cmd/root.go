@@ -57,6 +57,7 @@ func newRootCmd(rt *app.Runtime) *cobra.Command {
 		newReportCmd(rt),
 		newAttachmentCmd(rt),
 		newMeasureCmd(rt),
+		newTimesheetCmd(rt),
 		newWorkflowCmd(rt),
 		newSettingCmd(rt),
 		newLabelCmd(rt),

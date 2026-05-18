@@ -197,11 +197,11 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 工时
 
-- [ ] `tapd timesheet create`
-- [ ] `tapd timesheet list`
-- [ ] `tapd timesheet count`
-- [ ] `tapd timesheet update`
-- [ ] `tapd timesheet delete`
+- [x] `tapd timesheet create`
+- [x] `tapd timesheet list`
+- [x] `tapd timesheet count`
+- [x] `tapd timesheet update`
+- [x] `tapd timesheet delete`
 
 ### 项目
 
