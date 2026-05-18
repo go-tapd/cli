@@ -219,7 +219,7 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 工作流
 
-- [ ] `tapd workflow last-steps`
+- [x] `tapd workflow last-steps`
 
 ### 配置
 

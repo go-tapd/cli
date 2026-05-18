@@ -82,6 +82,7 @@ This installs a binary named `tapd`.
 - `tapd attachment image-url`
 - `tapd attachment document-url`
 - `tapd measure life-times`
+- `tapd workflow last-steps`
 
 ## Login
 
@@ -163,6 +164,7 @@ go run ./cmd/tapd report list --workspace-id 123456 --author alice
 go run ./cmd/tapd attachment list --workspace-id 123456 --entry-id 1111112222001000001
 go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
 go run ./cmd/tapd measure life-times --workspace-id 123456 --entity-type story --entity-id 1111112222001000001
+go run ./cmd/tapd workflow last-steps --workspace-id 123456 --group-key workitem_type_id
 ```
 
 ## Documentation
@@ -175,3 +177,4 @@ go run ./cmd/tapd measure life-times --workspace-id 123456 --entity-type story -
 - [Report commands](docs/report.md)
 - [Attachment commands](docs/attachment.md)
 - [Measure commands](docs/measure.md)
+- [Workflow commands](docs/workflow.md)
