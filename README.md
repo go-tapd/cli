@@ -110,3 +110,4 @@ go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 ## Documentation
 
 - [Shell completion](docs/shell-completion.md)
+- [Story commands](docs/story.md)
