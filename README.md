@@ -160,6 +160,9 @@ This installs a binary named `tapd`.
 - `tapd source commit add`
 - `tapd source commit list`
 - `tapd source commit objects`
+- `tapd webhook serve`
+- `tapd webhook validate`
+- `tapd webhook inspect`
 
 ## Login
 
@@ -269,6 +272,9 @@ go run ./cmd/tapd label list --workspace-id 123456 --creator alice
 go run ./cmd/tapd label create --workspace-id 123456 --name backend --color 1 --creator alice
 go run ./cmd/tapd user roles --workspace-id 123456
 go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story --object-id 1111112222001000001
+go run ./cmd/tapd webhook inspect --file payload.json
+go run ./cmd/tapd webhook validate --file payload.json
+go run ./cmd/tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 ```
 
 ## Documentation
@@ -293,3 +299,4 @@ go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story -
 - [Label commands](docs/label.md)
 - [User commands](docs/user.md)
 - [Source commands](docs/source.md)
+- [Webhook commands](docs/webhook.md)

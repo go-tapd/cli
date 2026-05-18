@@ -244,9 +244,10 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ## Webhook
 
-- [ ] `tapd webhook serve`
-- [ ] `tapd webhook validate`
-- [ ] `tapd webhook inspect`
+- [x] `tapd webhook serve`
+- [x] `tapd webhook validate`
+- [x] `tapd webhook inspect`
+- [x] Webhook 说明：`docs/webhook.md`
 
 ## 轻协作 API
 

@@ -70,6 +70,7 @@ func newRootCmd(rt *app.Runtime) *cobra.Command {
 		newLabelCmd(rt),
 		newUserCmd(rt),
 		newSourceCmd(rt),
+		newWebhookCmd(rt),
 	)
 
 	return cmd
