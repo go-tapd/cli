@@ -74,6 +74,58 @@ func int64Multi(csv string) *tapd.Multi[int64] {
 	return tapd.NewMulti(values...)
 }
 
+func parseIntArg(name, value string) (int, error) {
+	v, err := strconv.Atoi(strings.TrimSpace(value))
+	if err != nil {
+		return 0, fmt.Errorf("invalid %s %q: %w", name, value, err)
+	}
+	return v, nil
+}
+
+func parseInt64Arg(name, value string) (int64, error) {
+	v, err := strconv.ParseInt(strings.TrimSpace(value), 10, 64)
+	if err != nil {
+		return 0, fmt.Errorf("invalid %s %q: %w", name, value, err)
+	}
+	return v, nil
+}
+
+func strictInt64Multi(name, csv string) (*tapd.Multi[int64], error) {
+	items := splitCSV(csv)
+	if len(items) == 0 {
+		return nil, fmt.Errorf("%s cannot be empty", name)
+	}
+
+	values := make([]int64, 0, len(items))
+	for _, item := range items {
+		v, err := parseInt64Arg(name, item)
+		if err != nil {
+			return nil, err
+		}
+		values = append(values, v)
+	}
+
+	return tapd.NewMulti(values...), nil
+}
+
+func strictIntMulti(name, csv string) (*tapd.Multi[int], error) {
+	items := splitCSV(csv)
+	if len(items) == 0 {
+		return nil, fmt.Errorf("%s cannot be empty", name)
+	}
+
+	values := make([]int, 0, len(items))
+	for _, item := range items {
+		v, err := parseIntArg(name, item)
+		if err != nil {
+			return nil, err
+		}
+		values = append(values, v)
+	}
+
+	return tapd.NewMulti(values...), nil
+}
+
 func splitCSV(csv string) []string {
 	if csv == "" {
 		return nil

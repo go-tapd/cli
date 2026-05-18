@@ -39,25 +39,25 @@ The SDK coverage ledger lives in the sibling SDK repository:
 
 ### 需求
 
-- [ ] `tapd story create`
-- [ ] `tapd story view`
+- [x] `tapd story create`
+- [x] `tapd story view`
 - [x] `tapd story list`
 - [x] `tapd story count`
-- [ ] `tapd story update`
-- [ ] `tapd story batch-update`
-- [ ] `tapd story categories`
-- [ ] `tapd story categories count`
-- [ ] `tapd story changes`
-- [ ] `tapd story changes count`
+- [x] `tapd story update`
+- [x] `tapd story batch-update`
+- [x] `tapd story categories`
+- [x] `tapd story categories count`
+- [x] `tapd story changes`
+- [x] `tapd story changes count`
 - [x] `tapd story fields`
-- [ ] `tapd story field-labels`
-- [ ] `tapd story templates`
-- [ ] `tapd story template-fields`
-- [ ] `tapd story removed`
-- [ ] `tapd story related-bugs`
-- [ ] `tapd story related-test-cases`
-- [ ] `tapd story by-view`
-- [ ] `tapd story convert-ids`
+- [x] `tapd story field-labels`
+- [x] `tapd story templates`
+- [x] `tapd story template-fields`
+- [x] `tapd story removed`
+- [x] `tapd story related-bugs`
+- [x] `tapd story related-test-cases`
+- [x] `tapd story by-view`
+- [x] `tapd story convert-ids`
 
 ### 缺陷
 

@@ -17,7 +17,25 @@ This installs a binary named `tapd`.
 - `tapd auth logout`
 - `tapd workspace view`
 - `tapd workspace users`
+- `tapd story create`
+- `tapd story view`
 - `tapd story list`
+- `tapd story count`
+- `tapd story update`
+- `tapd story batch-update`
+- `tapd story categories`
+- `tapd story categories count`
+- `tapd story changes`
+- `tapd story changes count`
+- `tapd story fields`
+- `tapd story field-labels`
+- `tapd story templates`
+- `tapd story template-fields`
+- `tapd story removed`
+- `tapd story related-bugs`
+- `tapd story related-test-cases`
+- `tapd story by-view`
+- `tapd story convert-ids`
 - `tapd bug list`
 - `tapd task list`
 
@@ -81,6 +99,10 @@ go run ./cmd/tapd auth status
 go run ./cmd/tapd workspace view --workspace-id 123456
 go run ./cmd/tapd workspace users --workspace-id 123456
 go run ./cmd/tapd story list --workspace-id 123456 --limit 20
+go run ./cmd/tapd story view 1111112222001000001 --workspace-id 123456
+go run ./cmd/tapd story create --workspace-id 123456 --name "New story" --owner alice
+go run ./cmd/tapd story changes --workspace-id 123456 --story-ids 1111112222001000001
+go run ./cmd/tapd story batch-update --workspace-id 123456 --file stories.json
 go run ./cmd/tapd bug list --workspace-id 123456 --owner alice
 go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
 ```
