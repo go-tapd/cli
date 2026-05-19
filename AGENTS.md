@@ -9,8 +9,10 @@ single-module Go project built with Cobra and the typed
 The executable entrypoint is `cmd/tapd/main.go`. Runtime concerns such as
 configuration, authentication, prompting, and output helpers live in
 `internal/app`. User-facing Cobra commands live in `internal/cmd`, generally one
-file per TAPD resource area. User documentation lives in `docs/`, and command
-coverage is tracked in `features.md`.
+file per TAPD resource area. `README.md` is the public entrypoint for
+installation and quick start guidance. Command-level user documentation lives in
+`docs/`, CLI command coverage is tracked in `features.md`, and contributor and
+release maintenance guidance lives in `CONTRIBUTING.md`.
 
 ## Setup Commands
 
@@ -18,6 +20,7 @@ coverage is tracked in `features.md`.
 - Tidy modules: `make go-mod-tidy`
 - Install the CLI locally: `go install ./cmd/tapd`
 - Show top-level help: `go run ./cmd/tapd --help`
+- Inspect npm package contents: `cd npm && npm pack --dry-run`
 
 The module declares Go `1.25.0` in `go.mod`. CI uses Go `1.26.x` for lint
 compatibility checks.
@@ -76,15 +79,27 @@ manual command-help checks.
 - Local build: `go build ./...`
 - Local lint: `make lint`
 - Local test: `make test`
-- GitHub Actions workflow: `.github/workflows/lint.yml`
+- GitHub Actions lint workflow: `.github/workflows/lint.yml`
+- GitHub Actions release workflow: `.github/workflows/release.yml`
+- Release configuration: `.goreleaser.yaml`
+- npm package wrapper: `npm/`
 
 The CI workflow currently runs lint and verifies that linting/tidying leaves a
 clean working tree with `make check-clean-work`.
+
+Pushing a `v*` tag triggers the release workflow. GoReleaser builds archives,
+checksums, GitHub Release assets, and the Homebrew formula. The release workflow
+also publishes the npm wrapper package from `npm/` as `@go-tapd/tapd`. Release
+secret setup and token rotation are documented in `CONTRIBUTING.md`.
 
 ## Security Considerations
 
 - Never commit real TAPD access tokens, client secrets, webhook payloads with
   private data, or generated `~/.tapd/config.json` contents.
+- Never commit release credentials such as `NPM_TOKEN`, `TAP_GITHUB_TOKEN`, or
+  `.npmrc` files containing auth tokens.
+- Keep release token setup and rotation details in `CONTRIBUTING.md` rather than
+  duplicating them in agent instructions.
 - Prefer environment variable placeholders such as `$TAPD_ACCESS_TOKEN` and
   `$DRAWIO_TOKEN` in docs.
 - Auth resolution supports `TAPD_ACCESS_TOKEN`, `TAPD_CLIENT_ID`,
@@ -111,3 +126,6 @@ clean working tree with `make check-clean-work`.
 - The CLI is intended to stay a thin wrapper over the SDK. If the SDK is missing
   an API, extend the SDK first instead of embedding HTTP behavior in this
   repository.
+- The npm package under `npm/` is a distribution wrapper. It downloads verified
+  binaries from GitHub Releases during npm installation; the Go CLI remains the
+  source of truth.
