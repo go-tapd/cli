@@ -21,7 +21,8 @@ builds:
       - arm64
 
 archives:
-  - ids:
+  - id: tapd
+    ids:
       - tapd
     name_template: >-
       {{ .ProjectName }}_
@@ -37,6 +38,25 @@ archives:
 
 checksum:
   name_template: checksums.txt
+
+homebrew_casks:
+  - name: tapd
+    ids:
+      - tapd
+    binaries:
+      - tapd
+    repository:
+      owner: go-tapd
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+    directory: Casks
+    homepage: "https://github.com/go-tapd/cli"
+    description: "TAPD command line client"
+    commit_msg_template: "chore: update tapd to {{ .Tag }}"
+    commit_author:
+      name: go-tapd-bot
+      email: actions@github.com
 
 snapshot:
   version_template: "{{ incpatch .Version }}-next"
