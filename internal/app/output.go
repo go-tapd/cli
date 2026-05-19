@@ -31,12 +31,12 @@ func WriteTable(w io.Writer, headers []string, rows [][]string) error {
 }
 
 func joinRow(parts []string) string {
-	var result strings.Builder
+	var sb strings.Builder
 	for i, part := range parts {
 		if i > 0 {
-			result.WriteString("\t")
+			sb.WriteString("\t") //nolint:revive
 		}
-		result.WriteString(part)
+		sb.WriteString(part) //nolint:revive
 	}
-	return result.String()
+	return sb.String()
 }

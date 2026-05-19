@@ -29,7 +29,7 @@ type AuthConfig struct {
 
 type Config struct {
 	BaseURL string     `json:"base_url,omitempty"`
-	Auth    AuthConfig `json:"auth,omitempty"`
+	Auth    AuthConfig `json:"auth,omitzero"`
 }
 
 func DefaultConfigPath() (string, error) {

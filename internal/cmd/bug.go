@@ -1193,7 +1193,7 @@ func applyBugCreateFlags(request *tapd.CreateBugRequest, flags bugMutationFlags)
 	}
 }
 
-func applyBugUpdateFlags(request *tapd.UpdateBugRequest, flags bugMutationFlags) {
+func applyBugUpdateFlags(request *tapd.UpdateBugRequest, flags bugMutationFlags) { //nolint:gocyclo
 	if flags.title != "" {
 		request.Title = tapd.Ptr(flags.title)
 	}

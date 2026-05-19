@@ -29,7 +29,7 @@ func newWebhookCmd(rt *app.Runtime) *cobra.Command {
 	return cmd
 }
 
-func newWebhookServeCmd(rt *app.Runtime) *cobra.Command {
+func newWebhookServeCmd(*app.Runtime) *cobra.Command {
 	var (
 		addr         string
 		path         string
