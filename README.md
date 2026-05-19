@@ -1,4 +1,4 @@
-# tapd CLI
+# TAPD CLI
 
 `tapd` is a TAPD command line client built on top of [`github.com/go-tapd/tapd`](https://github.com/go-tapd/tapd).
 
