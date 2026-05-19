@@ -20,28 +20,32 @@ webhooks, and TAPD Lite comments.
 
 ## Install
 
-Install with Homebrew:
+### Homebrew
 
 ```bash
 brew install go-tapd/tap/tapd
 ```
 
-Or download a prebuilt archive from
-[GitHub Releases](https://github.com/go-tapd/cli/releases).
+### npm
 
-Or install with npm:
+Use this when you want to install `tapd` through Node.js tooling:
 
 ```bash
 npm install -g @go-tapd/tapd
 ```
 
-Or install with Go 1.25 or later:
+### GitHub Releases
+
+Download a prebuilt archive for your platform from
+[GitHub Releases](https://github.com/go-tapd/cli/releases).
+
+### Go
 
 ```bash
 go install github.com/go-tapd/cli/cmd/tapd@latest
 ```
 
-This installs a binary named `tapd`.
+Requires Go 1.25 or later. This installs a binary named `tapd`.
 
 ## Quick Start
 
