@@ -18,7 +18,7 @@ It provides commands for common TAPD resources such as stories, bugs, tasks,
 iterations, workspaces, wiki pages, test cases, releases, comments, attachments,
 webhooks, and TAPD Lite comments.
 
-## Install
+## 📦 Install
 
 ### Homebrew
 
@@ -47,7 +47,7 @@ go install github.com/go-tapd/cli/cmd/tapd@latest
 
 Requires Go 1.25 or later. This installs a binary named `tapd`.
 
-## Quick Start
+## 🚀 Quick Start
 
 ```bash
 tapd login --auth-method pat
@@ -58,7 +58,7 @@ tapd story list --workspace-id 123456 --limit 20
 Use `tapd --help` and `tapd <command> --help` to inspect available commands and
 flags.
 
-## Authentication
+## 🔐 Authentication
 
 The recommended interactive setup is `tapd login`.
 
@@ -107,7 +107,7 @@ export TAPD_CLIENT_ID=...
 export TAPD_CLIENT_SECRET=...
 ```
 
-## Common Examples
+## ✨ Common Examples
 
 ```bash
 tapd workspace view --workspace-id 123456
@@ -125,7 +125,7 @@ tapd webhook inspect --file payload.json
 tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 ```
 
-## Command Areas
+## 🧭 Command Areas
 
 - Authentication: `tapd login`, `tapd auth status`, `tapd auth logout`
 - Workspaces: `tapd workspace ...`
@@ -147,7 +147,7 @@ tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 - Webhooks: `tapd webhook ...`
 - TAPD Lite: `tapd lite comment ...`
 
-## Documentation
+## 📚 Documentation
 
 - [Shell completion](docs/shell-completion.md)
 - [Workspace commands](docs/workspace.md)
@@ -173,7 +173,7 @@ tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 - [Lite commands](docs/lite.md)
 - [Feature coverage](features.md)
 
-## Development
+## 🛠️ Development
 
 ```bash
 make lint
@@ -187,6 +187,6 @@ also be checked with the relevant `tapd <command> --help` output.
 When adding a command, prefer the typed services, requests, and responses from
 `github.com/go-tapd/tapd` rather than writing ad hoc HTTP calls.
 
-## License
+## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
