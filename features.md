@@ -1,9 +1,9 @@
-# TODO
+# Feature Coverage
 
 This file tracks TAPD CLI feature coverage.
 
-The SDK coverage ledger lives in the sibling SDK repository:
-`../tapd/features.md`.
+The SDK coverage ledger lives in the TAPD SDK repository:
+[`github.com/go-tapd/tapd/features.md`](https://github.com/go-tapd/tapd/blob/main/features.md).
 
 > [!NOTE]
 > This file is command-oriented. A checked item means the CLI exposes a user-facing

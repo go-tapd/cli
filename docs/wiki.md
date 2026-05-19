@@ -81,7 +81,7 @@ tapd wiki drawio -w 123456 --id 20001
 If TAPD requires a token:
 
 ```bash
-tapd wiki drawio -w 123456 --id 20001 --token abc123
+tapd wiki drawio -w 123456 --id 20001 --token <drawio-token>
 ```
 
 Table output shows the data ID and XML byte length. Use JSON output for the raw
