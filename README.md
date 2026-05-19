@@ -173,31 +173,31 @@ This installs a binary named `tapd`.
 PAT:
 
 ```bash
-go run ./cmd/tapd login --auth-method pat
+tapd login --auth-method pat
 ```
 
 Validate at login time with a workspace:
 
 ```bash
-go run ./cmd/tapd login --auth-method pat --workspace-id 123456
+tapd login --auth-method pat --workspace-id 123456
 ```
 
 PAT with flag:
 
 ```bash
-go run ./cmd/tapd login --token "$TAPD_ACCESS_TOKEN"
+tapd login --token "$TAPD_ACCESS_TOKEN"
 ```
 
 Basic Authentication:
 
 ```bash
-go run ./cmd/tapd login --auth-method basic
+tapd login --auth-method basic
 ```
 
 Basic Authentication with flags:
 
 ```bash
-go run ./cmd/tapd login --client-id "$TAPD_CLIENT_ID" --client-secret "$TAPD_CLIENT_SECRET"
+tapd login --client-id "$TAPD_CLIENT_ID" --client-secret "$TAPD_CLIENT_SECRET"
 ```
 
 The login command validates credentials before saving them to:
@@ -224,63 +224,63 @@ export TAPD_CLIENT_SECRET=...
 ## Examples
 
 ```bash
-go run ./cmd/tapd auth status
-go run ./cmd/tapd workspace view --workspace-id 123456
-go run ./cmd/tapd workspace users --workspace-id 123456
-go run ./cmd/tapd workspace roles --workspace-id 123456
-go run ./cmd/tapd workspace documents --workspace-id 123456
-go run ./cmd/tapd workspace short-id convert --workspace-id 123456 --entity-type story --short-ids "1001;1002"
-go run ./cmd/tapd story list --workspace-id 123456 --limit 20
-go run ./cmd/tapd story view 1111112222001000001 --workspace-id 123456
-go run ./cmd/tapd story create --workspace-id 123456 --name "New story" --owner alice
-go run ./cmd/tapd story changes --workspace-id 123456 --story-ids 1111112222001000001
-go run ./cmd/tapd story batch-update --workspace-id 123456 --file stories.json
-go run ./cmd/tapd bug list --workspace-id 123456 --owner alice
-go run ./cmd/tapd bug view 1111112222001000001 --workspace-id 123456
-go run ./cmd/tapd bug create --workspace-id 123456 --title "Login fails" --owner alice
-go run ./cmd/tapd bug copy --workspace-id 123456 --source-bug-id 1111112222001000001 --dst-workspace-id 654321
-go run ./cmd/tapd bug changes --workspace-id 123456 --bug-ids 1111112222001000001
-go run ./cmd/tapd bug links --workspace-id 123456 --bug-id 1111112222001000001
-go run ./cmd/tapd bug link --workspace-id 123456 --bug-id 1111112222001000001 --relate-bug-ids 1111112222001000002
-go run ./cmd/tapd test-case list --workspace-id 123456 --status normal
-go run ./cmd/tapd test-case create --workspace-id 123456 --name "Login regression" --creator alice
-go run ./cmd/tapd test-case results --workspace-id 123456 --test-plan-id 2222223333001000001 --test-case-id 1111112222001000001
-go run ./cmd/tapd test-plan list --workspace-id 123456 --status open
-go run ./cmd/tapd test-plan create --workspace-id 123456 --name "Release regression" --owner alice
-go run ./cmd/tapd test-plan progress --workspace-id 123456 --id 2222223333001000001
-go run ./cmd/tapd iteration list --workspace-id 123456 --status open
-go run ./cmd/tapd iteration create --workspace-id 123456 --name "Sprint 1" --description "Sprint goal" --start-date 2026-06-01 --end-date 2026-06-14 --creator alice
-go run ./cmd/tapd iteration changes --workspace-id 123456 --iteration-id 1111112222001000001
-go run ./cmd/tapd task create --workspace-id 123456 --name "Implement login" --owner alice
-go run ./cmd/tapd task view 1111112222001000001 --workspace-id 123456
-go run ./cmd/tapd task changes --workspace-id 123456 --task-id 1111112222001000001
-go run ./cmd/tapd task list --workspace-id 123456 --creator bob --format json
-go run ./cmd/tapd release list --workspace-id 123456 --status open
-go run ./cmd/tapd release create --workspace-id 123456 --name "v1.2.0" --start-date 2026-06-01 --end-date 2026-06-30
-go run ./cmd/tapd launch-form list --workspace-id 123456 --creator alice
-go run ./cmd/tapd wiki list --workspace-id 123456 --creator alice
-go run ./cmd/tapd wiki tags --workspace-id 123456 --wiki-id 10001
-go run ./cmd/tapd report list --workspace-id 123456 --author alice
-go run ./cmd/tapd attachment list --workspace-id 123456 --entry-id 1111112222001000001
-go run ./cmd/tapd attachment download-url --workspace-id 123456 --id 10001
-go run ./cmd/tapd measure life-times --workspace-id 123456 --entity-type story --entity-id 1111112222001000001
-go run ./cmd/tapd timesheet list --workspace-id 123456 --owner alice
-go run ./cmd/tapd timesheet create --workspace-id 123456 --entity-type story --entity-id 1111112222001000001 --timespent 2h --owner alice
-go run ./cmd/tapd comment list --workspace-id 123456 --entry-type stories --entry-id 1111112222001000001
-go run ./cmd/tapd comment create --workspace-id 123456 --entry-type stories --entry-id 1111112222001000001 --author alice --description "Looks good"
-go run ./cmd/tapd board card list --workspace-id 123456 --board-id 20001
-go run ./cmd/tapd board columns --workspace-id 123456 --board-id 20001
-go run ./cmd/tapd workflow last-steps --workspace-id 123456 --group-key workitem_type_id
-go run ./cmd/tapd setting workspace --workspace-id 123456
-go run ./cmd/tapd label list --workspace-id 123456 --creator alice
-go run ./cmd/tapd label create --workspace-id 123456 --name backend --color 1 --creator alice
-go run ./cmd/tapd user roles --workspace-id 123456
-go run ./cmd/tapd source commit list --workspace-id 123456 --entity-type story --object-id 1111112222001000001
-go run ./cmd/tapd webhook inspect --file payload.json
-go run ./cmd/tapd webhook validate --file payload.json
-go run ./cmd/tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
-go run ./cmd/tapd lite comment list --workspace-id 123456 --entry-id 1111112222001000001
-go run ./cmd/tapd lite comment create --workspace-id 123456 --entry-id 1111112222001000001 --author alice --description "Looks good"
+tapd auth status
+tapd workspace view --workspace-id 123456
+tapd workspace users --workspace-id 123456
+tapd workspace roles --workspace-id 123456
+tapd workspace documents --workspace-id 123456
+tapd workspace short-id convert --workspace-id 123456 --entity-type story --short-ids "1001;1002"
+tapd story list --workspace-id 123456 --limit 20
+tapd story view 1111112222001000001 --workspace-id 123456
+tapd story create --workspace-id 123456 --name "New story" --owner alice
+tapd story changes --workspace-id 123456 --story-ids 1111112222001000001
+tapd story batch-update --workspace-id 123456 --file stories.json
+tapd bug list --workspace-id 123456 --owner alice
+tapd bug view 1111112222001000001 --workspace-id 123456
+tapd bug create --workspace-id 123456 --title "Login fails" --owner alice
+tapd bug copy --workspace-id 123456 --source-bug-id 1111112222001000001 --dst-workspace-id 654321
+tapd bug changes --workspace-id 123456 --bug-ids 1111112222001000001
+tapd bug links --workspace-id 123456 --bug-id 1111112222001000001
+tapd bug link --workspace-id 123456 --bug-id 1111112222001000001 --relate-bug-ids 1111112222001000002
+tapd test-case list --workspace-id 123456 --status normal
+tapd test-case create --workspace-id 123456 --name "Login regression" --creator alice
+tapd test-case results --workspace-id 123456 --test-plan-id 2222223333001000001 --test-case-id 1111112222001000001
+tapd test-plan list --workspace-id 123456 --status open
+tapd test-plan create --workspace-id 123456 --name "Release regression" --owner alice
+tapd test-plan progress --workspace-id 123456 --id 2222223333001000001
+tapd iteration list --workspace-id 123456 --status open
+tapd iteration create --workspace-id 123456 --name "Sprint 1" --description "Sprint goal" --start-date 2026-06-01 --end-date 2026-06-14 --creator alice
+tapd iteration changes --workspace-id 123456 --iteration-id 1111112222001000001
+tapd task create --workspace-id 123456 --name "Implement login" --owner alice
+tapd task view 1111112222001000001 --workspace-id 123456
+tapd task changes --workspace-id 123456 --task-id 1111112222001000001
+tapd task list --workspace-id 123456 --creator bob --format json
+tapd release list --workspace-id 123456 --status open
+tapd release create --workspace-id 123456 --name "v1.2.0" --start-date 2026-06-01 --end-date 2026-06-30
+tapd launch-form list --workspace-id 123456 --creator alice
+tapd wiki list --workspace-id 123456 --creator alice
+tapd wiki tags --workspace-id 123456 --wiki-id 10001
+tapd report list --workspace-id 123456 --author alice
+tapd attachment list --workspace-id 123456 --entry-id 1111112222001000001
+tapd attachment download-url --workspace-id 123456 --id 10001
+tapd measure life-times --workspace-id 123456 --entity-type story --entity-id 1111112222001000001
+tapd timesheet list --workspace-id 123456 --owner alice
+tapd timesheet create --workspace-id 123456 --entity-type story --entity-id 1111112222001000001 --timespent 2h --owner alice
+tapd comment list --workspace-id 123456 --entry-type stories --entry-id 1111112222001000001
+tapd comment create --workspace-id 123456 --entry-type stories --entry-id 1111112222001000001 --author alice --description "Looks good"
+tapd board card list --workspace-id 123456 --board-id 20001
+tapd board columns --workspace-id 123456 --board-id 20001
+tapd workflow last-steps --workspace-id 123456 --group-key workitem_type_id
+tapd setting workspace --workspace-id 123456
+tapd label list --workspace-id 123456 --creator alice
+tapd label create --workspace-id 123456 --name backend --color 1 --creator alice
+tapd user roles --workspace-id 123456
+tapd source commit list --workspace-id 123456 --entity-type story --object-id 1111112222001000001
+tapd webhook inspect --file payload.json
+tapd webhook validate --file payload.json
+tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
+tapd lite comment list --workspace-id 123456 --entry-id 1111112222001000001
+tapd lite comment create --workspace-id 123456 --entry-id 1111112222001000001 --author alice --description "Looks good"
 ```
 
 ## Documentation
