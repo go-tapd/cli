@@ -1,0 +1,41 @@
+{
+  "name": "@go-tapd/tapd",
+  "version": "0.0.0",
+  "description": "TAPD command line client",
+  "license": "MIT",
+  "homepage": "https://github.com/go-tapd/cli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/go-tapd/cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/go-tapd/cli/issues"
+  },
+  "bin": {
+    "tapd": "bin/tapd.js"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "postinstall": "node scripts/install.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}
