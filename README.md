@@ -20,15 +20,13 @@ webhooks, and TAPD Lite comments.
 
 ## Install
 
-Requires Go 1.25 or later.
-
 Install with Homebrew:
 
 ```bash
 brew install go-tapd/tap/tapd
 ```
 
-Or install with Go:
+Or install with Go 1.25 or later:
 
 ```bash
 go install github.com/go-tapd/cli/cmd/tapd@latest
