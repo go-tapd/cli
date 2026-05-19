@@ -81,7 +81,7 @@ func newWebhookServeCmd(rt *app.Runtime) *cobra.Command {
 				errCh <- server.ListenAndServe()
 			}()
 
-			fmt.Fprintf(cmd.ErrOrStderr(), "Listening on http://%s%s\n", addr, path)
+			fmt.Fprintf(cmd.ErrOrStderr(), "Listening on http://%s%s\n", addr, path) //nolint:errcheck
 			select {
 			case <-cmd.Context().Done():
 				ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -220,7 +220,7 @@ func parseWebhookPayload(payload []byte) (*webhookPayloadSummary, error) {
 }
 
 func logWebhookSummary(w io.Writer, summary *webhookPayloadSummary) {
-	fmt.Fprintf(
+	fmt.Fprintf( //nolint:errcheck
 		w,
 		"event=%s workspace_id=%s id=%s current_user=%s event_id=%s subject=%q\n",
 		summary.Event,

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"strings"
 	"text/tabwriter"
 )
 
@@ -30,12 +31,12 @@ func WriteTable(w io.Writer, headers []string, rows [][]string) error {
 }
 
 func joinRow(parts []string) string {
-	result := ""
+	var result strings.Builder
 	for i, part := range parts {
 		if i > 0 {
-			result += "\t"
+			result.WriteString("\t")
 		}
-		result += part
+		result.WriteString(part)
 	}
-	return result
+	return result.String()
 }

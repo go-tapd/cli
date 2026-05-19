@@ -16,7 +16,7 @@ func Execute() int {
 	rootCmd := newRootCmd(rt)
 
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Fprintln(rt.Stderr, "Error:", err)
+		fmt.Fprintln(rt.Stderr, "Error:", err) //nolint:errcheck
 		return 1
 	}
 

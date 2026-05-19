@@ -60,7 +60,7 @@ func newLoginCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			if workspaceID > 0 {
-				fmt.Fprintf(
+				fmt.Fprintf( //nolint:errcheck
 					cmd.OutOrStdout(),
 					"Logged in with %s and validated against workspace %d. Config saved to %s\n",
 					method,
@@ -70,7 +70,7 @@ func newLoginCmd(rt *app.Runtime) *cobra.Command {
 				return nil
 			}
 
-			fmt.Fprintf(
+			fmt.Fprintf( //nolint:errcheck
 				cmd.OutOrStdout(),
 				"Logged in with %s. Config saved to %s\n",
 				method,
