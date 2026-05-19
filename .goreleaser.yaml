@@ -39,24 +39,27 @@ archives:
 checksum:
   name_template: checksums.txt
 
-homebrew_casks:
+brews:
   - name: tapd
     ids:
-      - tapd
-    binaries:
       - tapd
     repository:
       owner: go-tapd
       name: homebrew-tap
       branch: main
       token: "{{ .Env.TAP_GITHUB_TOKEN }}"
-    directory: Casks
+    directory: Formula
     homepage: "https://github.com/go-tapd/cli"
     description: "TAPD command line client"
+    license: "MIT"
     commit_msg_template: "chore: update tapd to {{ .Tag }}"
     commit_author:
       name: go-tapd-bot
       email: actions@github.com
+    install: |
+      bin.install "tapd"
+    test: |
+      system "#{bin}/tapd", "--help"
 
 snapshot:
   version_template: "{{ incpatch .Version }}-next"

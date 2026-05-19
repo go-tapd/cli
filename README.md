@@ -25,7 +25,7 @@ Requires Go 1.25 or later.
 Install with Homebrew:
 
 ```bash
-brew install --cask go-tapd/tap/tapd
+brew install go-tapd/tap/tapd
 ```
 
 Or install with Go:
