@@ -26,6 +26,9 @@ Install with Homebrew:
 brew install go-tapd/tap/tapd
 ```
 
+Or download a prebuilt archive from
+[GitHub Releases](https://github.com/go-tapd/cli/releases).
+
 Or install with Go 1.25 or later:
 
 ```bash
