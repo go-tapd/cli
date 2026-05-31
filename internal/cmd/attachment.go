@@ -113,7 +113,9 @@ func newAttachmentUploadCmd(rt *app.Runtime) *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("open attachment file: %w", err)
 			}
-			defer body.Close()
+			defer func() {
+				_ = body.Close()
+			}()
 
 			if filename == "" {
 				filename = filepath.Base(file)
