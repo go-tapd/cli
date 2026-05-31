@@ -5,7 +5,7 @@ go 1.25.0
 tool github.com/golangci/golangci-lint/v2/cmd/golangci-lint
 
 require (
-	github.com/go-tapd/tapd v0.17.0
+	github.com/go-tapd/tapd v0.17.1
 	github.com/spf13/cobra v1.10.2
 	golang.org/x/term v0.43.0
 )
