@@ -187,6 +187,8 @@ The SDK coverage ledger lives in the TAPD SDK repository:
 
 ### 附件
 
+- [x] `tapd attachment upload`
+- [x] `tapd attachment upload-image-base64`
 - [x] `tapd attachment list`
 - [x] `tapd attachment download-url`
 - [x] `tapd attachment image-url`

@@ -1,7 +1,7 @@
 # Attachment Commands
 
-Use `tapd attachment` commands to list TAPD attachments and fetch download
-URLs for attachments, images, and documents.
+Use `tapd attachment` commands to upload TAPD attachments, list existing
+attachments, and fetch download URLs for attachments, images, and documents.
 
 All attachment commands use the configured TAPD credentials from `tapd login`
 or the `TAPD_ACCESS_TOKEN` / `TAPD_CLIENT_ID` / `TAPD_CLIENT_SECRET`
@@ -40,6 +40,12 @@ tapd attachment list -w 123456 --format json
 tapd attachment list -w 123456
 ```
 
+Paginate large attachment lists:
+
+```bash
+tapd attachment list -w 123456 --limit 100 --page 2
+```
+
 Filter by common fields:
 
 ```bash
@@ -48,6 +54,53 @@ tapd attachment list -w 123456 --entry-id 1111112222001000001
 tapd attachment list -w 123456 --type story
 tapd attachment list -w 123456 --filename spec
 tapd attachment list -w 123456 --owner alice
+```
+
+## Upload Attachments
+
+Upload a file to a custom field on a TAPD work item:
+
+```bash
+tapd attachment upload \
+  -w 123456 \
+  --entry-id 1111112222001000001 \
+  --custom-field custom_field_1 \
+  --file ./spec.pdf
+```
+
+The upload type defaults to `story_custom_field`, which is the attachment type
+documented by TAPD for custom-field uploads. Override it only when TAPD documents
+another value for the target endpoint:
+
+```bash
+tapd attachment upload \
+  -w 123456 \
+  --entry-id 1111112222001000001 \
+  --type story_custom_field \
+  --custom-field custom_field_1 \
+  --owner alice \
+  --filename spec-v2.pdf \
+  --file ./spec.pdf
+```
+
+Upload an image by reading a local file and encoding it as base64:
+
+```bash
+tapd attachment upload-image-base64 \
+  -w 123456 \
+  --entry-id 1111112222001000001 \
+  --custom-field custom_field_1 \
+  --image-file ./screenshot.png
+```
+
+Or pass base64 data directly:
+
+```bash
+tapd attachment upload-image-base64 \
+  -w 123456 \
+  --entry-id 1111112222001000001 \
+  --custom-field custom_field_1 \
+  --base64-data "$IMAGE_BASE64"
 ```
 
 ## Download URLs
