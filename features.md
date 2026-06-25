@@ -33,6 +33,7 @@ The SDK coverage ledger lives in the TAPD SDK repository:
 - [x] `--config <path>` 指定配置文件
 - [x] `--base-url <url>` 覆盖 TAPD API 地址
 - [x] `--format table|json`
+- [x] `tapd api <endpoint>` 原始 TAPD API 调用兜底能力
 - [x] Shell completion 文档与安装说明
 
 ## 研发协作 API
