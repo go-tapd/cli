@@ -70,7 +70,9 @@ tapd task create \
 ```
 
 Only task custom fields supported by the typed SDK request are accepted, such as
-`custom_field_one` through `custom_field_50`.
+`custom_field_one` through `custom_field_eight` and `custom_field_9` through
+`custom_field_50`. Use `tapd task fields -w 123456` to inspect the exact custom
+field names and options configured for your workspace.
 
 ### View a Task
 

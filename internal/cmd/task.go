@@ -759,7 +759,7 @@ func setTaskCustomField(request any, name, value string) error {
 			continue
 		}
 		if !strings.HasPrefix(jsonName, "custom_field_") {
-			return fmt.Errorf("unsupported task custom field %q, expected custom_field_one through custom_field_50", name)
+			return unsupportedTaskCustomFieldError(name)
 		}
 		field := v.Field(i)
 		if !field.CanSet() || field.Kind() != reflect.Pointer || field.Type().Elem().Kind() != reflect.String {
@@ -771,7 +771,14 @@ func setTaskCustomField(request any, name, value string) error {
 		return nil
 	}
 
-	return fmt.Errorf("unsupported task custom field %q, expected custom_field_one through custom_field_50", name)
+	return unsupportedTaskCustomFieldError(name)
+}
+
+func unsupportedTaskCustomFieldError(name string) error {
+	return fmt.Errorf(
+		"unsupported task custom field %q, expected custom_field_one through custom_field_eight or custom_field_9 through custom_field_50",
+		name,
+	)
 }
 
 func decodeTaskBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateTasksRequest, error) {
