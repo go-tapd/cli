@@ -47,6 +47,7 @@ func newRootCmd(rt *app.Runtime) *cobra.Command {
 	cmd.SetContext(signalContext())
 
 	cmd.AddCommand(
+		newAPICmd(rt),
 		newLoginCmd(rt),
 		newAuthCmd(rt),
 		newWorkspaceCmd(rt),

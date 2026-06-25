@@ -16,7 +16,7 @@
 
 It provides commands for common TAPD resources such as stories, bugs, tasks,
 iterations, workspaces, wiki pages, test cases, releases, comments, attachments,
-webhooks, and TAPD Lite comments.
+webhooks, TAPD Lite comments, and raw TAPD API calls.
 
 ## 📦 Install
 
@@ -121,6 +121,7 @@ tapd bug list --workspace-id 123456 --owner alice
 tapd bug create --workspace-id 123456 --title "Login fails" --owner alice
 
 tapd task list --workspace-id 123456 --creator bob --format json
+tapd api tasks/get_fields_info --field workspace_id=123456
 tapd webhook inspect --file payload.json
 tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 ```
@@ -128,6 +129,7 @@ tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 ## 🧭 Command Areas
 
 - Authentication: `tapd login`, `tapd auth status`, `tapd auth logout`
+- Raw API: `tapd api ...`
 - Workspaces: `tapd workspace ...`
 - Stories: `tapd story ...`
 - Bugs: `tapd bug ...`
@@ -149,6 +151,7 @@ tapd webhook serve --addr 127.0.0.1:8080 --path /webhook
 
 ## 📚 Documentation
 
+- [Raw API command](docs/api.md)
 - [Shell completion](docs/shell-completion.md)
 - [Workspace commands](docs/workspace.md)
 - [Story commands](docs/story.md)
