@@ -23,6 +23,7 @@ type apiFlags struct {
 	method    string
 	fields    []string
 	rawFields []string
+	queries   []string
 	input     string
 	headers   []string
 	include   bool
@@ -67,6 +68,10 @@ func newAPICmd(rt *app.Runtime) *cobra.Command {
 				return err
 			}
 
+			if err := appendAPIQuery(req.URL, nil, flags.queries); err != nil {
+				return err
+			}
+
 			if !apiMethodHasBody(method) {
 				if err := appendAPIQuery(req.URL, flags.fields, flags.rawFields); err != nil {
 					return err
@@ -86,6 +91,7 @@ func newAPICmd(rt *app.Runtime) *cobra.Command {
 	cmd.Flags().StringVarP(&flags.method, "method", "X", http.MethodGet, "HTTP method: GET|POST|PUT|PATCH|DELETE")
 	cmd.Flags().StringArrayVar(&flags.fields, "field", nil, "add a typed request parameter in key=value format")
 	cmd.Flags().StringArrayVar(&flags.rawFields, "raw-field", nil, "add a string request parameter in key=value format")
+	cmd.Flags().StringArrayVar(&flags.queries, "query", nil, "add a query parameter in key=value format")
 	cmd.Flags().StringVar(&flags.input, "input", "", "JSON request body file, or - for stdin")
 	cmd.Flags().StringArrayVarP(&flags.headers, "header", "H", nil, "add a request header in key:value format")
 	cmd.Flags().BoolVarP(&flags.include, "include", "i", false, "include HTTP response status and headers")
@@ -118,16 +124,34 @@ func normalizeAPIEndpoint(endpoint string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("invalid endpoint %q, expected a TAPD API relative path", endpoint)
 	}
+	if strings.Contains(unescaped, "\\") || strings.ContainsAny(unescaped, "?#") {
+		return "", fmt.Errorf("invalid endpoint %q, expected a TAPD API relative path", endpoint)
+	}
 	if strings.HasPrefix(unescaped, "//") {
 		return "", fmt.Errorf("invalid endpoint %q, absolute URLs are not allowed", endpoint)
 	}
+	if hasParentPathSegment(unescaped) {
+		return "", fmt.Errorf("invalid endpoint %q, parent path segments are not allowed", endpoint)
+	}
 
 	clean := pathpkg.Clean(unescaped)
-	if clean == "." || clean == ".." || strings.HasPrefix(clean, "../") || strings.Contains(clean, "/../") {
+	if clean == "." {
+		return "", fmt.Errorf("invalid endpoint %q, expected a TAPD API relative path", endpoint)
+	}
+	if clean == ".." || strings.HasPrefix(clean, "../") || strings.Contains(clean, "/../") {
 		return "", fmt.Errorf("invalid endpoint %q, parent path segments are not allowed", endpoint)
 	}
 
 	return clean, nil
+}
+
+func hasParentPathSegment(path string) bool {
+	for segment := range strings.SplitSeq(path, "/") {
+		if segment == ".." {
+			return true
+		}
+	}
+	return false
 }
 
 func normalizeAPIMethod(method string) (string, error) {
@@ -207,14 +231,14 @@ func appendAPIQuery(u *url.URL, fields, rawFields []string) error {
 		if err != nil {
 			return err
 		}
-		q.Set(name, value)
+		q.Add(name, value)
 	}
 	for _, field := range fields {
 		name, value, err := parseTypedAPIField(field)
 		if err != nil {
 			return err
 		}
-		q.Set(name, apiQueryValue(value))
+		q.Add(name, apiQueryValue(value))
 	}
 	u.RawQuery = q.Encode()
 	return nil
@@ -235,7 +259,7 @@ func parseTypedAPIField(field string) (string, any, error) {
 		return "", nil, err
 	}
 
-	typed, err := apiTypedValue(value)
+	typed, err := apiTypedValue(strings.TrimSpace(value))
 	if err != nil {
 		return "", nil, err
 	}
@@ -346,8 +370,10 @@ func writeAPIResponse(w io.Writer, resp *tapd.Response, body json.RawMessage, in
 
 	var pretty bytes.Buffer
 	if err := json.Indent(&pretty, body, "", "  "); err != nil {
-		_, err = fmt.Fprintln(w, string(body))
-		return err
+		if _, writeErr := fmt.Fprintln(w, string(body)); writeErr != nil {
+			return writeErr
+		}
+		return nil
 	}
 	if err := pretty.WriteByte('\n'); err != nil {
 		return err

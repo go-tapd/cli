@@ -23,8 +23,13 @@ func TestNormalizeAPIEndpoint(t *testing.T) {
 		{name: "absolute URL", input: "https://example.com/tasks", wantErr: true},
 		{name: "network path", input: "//example.com/tasks", wantErr: true},
 		{name: "parent path", input: "../tasks", wantErr: true},
+		{name: "nested parent path", input: "tasks/../bugs", wantErr: true},
 		{name: "encoded parent path", input: "%2e%2e/tasks", wantErr: true},
+		{name: "encoded nested parent path", input: "tasks/%2e%2e/bugs", wantErr: true},
 		{name: "query string", input: "tasks?workspace_id=1", wantErr: true},
+		{name: "encoded query delimiter", input: "tasks%3Fworkspace_id=1", wantErr: true},
+		{name: "encoded fragment delimiter", input: "tasks%23fragment", wantErr: true},
+		{name: "encoded backslash", input: "tasks%5Cname", wantErr: true},
 	}
 
 	for _, tt := range tests {
@@ -48,7 +53,7 @@ func TestNormalizeAPIEndpoint(t *testing.T) {
 
 func TestAPIFieldsData(t *testing.T) {
 	got, err := apiFieldsData(
-		[]string{"count=3", "enabled=true", "empty=null", "ratio=1.5"},
+		[]string{"count=3", "enabled=true", "empty=null", "ratio=1.5", "spaced=123 "},
 		[]string{"code=007"},
 	)
 	if err != nil {
@@ -70,6 +75,9 @@ func TestAPIFieldsData(t *testing.T) {
 	if got["code"] != "007" {
 		t.Fatalf("code = %#v, want 007 string", got["code"])
 	}
+	if got["spaced"] != int64(123) {
+		t.Fatalf("spaced = %#v, want int64(123)", got["spaced"])
+	}
 }
 
 func TestAPIRequestOptionsRejectsAuthorization(t *testing.T) {
@@ -86,8 +94,8 @@ func TestAppendAPIQuery(t *testing.T) {
 
 	err = appendAPIQuery(
 		u,
-		[]string{"workspace_id=123", "enabled=true", "empty=null"},
-		[]string{"code=007"},
+		[]string{"workspace_id=123", "enabled=true", "empty=null", "status=1", "status=2"},
+		[]string{"code=007", "tag=a", "tag=b"},
 	)
 	if err != nil {
 		t.Fatalf("appendAPIQuery returned error: %v", err)
@@ -105,6 +113,12 @@ func TestAppendAPIQuery(t *testing.T) {
 	}
 	if got := q.Get("code"); got != "007" {
 		t.Fatalf("code query = %q, want 007", got)
+	}
+	if got := q["status"]; len(got) != 2 || got[0] != "1" || got[1] != "2" {
+		t.Fatalf("status query = %#v, want [1 2]", got)
+	}
+	if got := q["tag"]; len(got) != 2 || got[0] != "a" || got[1] != "b" {
+		t.Fatalf("tag query = %#v, want [a b]", got)
 	}
 }
 

@@ -22,6 +22,7 @@ the TAPD API base URL.
 
 `tapd api` uses `GET` by default. Parameters are sent as query string values for
 `GET` and `DELETE`, and as JSON body values for `POST`, `PUT`, and `PATCH`.
+Use `--query` when any method needs explicit query string parameters.
 
 Typed fields:
 
@@ -41,7 +42,21 @@ tapd api tasks \
 ```
 
 `--field` converts `true`, `false`, `null`, integers, and floats to JSON values.
+If a `--field` value starts with `@`, it is treated as a file path and the field
+value is replaced with that file's contents as a JSON string. Use `--raw-field`
+to send a literal string that starts with `@`.
 `--raw-field` always sends a string value.
+
+Explicit query parameters:
+
+```bash
+tapd api tasks \
+  --method POST \
+  --query workspace_id=123456 \
+  --field name="Implement login"
+```
+
+Repeat `--query` to send multi-valued query parameters with the same name.
 
 ## JSON Input
 
