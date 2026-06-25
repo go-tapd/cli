@@ -5,7 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"reflect"
 	"strconv"
+	"strings"
 
 	"github.com/go-tapd/cli/internal/app"
 	"github.com/go-tapd/tapd"
@@ -568,6 +570,7 @@ type taskMutationFlags struct {
 	remain             float64
 	effort             string
 	autoCompleteEffort bool
+	customFields       []string
 }
 
 func addTaskMutationFlags(cmd *cobra.Command, flags *taskMutationFlags, update bool) {
@@ -596,6 +599,7 @@ func addTaskMutationFlags(cmd *cobra.Command, flags *taskMutationFlags, update b
 	cmd.Flags().StringVar(&flags.priorityLabel, "priority-label", "", "task priority label")
 	cmd.Flags().IntVar(&flags.progress, "progress", 0, "task progress")
 	cmd.Flags().StringVar(&flags.effort, "effort", "", "estimated effort")
+	cmd.Flags().StringArrayVar(&flags.customFields, "field", nil, "set custom field as key=value; repeatable, for example custom_field_one=开发阶段")
 }
 
 func applyTaskCreateFlags(request *tapd.CreateTaskRequest, flags taskMutationFlags) error {
@@ -657,6 +661,9 @@ func applyTaskCreateFlags(request *tapd.CreateTaskRequest, flags taskMutationFla
 	if flags.effort != "" {
 		request.Effort = tapd.Ptr(flags.effort)
 	}
+	if err := applyTaskCustomFields(request, flags.customFields); err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -713,7 +720,58 @@ func applyTaskUpdateFlags(request *tapd.UpdateTaskRequest, flags taskMutationFla
 	if flags.autoCompleteEffort {
 		request.AutoCompleteEffort = tapd.Ptr(1)
 	}
+	if err := applyTaskCustomFields(request, flags.customFields); err != nil {
+		return err
+	}
 	return nil
+}
+
+func applyTaskCustomFields(request any, fields []string) error {
+	for _, field := range fields {
+		name, value, ok := strings.Cut(field, "=")
+		name = strings.TrimSpace(name)
+		value = strings.TrimSpace(value)
+		if !ok || name == "" {
+			return fmt.Errorf("invalid custom field %q, expected key=value", field)
+		}
+		if err := setTaskCustomField(request, name, value); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func setTaskCustomField(request any, name, value string) error {
+	v := reflect.ValueOf(request)
+	if v.Kind() != reflect.Pointer || v.IsNil() {
+		return errors.New("task custom fields require a non-nil request pointer")
+	}
+	v = v.Elem()
+	if v.Kind() != reflect.Struct {
+		return errors.New("task custom fields require a struct request")
+	}
+
+	t := v.Type()
+	for i := range v.NumField() {
+		fieldType := t.Field(i)
+		jsonName, _, _ := strings.Cut(fieldType.Tag.Get("json"), ",")
+		if jsonName != name {
+			continue
+		}
+		if !strings.HasPrefix(jsonName, "custom_field_") {
+			return fmt.Errorf("unsupported task custom field %q, expected custom_field_one through custom_field_50", name)
+		}
+		field := v.Field(i)
+		if !field.CanSet() || field.Kind() != reflect.Pointer || field.Type().Elem().Kind() != reflect.String {
+			return fmt.Errorf("unsupported task custom field %q, expected string custom field", name)
+		}
+
+		valueCopy := value
+		field.Set(reflect.ValueOf(&valueCopy))
+		return nil
+	}
+
+	return fmt.Errorf("unsupported task custom field %q, expected custom_field_one through custom_field_50", name)
 }
 
 func decodeTaskBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateTasksRequest, error) {

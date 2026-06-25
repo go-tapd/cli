@@ -59,6 +59,19 @@ tapd task create \
   --due 2026-06-14
 ```
 
+Set task custom fields at creation time with repeatable `--field` flags:
+
+```bash
+tapd task create \
+  -w 123456 \
+  --name "Implement login" \
+  --story-ids 1111112222001000001 \
+  --field custom_field_one=开发阶段
+```
+
+Only task custom fields supported by the typed SDK request are accepted, such as
+`custom_field_one` through `custom_field_50`.
+
 ### View a Task
 
 ```bash
@@ -117,8 +130,8 @@ tapd task update 1111112222001000001 \
   --due 2026-06-14
 ```
 
-`tapd task update` exposes common fields currently mapped by the CLI. Use
-`tapd task batch-update` when you need fields not exposed as flags.
+`tapd task update` also supports repeatable `--field key=value` flags for task
+custom fields.
 
 ### Batch Update Tasks
 
