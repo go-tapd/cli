@@ -45,15 +45,6 @@ jobs:
             exit 1
           fi
 
-      - name: Check npm token
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "NPM_TOKEN secret is required to publish the npm package."
-            exit 1
-          fi
-
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v7
         with:
@@ -69,11 +60,10 @@ jobs:
         with:
           node-version: '24'
           registry-url: https://registry.npmjs.org
+          package-manager-cache: false
 
       - name: Publish npm package
         working-directory: npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           node scripts/set-version.js "$GITHUB_REF_NAME"
-          npm publish --access public --provenance
+          npm publish --access public
