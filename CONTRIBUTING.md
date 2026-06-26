@@ -113,6 +113,10 @@ Expected results:
 - `npm publish --access public --dry-run` prints the package contents and ends
   with `+ @go-tapd/tapd@...`.
 
+Manually re-open the npm package settings and confirm the trusted publisher
+entry still targets `go-tapd/cli`, workflow `release.yml`, and the `npm publish`
+allowed action.
+
 The dry-run does not prove that the trusted publisher is configured correctly.
 It only proves the local npm account and package metadata are valid. The trusted
 publisher is exercised by the GitHub Actions release workflow.
