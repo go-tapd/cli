@@ -72,13 +72,15 @@ Configure trusted publishing from npm:
 7. Set workflow filename to `release.yml`.
 8. Leave environment empty unless the release workflow starts using a GitHub
    environment.
-9. Allow the `npm publish` action.
-10. Save the trusted publisher configuration.
+9. Under Allowed actions, select `npm publish`.
+10. Click Add publisher to save the trusted publisher configuration.
 
 Why this permission is needed: the release workflow runs `npm publish --access
 public` from the `npm/` package directory. npm exchanges the GitHub Actions OIDC
 identity for a short-lived publish token, so no long-lived npm repository secret
-is required.
+is required. Trusted publishing automatically generates npm provenance
+attestations from GitHub Actions, so the workflow does not need to pass
+`--provenance`.
 
 ### Verify Release Configuration
 
@@ -115,7 +117,7 @@ The dry-run does not prove that the trusted publisher is configured correctly.
 It only proves the local npm account and package metadata are valid. The trusted
 publisher is exercised by the GitHub Actions release workflow.
 
-### Rotate Expired Tokens
+### Rotate TAP_GITHUB_TOKEN
 
 When `TAP_GITHUB_TOKEN` is close to expiration:
 
