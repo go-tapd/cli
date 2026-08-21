@@ -48,10 +48,10 @@ func newBoardCardCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateBoardCardRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				BoardID:     tapd.Ptr(flags.boardID),
-				ColumnID:    tapd.Ptr(flags.columnID),
-				Name:        tapd.Ptr(flags.name),
+				WorkspaceID: new(flags.workspaceID),
+				BoardID:     new(flags.boardID),
+				ColumnID:    new(flags.columnID),
+				Name:        new(flags.name),
 			}
 			applyBoardCardCreateFlags(request, flags)
 
@@ -127,8 +127,8 @@ func newBoardCardUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateBoardCardRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(flags.workspaceID),
 			}
 			applyBoardCardUpdateFlags(request, flags)
 
@@ -170,9 +170,9 @@ func newBoardColumnsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetBoardColumnsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			}
 			if ids != "" {
@@ -182,19 +182,19 @@ func newBoardColumnsCmd(rt *app.Runtime) *cobra.Command {
 				}
 			}
 			if name != "" {
-				request.Name = tapd.Ptr(name)
+				request.Name = new(name)
 			}
 			if boardID > 0 {
-				request.BoardID = tapd.Ptr(boardID)
+				request.BoardID = new(boardID)
 			}
 			if status != "" {
-				request.Status = tapd.Ptr(status)
+				request.Status = new(status)
 			}
 			if created != "" {
-				request.Created = tapd.Ptr(created)
+				request.Created = new(created)
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 
 			columns, _, err := client.BoardService.GetBoardColumns(cmd.Context(), request)
@@ -249,58 +249,58 @@ func addBoardCardMutationFlags(cmd *cobra.Command, flags *boardCardMutationFlags
 
 func applyBoardCardCreateFlags(request *tapd.CreateBoardCardRequest, flags boardCardMutationFlags) {
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.begin != "" {
-		request.Begin = tapd.Ptr(flags.begin)
+		request.Begin = new(flags.begin)
 	}
 	if flags.due != "" {
-		request.Due = tapd.Ptr(flags.due)
+		request.Due = new(flags.due)
 	}
 	if flags.label > 0 {
-		request.Label = tapd.Ptr(flags.label)
+		request.Label = new(flags.label)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 }
 
 func applyBoardCardUpdateFlags(request *tapd.UpdateBoardCardRequest, flags boardCardMutationFlags) {
 	if flags.boardID > 0 {
-		request.BoardID = tapd.Ptr(flags.boardID)
+		request.BoardID = new(flags.boardID)
 	}
 	if flags.columnID > 0 {
-		request.ColumnID = tapd.Ptr(flags.columnID)
+		request.ColumnID = new(flags.columnID)
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.begin != "" {
-		request.Begin = tapd.Ptr(flags.begin)
+		request.Begin = new(flags.begin)
 	}
 	if flags.due != "" {
-		request.Due = tapd.Ptr(flags.due)
+		request.Due = new(flags.due)
 	}
 	if flags.label > 0 {
-		request.Label = tapd.Ptr(flags.label)
+		request.Label = new(flags.label)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 }
 
@@ -354,9 +354,9 @@ func addBoardCardQueryFlags(cmd *cobra.Command, flags *boardCardQueryFlags) {
 
 func newGetBoardCardsRequest(flags boardCardQueryFlags) (*tapd.GetBoardCardsRequest, error) {
 	request := &tapd.GetBoardCardsRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -367,34 +367,34 @@ func newGetBoardCardsRequest(flags boardCardQueryFlags) (*tapd.GetBoardCardsRequ
 		request.ID = ids
 	}
 	if flags.boardID > 0 {
-		request.BoardID = tapd.Ptr(flags.boardID)
+		request.BoardID = new(flags.boardID)
 	}
 	if flags.columnID > 0 {
-		request.ColumnID = tapd.Ptr(flags.columnID)
+		request.ColumnID = new(flags.columnID)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.begin != "" {
-		request.Begin = tapd.Ptr(flags.begin)
+		request.Begin = new(flags.begin)
 	}
 	if flags.due != "" {
-		request.Due = tapd.Ptr(flags.due)
+		request.Due = new(flags.due)
 	}
 	if flags.label > 0 {
-		request.Label = tapd.Ptr(flags.label)
+		request.Label = new(flags.label)
 	}
 	return request, nil
 }

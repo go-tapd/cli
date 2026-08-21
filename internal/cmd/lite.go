@@ -56,20 +56,20 @@ func newLiteCommentCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateCommentRequest{
-				Description: tapd.Ptr(description),
-				Author:      tapd.Ptr(author),
-				EntryType:   tapd.Ptr(liteCommentEntryType),
-				EntryID:     tapd.Ptr(entryID),
-				WorkspaceID: tapd.Ptr(workspaceID),
+				Description: new(description),
+				Author:      new(author),
+				EntryType:   new(liteCommentEntryType),
+				EntryID:     new(entryID),
+				WorkspaceID: new(workspaceID),
 			}
 			if title != "" {
-				request.Title = tapd.Ptr(title)
+				request.Title = new(title)
 			}
 			if replyID > 0 {
-				request.ReplyID = tapd.Ptr(replyID)
+				request.ReplyID = new(replyID)
 			}
 			if rootID > 0 {
-				request.RootID = tapd.Ptr(rootID)
+				request.RootID = new(rootID)
 			}
 
 			comment, _, err := client.CommentService.CreateComment(cmd.Context(), request)

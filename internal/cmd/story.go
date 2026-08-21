@@ -62,21 +62,21 @@ func newStoryListCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetStoriesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 				ID:          int64Multi(ids),
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 			if status != "" {
-				request.VStatus = tapd.Ptr(status)
-				request.WithVStatus = tapd.Ptr("1")
+				request.VStatus = new(status)
+				request.WithVStatus = new("1")
 			}
 
 			stories, _, err := client.StoryService.GetStories(cmd.Context(), request)
@@ -124,8 +124,8 @@ func newStoryCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateStoryRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Name:        tapd.Ptr(flags.name),
+				WorkspaceID: new(flags.workspaceID),
+				Name:        new(flags.name),
 			}
 			applyStoryCreateFlags(request, flags)
 
@@ -164,10 +164,10 @@ func newStoryViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			stories, _, err := client.StoryService.GetStories(cmd.Context(), &tapd.GetStoriesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          tapd.NewMulti(id),
-				Limit:       tapd.Ptr(1),
-				Page:        tapd.Ptr(1),
+				Limit:       new(1),
+				Page:        new(1),
 			})
 			if err != nil {
 				return err
@@ -203,18 +203,18 @@ func newStoryCountCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetStoriesCountRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          int64Multi(ids),
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 			if status != "" {
-				request.VStatus = tapd.Ptr(status)
-				request.WithVStatus = tapd.Ptr("1")
+				request.VStatus = new(status)
+				request.WithVStatus = new("1")
 			}
 
 			count, _, err := client.StoryService.GetStoriesCount(cmd.Context(), request)
@@ -253,7 +253,7 @@ func newStoryFieldsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			fields, _, err := client.StoryService.GetStoryFieldsInfo(cmd.Context(), &tapd.GetStoryFieldsInfoRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -305,8 +305,8 @@ func newStoryUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateStoryRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(flags.workspaceID),
 			}
 			applyStoryUpdateFlags(request, flags)
 
@@ -386,17 +386,17 @@ func newStoryCategoriesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetStoryCategoriesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 				ID:          int64Multi(ids),
 			}
 			if name != "" {
-				request.Name = tapd.Ptr(name)
+				request.Name = new(name)
 			}
 			if parentID > 0 {
-				request.ParentID = tapd.Ptr(parentID)
+				request.ParentID = new(parentID)
 			}
 
 			categories, _, err := client.StoryService.GetStoryCategories(cmd.Context(), request)
@@ -447,14 +447,14 @@ func newStoryCategoriesCountCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetStoryCategoriesCountRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          int64Multi(ids),
 			}
 			if name != "" {
-				request.Name = tapd.Ptr(name)
+				request.Name = new(name)
 			}
 			if parentID > 0 {
-				request.ParentID = tapd.Ptr(parentID)
+				request.ParentID = new(parentID)
 			}
 
 			count, _, err := client.StoryService.GetStoryCategoriesCount(cmd.Context(), request)
@@ -570,7 +570,7 @@ func newStoryFieldLabelsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			labels, _, err := client.StoryService.GetStoryFieldsLabel(cmd.Context(), &tapd.GetStoryFieldsLabelRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -605,10 +605,10 @@ func newStoryTemplatesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetStoryTemplatesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			}
 			if workitemTypeID > 0 {
-				request.WorkitemTypeID = tapd.Ptr(workitemTypeID)
+				request.WorkitemTypeID = new(workitemTypeID)
 			}
 
 			templates, _, err := client.StoryService.GetStoryTemplates(cmd.Context(), request)
@@ -646,8 +646,8 @@ func newStoryTemplateFieldsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			fields, _, err := client.StoryService.GetStoryTemplateFields(cmd.Context(), &tapd.GetStoryTemplateFieldsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				TemplateID:  tapd.Ptr(templateID),
+				WorkspaceID: new(workspaceID),
+				TemplateID:  new(templateID),
 			})
 			if err != nil {
 				return err
@@ -688,9 +688,9 @@ func newStoryRemovedCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetRemovedStoriesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 			}
 			if ids != "" {
 				request.ID, err = strictIntMulti("story IDs", ids)
@@ -699,10 +699,10 @@ func newStoryRemovedCmd(rt *app.Runtime) *cobra.Command {
 				}
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if archived {
-				request.IsArchived = tapd.Ptr(1)
+				request.IsArchived = new(1)
 			}
 
 			stories, _, err := client.StoryService.GetRemovedStories(cmd.Context(), request)
@@ -748,7 +748,7 @@ func newStoryRelatedBugsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			items, _, err := client.StoryService.GetStoryRelatedBugs(cmd.Context(), &tapd.GetStoryRelatedBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				StoryID:     ids,
 			})
 			if err != nil {
@@ -791,9 +791,9 @@ func newStoryRelatedTestCasesCmd(rt *app.Runtime) *cobra.Command {
 				include = 1
 			}
 			items, _, err := client.StoryService.GetStoryTestCaseRelation(cmd.Context(), &tapd.GetStoryTestCaseRelationRequest{
-				WorkspaceID:     tapd.Ptr(workspaceID),
-				StoryID:         tapd.Ptr(storyID),
-				IncludeTestPlan: tapd.Ptr(include),
+				WorkspaceID:     new(workspaceID),
+				StoryID:         new(storyID),
+				IncludeTestPlan: new(include),
 			})
 			if err != nil {
 				return err
@@ -838,26 +838,26 @@ func newStoryByViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetStoriesByViewConfIDRequest{
-				ViewConfID: tapd.Ptr(viewConfID),
+				ViewConfID: new(viewConfID),
 				GetStoriesRequest: tapd.GetStoriesRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					Limit:       tapd.Ptr(limit),
-					Page:        tapd.Ptr(page),
+					WorkspaceID: new(workspaceID),
+					Limit:       new(limit),
+					Page:        new(page),
 					Fields:      fieldsMulti(fields),
 				},
 			}
 			if currentUser != "" {
-				request.CurrentUser = tapd.Ptr(currentUser)
+				request.CurrentUser = new(currentUser)
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 			if status != "" {
-				request.VStatus = tapd.Ptr(status)
-				request.WithVStatus = tapd.Ptr("1")
+				request.VStatus = new(status)
+				request.WithVStatus = new("1")
 			}
 
 			stories, _, err := client.StoryService.GetStoriesByViewConfID(cmd.Context(), request)
@@ -904,7 +904,7 @@ func newStoryConvertIDsCmd(rt *app.Runtime) *cobra.Command {
 			result, _, err := client.StoryService.GetConvertStoryIDsToQueryToken(
 				cmd.Context(),
 				&tapd.GetConvertStoryIDsToQueryTokenRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
+					WorkspaceID: new(workspaceID),
 					StoryIDs:    storyIDs,
 				},
 			)
@@ -996,161 +996,161 @@ func addStoryMutationFlags(cmd *cobra.Command, flags *storyMutationFlags, update
 
 func applyStoryCreateFlags(request *tapd.CreateStoryRequest, flags storyMutationFlags) {
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.priorityLabel != "" {
-		request.PriorityLabel = tapd.Ptr(tapd.PriorityLabel(flags.priorityLabel))
+		request.PriorityLabel = new(tapd.PriorityLabel(flags.priorityLabel))
 	}
 	if flags.businessValue > 0 {
-		request.BusinessValue = tapd.Ptr(flags.businessValue)
+		request.BusinessValue = new(flags.businessValue)
 	}
 	if flags.size > 0 {
-		request.Size = tapd.Ptr(flags.size)
+		request.Size = new(flags.size)
 	}
 	if flags.categoryID > 0 {
-		request.CategoryID = tapd.Ptr(int(flags.categoryID))
+		request.CategoryID = new(int(flags.categoryID))
 	}
 	if flags.workitemTypeID > 0 {
-		request.WorkitemTypeID = tapd.Ptr(flags.workitemTypeID)
+		request.WorkitemTypeID = new(flags.workitemTypeID)
 	}
 	if flags.iterationID != "" {
-		request.IterationID = tapd.Ptr(flags.iterationID)
+		request.IterationID = new(flags.iterationID)
 	}
 	if flags.parentID > 0 {
-		request.ParentID = tapd.Ptr(int(flags.parentID))
+		request.ParentID = new(int(flags.parentID))
 	}
 	if flags.releaseID > 0 {
-		request.ReleaseID = tapd.Ptr(flags.releaseID)
+		request.ReleaseID = new(flags.releaseID)
 	}
 	if flags.begin != "" {
-		request.Begin = tapd.Ptr(flags.begin)
+		request.Begin = new(flags.begin)
 	}
 	if flags.due != "" {
-		request.Due = tapd.Ptr(flags.due)
+		request.Due = new(flags.due)
 	}
 	if flags.label != "" {
-		request.Label = tapd.Ptr(flags.label)
+		request.Label = new(flags.label)
 	}
 	if flags.module != "" {
-		request.Module = tapd.Ptr(flags.module)
+		request.Module = new(flags.module)
 	}
 	if flags.version != "" {
-		request.Version = tapd.Ptr(flags.version)
+		request.Version = new(flags.version)
 	}
 	if flags.source != "" {
-		request.Source = tapd.Ptr(flags.source)
+		request.Source = new(flags.source)
 	}
 	if flags.storyType != "" {
-		request.Type = tapd.Ptr(flags.storyType)
+		request.Type = new(flags.storyType)
 	}
 	if flags.developer != "" {
-		request.Developer = tapd.Ptr(flags.developer)
+		request.Developer = new(flags.developer)
 	}
 	if flags.testFocus != "" {
-		request.TestFocus = tapd.Ptr(flags.testFocus)
+		request.TestFocus = new(flags.testFocus)
 	}
 	if flags.effort != "" {
-		request.Effort = tapd.Ptr(flags.effort)
+		request.Effort = new(flags.effort)
 	}
 	if flags.effortCompleted != "" {
-		request.EffortCompleted = tapd.Ptr(flags.effortCompleted)
+		request.EffortCompleted = new(flags.effortCompleted)
 	}
 }
 
 func applyStoryUpdateFlags(request *tapd.UpdateStoryRequest, flags storyMutationFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.currentUser != "" {
-		request.CurrentUser = tapd.Ptr(flags.currentUser)
+		request.CurrentUser = new(flags.currentUser)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.vStatus != "" {
-		request.VStatus = tapd.Ptr(flags.vStatus)
+		request.VStatus = new(flags.vStatus)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.priorityLabel != "" {
-		request.PriorityLabel = tapd.Ptr(tapd.PriorityLabel(flags.priorityLabel))
+		request.PriorityLabel = new(tapd.PriorityLabel(flags.priorityLabel))
 	}
 	if flags.businessValue > 0 {
-		request.BusinessValue = tapd.Ptr(flags.businessValue)
+		request.BusinessValue = new(flags.businessValue)
 	}
 	if flags.size > 0 {
-		request.Size = tapd.Ptr(flags.size)
+		request.Size = new(flags.size)
 	}
 	if flags.categoryID > 0 {
-		request.CategoryID = tapd.Ptr(flags.categoryID)
+		request.CategoryID = new(flags.categoryID)
 	}
 	if flags.iterationID != "" {
-		request.IterationID = tapd.Ptr(flags.iterationID)
+		request.IterationID = new(flags.iterationID)
 	}
 	if flags.releaseID > 0 {
-		request.ReleaseID = tapd.Ptr(flags.releaseID)
+		request.ReleaseID = new(flags.releaseID)
 	}
 	if flags.begin != "" {
-		request.Begin = tapd.Ptr(flags.begin)
+		request.Begin = new(flags.begin)
 	}
 	if flags.due != "" {
-		request.Due = tapd.Ptr(flags.due)
+		request.Due = new(flags.due)
 	}
 	if flags.label != "" {
-		request.Label = tapd.Ptr(flags.label)
+		request.Label = new(flags.label)
 	}
 	if flags.module != "" {
-		request.Module = tapd.Ptr(flags.module)
+		request.Module = new(flags.module)
 	}
 	if flags.version != "" {
-		request.Version = tapd.Ptr(flags.version)
+		request.Version = new(flags.version)
 	}
 	if flags.source != "" {
-		request.Source = tapd.Ptr(flags.source)
+		request.Source = new(flags.source)
 	}
 	if flags.storyType != "" {
-		request.Type = tapd.Ptr(flags.storyType)
+		request.Type = new(flags.storyType)
 	}
 	if flags.developer != "" {
-		request.Developer = tapd.Ptr(flags.developer)
+		request.Developer = new(flags.developer)
 	}
 	if flags.testFocus != "" {
-		request.TestFocus = tapd.Ptr(flags.testFocus)
+		request.TestFocus = new(flags.testFocus)
 	}
 	if flags.effort != "" {
-		request.Effort = tapd.Ptr(flags.effort)
+		request.Effort = new(flags.effort)
 	}
 	if flags.effortCompleted != "" {
-		request.EffortCompleted = tapd.Ptr(flags.effortCompleted)
+		request.EffortCompleted = new(flags.effortCompleted)
 	}
 	if flags.autoCloseTask {
-		request.IsAutoCloseTask = tapd.Ptr(1)
+		request.IsAutoCloseTask = new(1)
 	}
 }
 
 func decodeStoryBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateStoriesRequest, error) {
 	var request tapd.BatchUpdateStoriesRequest
 	if err := json.Unmarshal(data, &request); err == nil && len(request.Workitems) > 0 {
-		request.WorkspaceID = tapd.Ptr(workspaceID)
+		request.WorkspaceID = new(workspaceID)
 		for _, item := range request.Workitems {
 			if item != nil && item.WorkspaceID == nil {
-				item.WorkspaceID = tapd.Ptr(workspaceID)
+				item.WorkspaceID = new(workspaceID)
 			}
 		}
 		return &request, nil
@@ -1165,11 +1165,11 @@ func decodeStoryBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateStor
 	}
 	for _, item := range items {
 		if item != nil && item.WorkspaceID == nil {
-			item.WorkspaceID = tapd.Ptr(workspaceID)
+			item.WorkspaceID = new(workspaceID)
 		}
 	}
 	return &tapd.BatchUpdateStoriesRequest{
-		WorkspaceID: tapd.Ptr(workspaceID),
+		WorkspaceID: new(workspaceID),
 		Workitems:   items,
 	}, nil
 }
@@ -1207,9 +1207,9 @@ func addStoryChangesFlags(cmd *cobra.Command, flags *storyChangesFlags, withPagi
 
 func newStoryChangesRequest(flags storyChangesFlags) (*tapd.GetStoryChangesRequest, error) {
 	request := &tapd.GetStoryChangesRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -1227,29 +1227,29 @@ func newStoryChangesRequest(flags storyChangesFlags) (*tapd.GetStoryChangesReque
 		request.StoryID = ids
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.changeType != "" {
-		request.ChangeType = tapd.Ptr(tapd.StoreChangeType(flags.changeType))
+		request.ChangeType = new(tapd.StoreChangeType(flags.changeType))
 	}
 	if flags.changeSummary != "" {
-		request.ChangeSummary = tapd.Ptr(flags.changeSummary)
+		request.ChangeSummary = new(flags.changeSummary)
 	}
 	if flags.comment != "" {
-		request.Comment = tapd.Ptr(flags.comment)
+		request.Comment = new(flags.comment)
 	}
 	if flags.entityType != "" {
-		request.EntityType = tapd.Ptr(flags.entityType)
+		request.EntityType = new(flags.entityType)
 	}
 	if flags.changeField != "" {
-		request.ChangeField = tapd.Ptr(flags.changeField)
+		request.ChangeField = new(flags.changeField)
 	}
 	return request, nil
 }
 
 func newStoryChangesCountRequest(flags storyChangesFlags) (*tapd.GetStoryChangesCountRequest, error) {
 	request := &tapd.GetStoryChangesCountRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
+		WorkspaceID: new(flags.workspaceID),
 	}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("change IDs", flags.ids)
@@ -1266,22 +1266,22 @@ func newStoryChangesCountRequest(flags storyChangesFlags) (*tapd.GetStoryChanges
 		request.StoryID = ids
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.changeType != "" {
-		request.ChangeType = tapd.Ptr(tapd.StoreChangeType(flags.changeType))
+		request.ChangeType = new(tapd.StoreChangeType(flags.changeType))
 	}
 	if flags.changeSummary != "" {
-		request.ChangeSummary = tapd.Ptr(flags.changeSummary)
+		request.ChangeSummary = new(flags.changeSummary)
 	}
 	if flags.comment != "" {
-		request.Comment = tapd.Ptr(flags.comment)
+		request.Comment = new(flags.comment)
 	}
 	if flags.entityType != "" {
-		request.EntityType = tapd.Ptr(flags.entityType)
+		request.EntityType = new(flags.entityType)
 	}
 	if flags.changeField != "" {
-		request.ChangeField = tapd.Ptr(flags.changeField)
+		request.ChangeField = new(flags.changeField)
 	}
 	return request, nil
 }

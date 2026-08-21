@@ -37,15 +37,15 @@ func newMeasureLifeTimesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.LifeTimesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				EntityID:    tapd.Ptr(entityID),
-				EntityType:  tapd.Ptr(tapd.EntityType(entityType)),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				EntityID:    new(entityID),
+				EntityType:  new(tapd.EntityType(entityType)),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			}
 			if created != "" {
-				request.Created = tapd.Ptr(created)
+				request.Created = new(created)
 			}
 
 			items, _, err := client.MeasureService.LifeTimes(cmd.Context(), request)

@@ -59,8 +59,8 @@ func newTestCaseCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateTestCaseRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Name:        tapd.Ptr(flags.name),
+				WorkspaceID: new(flags.workspaceID),
+				Name:        new(flags.name),
 			}
 			applyTestCaseMutationFlags(request, flags)
 
@@ -161,8 +161,8 @@ func newTestCaseUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateTestCaseRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(flags.workspaceID),
 			}
 			applyTestCaseMutationFlags(request, flags)
 
@@ -206,9 +206,9 @@ func newTestCaseCategoriesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetTestCaseCategoriesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			}
 			if ids != "" {
@@ -218,25 +218,25 @@ func newTestCaseCategoriesCmd(rt *app.Runtime) *cobra.Command {
 				}
 			}
 			if name != "" {
-				request.Name = tapd.Ptr(name)
+				request.Name = new(name)
 			}
 			if description != "" {
-				request.Description = tapd.Ptr(description)
+				request.Description = new(description)
 			}
 			if parentID > 0 {
-				request.ParentID = tapd.Ptr(parentID)
+				request.ParentID = new(parentID)
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if modifier != "" {
-				request.Modifier = tapd.Ptr(modifier)
+				request.Modifier = new(modifier)
 			}
 			if created != "" {
-				request.Created = tapd.Ptr(created)
+				request.Created = new(created)
 			}
 			if modified != "" {
-				request.Modified = tapd.Ptr(modified)
+				request.Modified = new(modified)
 			}
 
 			categories, _, err := client.TestService.GetTestCaseCategories(cmd.Context(), request)
@@ -275,7 +275,7 @@ func newTestCaseFieldsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			fields, _, err := client.TestService.GetTestCaseFieldsInfo(cmd.Context(), &tapd.GetTestCaseFieldsInfoRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -306,9 +306,9 @@ func newTestCaseResultsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			results, _, err := client.TestService.GetTestCaseResults(cmd.Context(), &tapd.GetTestCaseResultsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				TestPlanID:  tapd.Ptr(testPlanID),
-				TestCaseID:  tapd.Ptr(testCaseID),
+				WorkspaceID: new(workspaceID),
+				TestPlanID:  new(testPlanID),
+				TestCaseID:  new(testCaseID),
 			})
 			if err != nil {
 				return err
@@ -339,8 +339,8 @@ func newTestPlanCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateTestPlanRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Name:        tapd.Ptr(flags.name),
+				WorkspaceID: new(flags.workspaceID),
+				Name:        new(flags.name),
 			}
 			applyTestPlanCreateFlags(request, flags)
 
@@ -441,8 +441,8 @@ func newTestPlanUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateTestPlanRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(flags.workspaceID),
 			}
 			applyTestPlanUpdateFlags(request, flags)
 
@@ -476,8 +476,8 @@ func newTestPlanProgressCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			progress, _, err := client.TestService.GetTestPlanProgress(cmd.Context(), &tapd.GetTestPlanProgressRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				ID:          tapd.Ptr(id),
+				WorkspaceID: new(workspaceID),
+				ID:          new(id),
 			})
 			if err != nil {
 				return err
@@ -511,14 +511,14 @@ func newTestPlanResultCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetTestPlanResultRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				ID:          tapd.Ptr(id),
+				WorkspaceID: new(workspaceID),
+				ID:          new(id),
 			}
 			if lastExecutor != "" {
-				request.LastExecutor = tapd.Ptr(lastExecutor)
+				request.LastExecutor = new(lastExecutor)
 			}
 			if includeRepeat {
-				request.IncludeRepeat = tapd.Ptr(1)
+				request.IncludeRepeat = new(1)
 			}
 
 			testCases, _, err := client.TestService.GetTestPlanResult(cmd.Context(), request)
@@ -557,10 +557,10 @@ func newTestPlanRelatedBugsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			items, _, err := client.TestService.GetTestPlanRelatedBugs(cmd.Context(), &tapd.GetTestPlanRelatedBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				ID:          tapd.Ptr(id),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				ID:          new(id),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			})
 			if err != nil {
@@ -595,8 +595,8 @@ func newTestPlanRelatedStoriesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			storyIDs, _, err := client.TestService.GetTestPlanRelatedStories(cmd.Context(), &tapd.GetTestPlanRelatedStoriesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				TestPlanID:  tapd.Ptr(testPlanID),
+				WorkspaceID: new(workspaceID),
+				TestPlanID:  new(testPlanID),
 			})
 			if err != nil {
 				return err
@@ -646,31 +646,31 @@ func addTestCaseMutationFlags(cmd *cobra.Command, flags *testCaseMutationFlags, 
 
 func applyTestCaseMutationFlags(request *tapd.CreateTestCaseRequest, flags testCaseMutationFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.steps != "" {
-		request.Steps = tapd.Ptr(flags.steps)
+		request.Steps = new(flags.steps)
 	}
 	if flags.categoryID > 0 {
-		request.CategoryID = tapd.Ptr(flags.categoryID)
+		request.CategoryID = new(flags.categoryID)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(tapd.TestCaseStatus(flags.status))
+		request.Status = new(tapd.TestCaseStatus(flags.status))
 	}
 	if flags.precondition != "" {
-		request.Precondition = tapd.Ptr(flags.precondition)
+		request.Precondition = new(flags.precondition)
 	}
 	if flags.expectation != "" {
-		request.Expectation = tapd.Ptr(flags.expectation)
+		request.Expectation = new(flags.expectation)
 	}
 	if flags.testType != "" {
-		request.Type = tapd.Ptr(flags.testType)
+		request.Type = new(flags.testType)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 }
 
@@ -729,9 +729,9 @@ func addTestCaseQueryFlags(cmd *cobra.Command, flags *testCaseQueryFlags, withPa
 
 func newTestCasesRequest(flags testCaseQueryFlags) (*tapd.GetTestCasesRequest, error) {
 	request := &tapd.GetTestCasesRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -747,7 +747,7 @@ func newTestCasesRequest(flags testCaseQueryFlags) (*tapd.GetTestCasesRequest, e
 
 func newTestCasesCountRequest(flags testCaseQueryFlags) (*tapd.GetTestCasesCountRequest, error) {
 	request := &tapd.GetTestCasesCountRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
+		WorkspaceID: new(flags.workspaceID),
 	}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("test case IDs", flags.ids)
@@ -762,106 +762,106 @@ func newTestCasesCountRequest(flags testCaseQueryFlags) (*tapd.GetTestCasesCount
 
 func applyTestCaseQueryFilters(request *tapd.GetTestCasesRequest, flags testCaseQueryFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.steps != "" {
-		request.Steps = tapd.Ptr(flags.steps)
+		request.Steps = new(flags.steps)
 	}
 	if flags.categoryID > 0 {
-		request.CategoryID = tapd.Ptr(flags.categoryID)
+		request.CategoryID = new(flags.categoryID)
 	}
 	if flags.status != "" {
 		request.Status = tapd.NewEnum(tapd.TestCaseStatus(flags.status))
 	}
 	if flags.precondition != "" {
-		request.Precondition = tapd.Ptr(flags.precondition)
+		request.Precondition = new(flags.precondition)
 	}
 	if flags.expectation != "" {
-		request.Expectation = tapd.Ptr(flags.expectation)
+		request.Expectation = new(flags.expectation)
 	}
 	if flags.testType != "" {
-		request.Type = tapd.Ptr(flags.testType)
+		request.Type = new(flags.testType)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.isAutomated != "" {
-		request.IsAutomated = tapd.Ptr(flags.isAutomated)
+		request.IsAutomated = new(flags.isAutomated)
 	}
 	if flags.automationType != "" {
-		request.AutomationType = tapd.Ptr(flags.automationType)
+		request.AutomationType = new(flags.automationType)
 	}
 	if flags.automationPlatform != "" {
-		request.AutomationPlatform = tapd.Ptr(flags.automationPlatform)
+		request.AutomationPlatform = new(flags.automationPlatform)
 	}
 	if flags.isServing != "" {
-		request.IsServing = tapd.Ptr(flags.isServing)
+		request.IsServing = new(flags.isServing)
 	}
 }
 
 func applyTestCaseCountFilters(request *tapd.GetTestCasesCountRequest, flags testCaseQueryFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.steps != "" {
-		request.Steps = tapd.Ptr(flags.steps)
+		request.Steps = new(flags.steps)
 	}
 	if flags.categoryID > 0 {
-		request.CategoryID = tapd.Ptr(flags.categoryID)
+		request.CategoryID = new(flags.categoryID)
 	}
 	if flags.status != "" {
 		request.Status = tapd.NewEnum(tapd.TestCaseStatus(flags.status))
 	}
 	if flags.precondition != "" {
-		request.Precondition = tapd.Ptr(flags.precondition)
+		request.Precondition = new(flags.precondition)
 	}
 	if flags.expectation != "" {
-		request.Expectation = tapd.Ptr(flags.expectation)
+		request.Expectation = new(flags.expectation)
 	}
 	if flags.testType != "" {
-		request.Type = tapd.Ptr(flags.testType)
+		request.Type = new(flags.testType)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.isAutomated != "" {
-		request.IsAutomated = tapd.Ptr(flags.isAutomated)
+		request.IsAutomated = new(flags.isAutomated)
 	}
 	if flags.automationType != "" {
-		request.AutomationType = tapd.Ptr(flags.automationType)
+		request.AutomationType = new(flags.automationType)
 	}
 	if flags.automationPlatform != "" {
-		request.AutomationPlatform = tapd.Ptr(flags.automationPlatform)
+		request.AutomationPlatform = new(flags.automationPlatform)
 	}
 	if flags.isServing != "" {
-		request.IsServing = tapd.Ptr(flags.isServing)
+		request.IsServing = new(flags.isServing)
 	}
 	if flags.testPlanID > 0 {
-		request.TestPlanID = tapd.Ptr(flags.testPlanID)
+		request.TestPlanID = new(flags.testPlanID)
 	}
 }
 
@@ -906,67 +906,67 @@ func addTestPlanMutationFlags(cmd *cobra.Command, flags *testPlanMutationFlags, 
 
 func applyTestPlanCreateFlags(request *tapd.CreateTestPlanRequest, flags testPlanMutationFlags) {
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.iterationID > 0 {
-		request.IterationID = tapd.Ptr(flags.iterationID)
+		request.IterationID = new(flags.iterationID)
 	}
 	if flags.version != "" {
-		request.Version = tapd.Ptr(flags.version)
+		request.Version = new(flags.version)
 	}
 	if flags.testType != "" {
-		request.Type = tapd.Ptr(flags.testType)
+		request.Type = new(flags.testType)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 }
 
 func applyTestPlanUpdateFlags(request *tapd.UpdateTestPlanRequest, flags testPlanMutationFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.version != "" {
-		request.Version = tapd.Ptr(flags.version)
+		request.Version = new(flags.version)
 	}
 	if flags.testType != "" {
-		request.Type = tapd.Ptr(flags.testType)
+		request.Type = new(flags.testType)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.templateID > 0 {
-		request.TemplateID = tapd.Ptr(flags.templateID)
+		request.TemplateID = new(flags.templateID)
 	}
 }
 
@@ -1011,9 +1011,9 @@ func addTestPlanQueryFlags(cmd *cobra.Command, flags *testPlanQueryFlags, withPa
 
 func newTestPlansRequest(flags testPlanQueryFlags) (*tapd.GetTestPlansRequest, error) {
 	request := &tapd.GetTestPlansRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -1029,7 +1029,7 @@ func newTestPlansRequest(flags testPlanQueryFlags) (*tapd.GetTestPlansRequest, e
 
 func newTestPlansCountRequest(flags testPlanQueryFlags) (*tapd.GetTestPlansCountRequest, error) {
 	request := &tapd.GetTestPlansCountRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
+		WorkspaceID: new(flags.workspaceID),
 	}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("test plan IDs", flags.ids)
@@ -1044,73 +1044,73 @@ func newTestPlansCountRequest(flags testPlanQueryFlags) (*tapd.GetTestPlansCount
 
 func applyTestPlanQueryFilters(request *tapd.GetTestPlansRequest, flags testPlanQueryFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.iterationID > 0 {
-		request.IterationID = tapd.Ptr(flags.iterationID)
+		request.IterationID = new(flags.iterationID)
 	}
 	if flags.version != "" {
-		request.Version = tapd.Ptr(flags.version)
+		request.Version = new(flags.version)
 	}
 	if flags.testType != "" {
-		request.Type = tapd.Ptr(flags.testType)
+		request.Type = new(flags.testType)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 }
 
 func applyTestPlanCountFilters(request *tapd.GetTestPlansCountRequest, flags testPlanQueryFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.iterationID > 0 {
-		request.IterationID = tapd.Ptr(flags.iterationID)
+		request.IterationID = new(flags.iterationID)
 	}
 	if flags.version != "" {
-		request.Version = tapd.Ptr(flags.version)
+		request.Version = new(flags.version)
 	}
 	if flags.testType != "" {
-		request.Type = tapd.Ptr(flags.testType)
+		request.Type = new(flags.testType)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 }
 

@@ -8,7 +8,7 @@
   <a href="https://github.com/go-tapd/cli/actions/workflows/lint.yml"><img alt="Lint" src="https://github.com/go-tapd/cli/actions/workflows/lint.yml/badge.svg"></a>
   <a href="https://pkg.go.dev/github.com/go-tapd/cli"><img alt="Go Reference" src="https://pkg.go.dev/badge/github.com/go-tapd/cli.svg"></a>
   <a href="https://github.com/go-tapd/cli/blob/main/LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-blue.svg"></a>
-  <a href="https://github.com/go-tapd/cli"><img alt="Go Version" src="https://img.shields.io/badge/Go-%3E%3D%201.25-00ADD8.svg"></a>
+  <a href="https://github.com/go-tapd/cli"><img alt="Go Version" src="https://img.shields.io/badge/Go-%3E%3D%201.26-00ADD8.svg"></a>
 </p>
 
 `tapd` is a command line client for TAPD, built on top of the typed
@@ -45,7 +45,7 @@ Download a prebuilt archive for your platform from
 go install github.com/go-tapd/cli/cmd/tapd@latest
 ```
 
-Requires Go 1.25 or later. This installs a binary named `tapd`.
+Requires Go 1.26 or later. This installs a binary named `tapd`.
 
 ## 🚀 Quick Start
 

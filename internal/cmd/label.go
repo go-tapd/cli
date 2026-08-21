@@ -42,14 +42,14 @@ func newLabelCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateLabelRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Name:        tapd.Ptr(name),
+				WorkspaceID: new(workspaceID),
+				Name:        new(name),
 			}
 			if color != "" {
-				request.Color = tapd.Ptr(tapd.LabelColor(color))
+				request.Color = new(tapd.LabelColor(color))
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 
 			label, _, err := client.LabelService.CreateLabel(cmd.Context(), request)
@@ -154,14 +154,14 @@ func newLabelUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateLabelRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(workspaceID),
 			}
 			if color != "" {
-				request.Color = tapd.Ptr(tapd.LabelColor(color))
+				request.Color = new(tapd.LabelColor(color))
 			}
 			if modifier != "" {
-				request.Modifier = tapd.Ptr(modifier)
+				request.Modifier = new(modifier)
 			}
 			if request.Color == nil && request.Modifier == nil {
 				return fmt.Errorf("provide at least one of --color or --modifier")
@@ -205,9 +205,9 @@ func addLabelQueryFlags(cmd *cobra.Command, flags *labelQueryFlags, withPaging b
 
 func newLabelsRequest(flags labelQueryFlags) (*tapd.GetLabelsRequest, error) {
 	request := &tapd.GetLabelsRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 	}
 	if flags.ids != "" {
 		ids, err := strictIntMulti("label IDs", flags.ids)
@@ -217,20 +217,20 @@ func newLabelsRequest(flags labelQueryFlags) (*tapd.GetLabelsRequest, error) {
 		request.ID = ids
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	return request, nil
 }
 
 func newLabelCountRequest(flags labelQueryFlags) (*tapd.GetLabelCountRequest, error) {
 	request := &tapd.GetLabelCountRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
+		WorkspaceID: new(flags.workspaceID),
 	}
 	if flags.ids != "" {
 		ids, err := strictIntMulti("label IDs", flags.ids)
@@ -240,13 +240,13 @@ func newLabelCountRequest(flags labelQueryFlags) (*tapd.GetLabelCountRequest, er
 		request.ID = ids
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	return request, nil
 }

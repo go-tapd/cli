@@ -47,8 +47,8 @@ func newTaskCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateTaskRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Name:        tapd.Ptr(flags.name),
+				WorkspaceID: new(flags.workspaceID),
+				Name:        new(flags.name),
 			}
 			if err := applyTaskCreateFlags(request, flags); err != nil {
 				return err
@@ -89,10 +89,10 @@ func newTaskViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			tasks, _, err := client.TaskService.GetTasks(cmd.Context(), &tapd.GetTasksRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          tapd.NewMulti(id),
-				Limit:       tapd.Ptr(1),
-				Page:        tapd.Ptr(1),
+				Limit:       new(1),
+				Page:        new(1),
 			})
 			if err != nil {
 				return err
@@ -135,20 +135,20 @@ func newTaskListCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetTasksRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 				ID:          int64Multi(ids),
 			}
 			if name != "" {
-				request.Name = tapd.Ptr(name)
+				request.Name = new(name)
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 			if status != "" {
 				request.Status = taskStatusEnum(status)
@@ -213,17 +213,17 @@ func newTaskCountCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetTasksCountRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          int64Multi(ids),
 			}
 			if name != "" {
-				request.Name = tapd.Ptr(name)
+				request.Name = new(name)
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 			if status != "" {
 				request.Status = taskStatusEnum(status)
@@ -288,8 +288,8 @@ func newTaskUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateTaskRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(flags.workspaceID),
 			}
 			if err := applyTaskUpdateFlags(request, flags); err != nil {
 				return err
@@ -445,7 +445,7 @@ func newTaskFieldsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			fields, _, err := client.TaskService.GetTaskFieldsInfo(cmd.Context(), &tapd.GetTaskFieldsInfoRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -499,9 +499,9 @@ func newTaskRemovedCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetRemovedTasksRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 			}
 			if ids != "" {
 				request.ID, err = strictIntMulti("task IDs", ids)
@@ -510,16 +510,16 @@ func newTaskRemovedCmd(rt *app.Runtime) *cobra.Command {
 				}
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if created != "" {
-				request.Created = tapd.Ptr(created)
+				request.Created = new(created)
 			}
 			if deleted != "" {
-				request.Deleted = tapd.Ptr(deleted)
+				request.Deleted = new(deleted)
 			}
 			if archived {
-				request.IsArchived = tapd.Ptr(1)
+				request.IsArchived = new(1)
 			}
 
 			tasks, _, err := client.TaskService.GetRemovedTasks(cmd.Context(), request)
@@ -604,10 +604,10 @@ func addTaskMutationFlags(cmd *cobra.Command, flags *taskMutationFlags, update b
 
 func applyTaskCreateFlags(request *tapd.CreateTaskRequest, flags taskMutationFlags) error {
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.status != "" {
 		request.Status = taskStatusEnum(flags.status)
@@ -616,16 +616,16 @@ func applyTaskCreateFlags(request *tapd.CreateTaskRequest, flags taskMutationFla
 		request.Label = stringEnum(flags.label)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.begin != "" {
-		request.Begin = tapd.Ptr(flags.begin)
+		request.Begin = new(flags.begin)
 	}
 	if flags.due != "" {
-		request.Due = tapd.Ptr(flags.due)
+		request.Due = new(flags.due)
 	}
 	if flags.storyIDs != "" {
 		ids, err := strictInt64Multi("story IDs", flags.storyIDs)
@@ -638,28 +638,28 @@ func applyTaskCreateFlags(request *tapd.CreateTaskRequest, flags taskMutationFla
 		request.IterationID = tapd.NewEnum(flags.iterationID)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.priorityLabel != "" {
-		request.PriorityLabel = tapd.Ptr(tapd.PriorityLabel(flags.priorityLabel))
+		request.PriorityLabel = new(tapd.PriorityLabel(flags.priorityLabel))
 	}
 	if flags.progress > 0 {
-		request.Progress = tapd.Ptr(flags.progress)
+		request.Progress = new(flags.progress)
 	}
 	if flags.completed != "" {
-		request.Completed = tapd.Ptr(flags.completed)
+		request.Completed = new(flags.completed)
 	}
 	if flags.effortCompleted != "" {
-		request.EffortCompleted = tapd.Ptr(flags.effortCompleted)
+		request.EffortCompleted = new(flags.effortCompleted)
 	}
 	if flags.exceed > 0 {
-		request.Exceed = tapd.Ptr(flags.exceed)
+		request.Exceed = new(flags.exceed)
 	}
 	if flags.remain > 0 {
-		request.Remain = tapd.Ptr(flags.remain)
+		request.Remain = new(flags.remain)
 	}
 	if flags.effort != "" {
-		request.Effort = tapd.Ptr(flags.effort)
+		request.Effort = new(flags.effort)
 	}
 	if err := applyTaskCustomFields(request, flags.customFields); err != nil {
 		return err
@@ -669,56 +669,56 @@ func applyTaskCreateFlags(request *tapd.CreateTaskRequest, flags taskMutationFla
 
 func applyTaskUpdateFlags(request *tapd.UpdateTaskRequest, flags taskMutationFlags) error {
 	if flags.currentUser != "" {
-		request.CurrentUser = tapd.Ptr(flags.currentUser)
+		request.CurrentUser = new(flags.currentUser)
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.status != "" {
 		status := tapd.TaskStatus(flags.status)
-		request.Status = tapd.Ptr(status)
+		request.Status = new(status)
 	}
 	if flags.label != "" {
 		request.Label = stringEnum(flags.label)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.begin != "" {
-		request.Begin = tapd.Ptr(flags.begin)
+		request.Begin = new(flags.begin)
 	}
 	if flags.due != "" {
-		request.Due = tapd.Ptr(flags.due)
+		request.Due = new(flags.due)
 	}
 	if flags.storyID > 0 {
-		request.StoryID = tapd.Ptr(flags.storyID)
+		request.StoryID = new(flags.storyID)
 	}
 	if flags.iterationID > 0 {
-		request.IterationID = tapd.Ptr(flags.iterationID)
+		request.IterationID = new(flags.iterationID)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.priorityLabel != "" {
-		request.PriorityLabel = tapd.Ptr(tapd.PriorityLabel(flags.priorityLabel))
+		request.PriorityLabel = new(tapd.PriorityLabel(flags.priorityLabel))
 	}
 	if flags.progress > 0 {
-		request.Progress = tapd.Ptr(flags.progress)
+		request.Progress = new(flags.progress)
 	}
 	if flags.effort != "" {
-		request.Effort = tapd.Ptr(flags.effort)
+		request.Effort = new(flags.effort)
 	}
 	if flags.autoCompleteEffort {
-		request.AutoCompleteEffort = tapd.Ptr(1)
+		request.AutoCompleteEffort = new(1)
 	}
 	if err := applyTaskCustomFields(request, flags.customFields); err != nil {
 		return err
@@ -784,10 +784,10 @@ func unsupportedTaskCustomFieldError(name string) error {
 func decodeTaskBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateTasksRequest, error) {
 	var request tapd.BatchUpdateTasksRequest
 	if err := json.Unmarshal(data, &request); err == nil && len(request.Workitems) > 0 {
-		request.WorkspaceID = tapd.Ptr(workspaceID)
+		request.WorkspaceID = new(workspaceID)
 		for _, item := range request.Workitems {
 			if item != nil && item.WorkspaceID == nil {
-				item.WorkspaceID = tapd.Ptr(workspaceID)
+				item.WorkspaceID = new(workspaceID)
 			}
 		}
 		return &request, nil
@@ -802,11 +802,11 @@ func decodeTaskBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateTasks
 	}
 	for _, item := range items {
 		if item != nil && item.WorkspaceID == nil {
-			item.WorkspaceID = tapd.Ptr(workspaceID)
+			item.WorkspaceID = new(workspaceID)
 		}
 	}
 	return &tapd.BatchUpdateTasksRequest{
-		WorkspaceID: tapd.Ptr(workspaceID),
+		WorkspaceID: new(workspaceID),
 		Workitems:   items,
 	}, nil
 }
@@ -846,9 +846,9 @@ func addTaskChangesFlags(cmd *cobra.Command, flags *taskChangesFlags, withPaging
 
 func newTaskChangesRequest(flags taskChangesFlags) (*tapd.GetTaskChangesRequest, error) {
 	request := &tapd.GetTaskChangesRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -859,35 +859,35 @@ func newTaskChangesRequest(flags taskChangesFlags) (*tapd.GetTaskChangesRequest,
 		request.ID = ids
 	}
 	if flags.taskID > 0 {
-		request.TaskID = tapd.Ptr(flags.taskID)
+		request.TaskID = new(flags.taskID)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.changeSummary != "" {
-		request.ChangeSummary = tapd.Ptr(flags.changeSummary)
+		request.ChangeSummary = new(flags.changeSummary)
 	}
 	if flags.comment != "" {
-		request.Comment = tapd.Ptr(flags.comment)
+		request.Comment = new(flags.comment)
 	}
 	if flags.changes != "" {
-		request.Changes = tapd.Ptr(flags.changes)
+		request.Changes = new(flags.changes)
 	}
 	if flags.entityType != "" {
-		request.EntityType = tapd.Ptr(flags.entityType)
+		request.EntityType = new(flags.entityType)
 	}
 	if !flags.needParseChanges {
-		request.NeedParseChanges = tapd.Ptr(0)
+		request.NeedParseChanges = new(0)
 	}
 	return request, nil
 }
 
 func newTaskChangesCountRequest(flags taskChangesFlags) (*tapd.GetTaskChangesCountRequest, error) {
 	request := &tapd.GetTaskChangesCountRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
+		WorkspaceID: new(flags.workspaceID),
 	}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("change IDs", flags.ids)
@@ -897,25 +897,25 @@ func newTaskChangesCountRequest(flags taskChangesFlags) (*tapd.GetTaskChangesCou
 		request.ID = ids
 	}
 	if flags.taskID > 0 {
-		request.TaskID = tapd.Ptr(flags.taskID)
+		request.TaskID = new(flags.taskID)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.changeSummary != "" {
-		request.ChangeSummary = tapd.Ptr(flags.changeSummary)
+		request.ChangeSummary = new(flags.changeSummary)
 	}
 	if flags.comment != "" {
-		request.Comment = tapd.Ptr(flags.comment)
+		request.Comment = new(flags.comment)
 	}
 	if flags.changes != "" {
-		request.Changes = tapd.Ptr(flags.changes)
+		request.Changes = new(flags.changes)
 	}
 	if flags.entityType != "" {
-		request.EntityType = tapd.Ptr(flags.entityType)
+		request.EntityType = new(flags.entityType)
 	}
 	return request, nil
 }

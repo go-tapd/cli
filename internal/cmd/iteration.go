@@ -45,12 +45,12 @@ func newIterationCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateIterationRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Name:        tapd.Ptr(flags.name),
-				Description: tapd.Ptr(flags.description),
-				StartDate:   tapd.Ptr(flags.startDate),
-				EndDate:     tapd.Ptr(flags.endDate),
-				Creator:     tapd.Ptr(flags.creator),
+				WorkspaceID: new(flags.workspaceID),
+				Name:        new(flags.name),
+				Description: new(flags.description),
+				StartDate:   new(flags.startDate),
+				EndDate:     new(flags.endDate),
+				Creator:     new(flags.creator),
 			}
 			applyIterationCreateFlags(request, flags)
 
@@ -92,10 +92,10 @@ func newIterationViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			iterations, _, err := client.IterationService.GetIterations(cmd.Context(), &tapd.GetIterationsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          tapd.NewMulti(id),
-				Limit:       tapd.Ptr(1),
-				Page:        tapd.Ptr(1),
+				Limit:       new(1),
+				Page:        new(1),
 			})
 			if err != nil {
 				return err
@@ -193,9 +193,9 @@ func newIterationUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateIterationRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				CurrentUser: tapd.Ptr(flags.currentUser),
+				ID:          new(id),
+				WorkspaceID: new(flags.workspaceID),
+				CurrentUser: new(flags.currentUser),
 			}
 			applyIterationUpdateFlags(request, flags)
 
@@ -295,7 +295,7 @@ func newIterationFieldsCmd(rt *app.Runtime) *cobra.Command {
 
 			fields, _, err := client.IterationService.GetIterationCustomFieldsSettings(
 				cmd.Context(),
-				&tapd.GetIterationCustomFieldsSettingsRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+				&tapd.GetIterationCustomFieldsSettingsRequest{WorkspaceID: new(workspaceID)},
 			)
 			if err != nil {
 				return err
@@ -328,7 +328,7 @@ func newIterationWorkitemTypesCmd(rt *app.Runtime) *cobra.Command {
 
 			items, _, err := client.IterationService.GetWorkitemTypes(
 				cmd.Context(),
-				&tapd.GetWorkitemTypesRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+				&tapd.GetWorkitemTypesRequest{WorkspaceID: new(workspaceID)},
 			)
 			if err != nil {
 				return err
@@ -361,7 +361,7 @@ func newIterationTemplatesCmd(rt *app.Runtime) *cobra.Command {
 
 			items, _, err := client.IterationService.GetTemplateList(
 				cmd.Context(),
-				&tapd.GetTemplateListRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+				&tapd.GetTemplateListRequest{WorkspaceID: new(workspaceID)},
 			)
 			if err != nil {
 				return err
@@ -405,16 +405,16 @@ func newIterationTemplateFieldsCmd(rt *app.Runtime) *cobra.Command {
 				fields, _, err = client.IterationService.GetIterationTemplateFields(
 					cmd.Context(),
 					&tapd.GetIterationTemplateFieldsRequest{
-						WorkspaceID: tapd.Ptr(workspaceID),
-						TemplateID:  tapd.Ptr(templateID),
+						WorkspaceID: new(workspaceID),
+						TemplateID:  new(templateID),
 					},
 				)
 			} else {
 				fields, _, err = client.IterationService.GetIterationDefaultTemplateFields(
 					cmd.Context(),
 					&tapd.GetIterationDefaultTemplateFieldsRequest{
-						WorkspaceID:    tapd.Ptr(workspaceID),
-						WorkitemTypeID: tapd.Ptr(workitemTypeID),
+						WorkspaceID:    new(workspaceID),
+						WorkitemTypeID: new(workitemTypeID),
 					},
 				)
 			}
@@ -476,14 +476,14 @@ func newIterationLockToggleCmd(rt *app.Runtime, lock bool) *cobra.Command {
 			var result string
 			if lock {
 				result, _, err = client.IterationService.LockIteration(cmd.Context(), &tapd.LockIterationRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					IterationID: tapd.Ptr(iterationID),
+					WorkspaceID: new(workspaceID),
+					IterationID: new(iterationID),
 					LockTypes:   types,
 				})
 			} else {
 				result, _, err = client.IterationService.UnlockIteration(cmd.Context(), &tapd.UnlockIterationRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					IterationID: tapd.Ptr(iterationID),
+					WorkspaceID: new(workspaceID),
+					IterationID: new(iterationID),
 					LockTypes:   types,
 				})
 			}
@@ -536,13 +536,13 @@ func addIterationMutationFlags(cmd *cobra.Command, flags *iterationMutationFlags
 
 func applyIterationCreateFlags(request *tapd.CreateIterationRequest, flags iterationMutationFlags) {
 	if flags.workitemTypeID > 0 {
-		request.WorkitemTypeID = tapd.Ptr(flags.workitemTypeID)
+		request.WorkitemTypeID = new(flags.workitemTypeID)
 	}
 	if flags.planAppID > 0 {
-		request.PlanAppID = tapd.Ptr(flags.planAppID)
+		request.PlanAppID = new(flags.planAppID)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.label != "" {
 		request.Label = stringEnum(flags.label)
@@ -551,22 +551,22 @@ func applyIterationCreateFlags(request *tapd.CreateIterationRequest, flags itera
 
 func applyIterationUpdateFlags(request *tapd.UpdateIterationRequest, flags iterationMutationFlags) {
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.label != "" {
 		request.Label = stringEnum(flags.label)
@@ -614,9 +614,9 @@ func addIterationQueryFlags(cmd *cobra.Command, flags *iterationQueryFlags, with
 
 func newIterationsRequest(flags iterationQueryFlags) (*tapd.GetIterationsRequest, error) {
 	request := &tapd.GetIterationsRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -627,44 +627,44 @@ func newIterationsRequest(flags iterationQueryFlags) (*tapd.GetIterationsRequest
 		request.ID = ids
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.workitemTypeID > 0 {
-		request.WorkitemTypeID = tapd.Ptr(flags.workitemTypeID)
+		request.WorkitemTypeID = new(flags.workitemTypeID)
 	}
 	if flags.planAppID > 0 {
-		request.PlanAppID = tapd.Ptr(flags.planAppID)
+		request.PlanAppID = new(flags.planAppID)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.completed != "" {
-		request.Completed = tapd.Ptr(flags.completed)
+		request.Completed = new(flags.completed)
 	}
 	return request, nil
 }
 
 func newIterationsCountRequest(flags iterationQueryFlags) (*tapd.GetIterationsCountRequest, error) {
 	request := &tapd.GetIterationsCountRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
+		WorkspaceID: new(flags.workspaceID),
 	}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("iteration IDs", flags.ids)
@@ -674,37 +674,37 @@ func newIterationsCountRequest(flags iterationQueryFlags) (*tapd.GetIterationsCo
 		request.ID = ids
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.workitemTypeID > 0 {
-		request.WorkitemTypeID = tapd.Ptr(flags.workitemTypeID)
+		request.WorkitemTypeID = new(flags.workitemTypeID)
 	}
 	if flags.planAppID > 0 {
-		request.PlanAppID = tapd.Ptr(flags.planAppID)
+		request.PlanAppID = new(flags.planAppID)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.completed != "" {
-		request.Completed = tapd.Ptr(flags.completed)
+		request.Completed = new(flags.completed)
 	}
 	return request, nil
 }
@@ -725,10 +725,10 @@ type iterationChangesFlags struct {
 
 func newIterationChangesRequest(flags iterationChangesFlags) (*tapd.GetIterationChangesRequest, error) {
 	request := &tapd.GetIterationChangesRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		IterationID: tapd.Ptr(flags.iterationID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		IterationID: new(flags.iterationID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -739,19 +739,19 @@ func newIterationChangesRequest(flags iterationChangesFlags) (*tapd.GetIteration
 		request.ID = ids
 	}
 	if flags.author != "" {
-		request.Author = tapd.Ptr(flags.author)
+		request.Author = new(flags.author)
 	}
 	if flags.field != "" {
-		request.Field = tapd.Ptr(flags.field)
+		request.Field = new(flags.field)
 	}
 	if flags.oldValue != "" {
-		request.OldValue = tapd.Ptr(flags.oldValue)
+		request.OldValue = new(flags.oldValue)
 	}
 	if flags.newValue != "" {
-		request.NewValue = tapd.Ptr(flags.newValue)
+		request.NewValue = new(flags.newValue)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	return request, nil
 }

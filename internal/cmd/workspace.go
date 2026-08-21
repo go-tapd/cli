@@ -47,7 +47,7 @@ func newWorkspaceViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			workspace, _, err := client.WorkspaceService.GetWorkspaceInfo(cmd.Context(), &tapd.GetWorkspaceInfoRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -86,7 +86,7 @@ func newWorkspaceUsersCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetUsersRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				Fields:      fieldsMulti(fields),
 			}
 			if user != "" {
@@ -132,7 +132,7 @@ func newWorkspaceRolesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			roles, _, err := client.WorkspaceService.GetWorkspaceRoles(cmd.Context(), &tapd.GetWorkspaceRolesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -169,9 +169,9 @@ func newWorkspaceSubWorkspacesCmd(rt *app.Runtime) *cobra.Command {
 				return err
 			}
 
-			request := &tapd.GetSubWorkspacesRequest{WorkspaceID: tapd.Ptr(workspaceID)}
+			request := &tapd.GetSubWorkspacesRequest{WorkspaceID: new(workspaceID)}
 			if templateID > 0 {
-				request.TemplateID = tapd.Ptr(templateID)
+				request.TemplateID = new(templateID)
 			}
 
 			workspaces, _, err := client.WorkspaceService.GetSubWorkspaces(cmd.Context(), request)
@@ -204,12 +204,12 @@ func newWorkspaceCompanyWorkspacesCmd(rt *app.Runtime) *cobra.Command {
 				return err
 			}
 
-			request := &tapd.GetCompanyWorkspacesRequest{CompanyID: tapd.Ptr(companyID)}
+			request := &tapd.GetCompanyWorkspacesRequest{CompanyID: new(companyID)}
 			if category != "" {
-				request.Category = tapd.Ptr(category)
+				request.Category = new(category)
 			}
 			if withExtends {
-				request.WithExtends = tapd.Ptr(1)
+				request.WithExtends = new(1)
 			}
 
 			workspaces, _, err := client.WorkspaceService.GetCompanyWorkspaces(cmd.Context(), request)
@@ -246,8 +246,8 @@ func newWorkspaceParticipantWorkspacesCmd(rt *app.Runtime) *cobra.Command {
 			workspaces, _, err := client.WorkspaceService.GetUserParticipantWorkspaces(
 				cmd.Context(),
 				&tapd.GetUserParticipantWorkspacesRequest{
-					Nick:      tapd.Ptr(nick),
-					CompanyID: tapd.Ptr(companyID),
+					Nick:      new(nick),
+					CompanyID: new(companyID),
 				},
 			)
 			if err != nil {
@@ -288,12 +288,12 @@ func newWorkspaceAddMemberCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.AddWorkspaceMemberRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Nick:        tapd.Ptr(nick),
+				WorkspaceID: new(workspaceID),
+				Nick:        new(nick),
 				RoleIDs:     roles,
 			}
 			if companyID > 0 {
-				request.CompanyID = tapd.Ptr(companyID)
+				request.CompanyID = new(companyID)
 			}
 
 			result, _, err := client.WorkspaceService.AddWorkspaceMember(cmd.Context(), request)
@@ -332,9 +332,9 @@ func newWorkspaceUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			result, _, err := client.WorkspaceService.UpdateWorkspaceInfo(cmd.Context(), &tapd.UpdateWorkspaceInfoRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Field:       tapd.Ptr(field),
-				Value:       tapd.Ptr(value),
+				WorkspaceID: new(workspaceID),
+				Field:       new(field),
+				Value:       new(value),
 			})
 			if err != nil {
 				return err
@@ -367,7 +367,7 @@ func newWorkspaceCustomFieldsCmd(rt *app.Runtime) *cobra.Command {
 
 			settings, _, err := client.WorkspaceService.GetWorkspaceCustomFieldsSettings(
 				cmd.Context(),
-				&tapd.GetWorkspaceCustomFieldsSettingsRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+				&tapd.GetWorkspaceCustomFieldsSettingsRequest{WorkspaceID: new(workspaceID)},
 			)
 			if err != nil {
 				return err
@@ -421,9 +421,9 @@ func newWorkspaceDocumentsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			documents, _, err := client.WorkspaceService.GetWorkspaceDocuments(cmd.Context(), &tapd.GetWorkspaceDocumentsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			})
 			if err != nil {
@@ -487,14 +487,14 @@ func newWorkspaceShortIDConvertCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetWorkItemsLongIDByShortIDsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				EntityType:  tapd.Ptr(tapd.EntityType(entityType)),
+				WorkspaceID: new(workspaceID),
+				EntityType:  new(tapd.EntityType(entityType)),
 			}
 			if shortIDs != "" {
-				request.ShortIDs = tapd.Ptr(shortIDs)
+				request.ShortIDs = new(shortIDs)
 			}
 			if longIDs != "" {
-				request.LongIDs = tapd.Ptr(longIDs)
+				request.LongIDs = new(longIDs)
 			}
 
 			result, _, err := client.WorkspaceService.GetWorkItemsLongIDByShortIDs(cmd.Context(), request)
@@ -545,30 +545,30 @@ func newWorkspaceMemberActivityLogCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetMemberActivityLogRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 			}
 			if companyOnly {
-				request.CompanyOnly = tapd.Ptr(1)
+				request.CompanyOnly = new(1)
 			}
 			if startTime != "" {
-				request.StartTime = tapd.Ptr(startTime)
+				request.StartTime = new(startTime)
 			}
 			if endTime != "" {
-				request.EndTime = tapd.Ptr(endTime)
+				request.EndTime = new(endTime)
 			}
 			if operator != "" {
-				request.Operator = tapd.Ptr(operator)
+				request.Operator = new(operator)
 			}
 			if operateType != "" {
-				request.OperateType = tapd.Ptr(tapd.OperateType(operateType))
+				request.OperateType = new(tapd.OperateType(operateType))
 			}
 			if operatorObject != "" {
-				request.OperatorObject = tapd.Ptr(tapd.OperateObject(operatorObject))
+				request.OperatorObject = new(tapd.OperateObject(operatorObject))
 			}
 			if ip != "" {
-				request.IP = tapd.Ptr(ip)
+				request.IP = new(ip)
 			}
 
 			result, _, err := client.WorkspaceService.GetMemberActivityLog(cmd.Context(), request)
@@ -645,17 +645,17 @@ func newWorkspaceCalendarSetCustomCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.SetCustomWorkCalendarRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Year:        tapd.Ptr(year),
+				WorkspaceID: new(workspaceID),
+				Year:        new(year),
 			}
 			if weekdays != "" {
-				request.Weekdays = tapd.Ptr(weekdayItems)
+				request.Weekdays = new(weekdayItems)
 			}
 			if holidays != "" {
-				request.Holidays = tapd.Ptr(splitCSV(holidays))
+				request.Holidays = new(splitCSV(holidays))
 			}
 			if workdays != "" {
-				request.Workdays = tapd.Ptr(splitCSV(workdays))
+				request.Workdays = new(splitCSV(workdays))
 			}
 
 			result, _, err := client.WorkspaceService.SetCustomWorkCalendar(cmd.Context(), request)
@@ -693,8 +693,8 @@ func newWorkspaceCalendarEnableCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			result, _, err := client.WorkspaceService.EnableWorkCalendar(cmd.Context(), &tapd.EnableWorkCalendarRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Type:        tapd.Ptr(tapd.WorkCalendarType(calendarType)),
+				WorkspaceID: new(workspaceID),
+				Type:        new(tapd.WorkCalendarType(calendarType)),
 			})
 			if err != nil {
 				return err
@@ -727,8 +727,8 @@ func newWorkspaceCalendarViewCustomCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			calendar, _, err := client.WorkspaceService.GetCustomWorkCalendar(cmd.Context(), &tapd.GetCustomWorkCalendarRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Year:        tapd.Ptr(year),
+				WorkspaceID: new(workspaceID),
+				Year:        new(year),
 			})
 			if err != nil {
 				return err
@@ -758,7 +758,7 @@ func newWorkspaceCalendarSettingsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			settings, _, err := client.WorkspaceService.GetWorkCalendarSettings(cmd.Context(), &tapd.GetWorkCalendarSettingsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err

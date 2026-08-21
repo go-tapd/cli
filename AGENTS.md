@@ -22,7 +22,7 @@ release maintenance guidance lives in `CONTRIBUTING.md`.
 - Show top-level help: `go run ./cmd/tapd --help`
 - Inspect npm package contents: `cd npm && npm pack --dry-run`
 
-The module declares Go `1.25.0` in `go.mod`. CI uses Go `1.26.x` for lint
+The module declares Go `1.26.0` in `go.mod`. CI uses Go `1.27.x` for lint
 compatibility checks.
 
 ## Development Workflow
@@ -64,7 +64,7 @@ manual command-help checks.
 
 - Run lint before submitting: `make lint`
 - Apply automatic lint fixes where safe: `make lint-fix`
-- `make lint` runs `go mod tidy -compat=1.25.0` before `go tool
+- `make lint` runs `go mod tidy -compat=1.26.0` before `go tool
   golangci-lint run`.
 - Keep imports formatted by Go tooling; the linter also enables `goimports` and
   `gofumpt` formatters.

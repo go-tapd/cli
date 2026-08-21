@@ -5,7 +5,7 @@ GORELEASER = $(GO) run github.com/goreleaser/goreleaser/v2@latest
 .PHONY: go-mod-tidy
 go-mod-tidy:
 	@echo "go mod tidy in all modules" && \
-		$(GO) mod tidy -compat=1.25.0
+		$(GO) mod tidy -compat=1.26.0
 
 .PHONY: lint
 lint: go-mod-tidy

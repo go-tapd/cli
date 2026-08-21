@@ -45,16 +45,16 @@ func newReleaseCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateReleaseRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Name:        tapd.Ptr(name),
-				StartDate:   tapd.Ptr(startDate),
-				EndDate:     tapd.Ptr(endDate),
+				WorkspaceID: new(workspaceID),
+				Name:        new(name),
+				StartDate:   new(startDate),
+				EndDate:     new(endDate),
 			}
 			if description != "" {
-				request.Description = tapd.Ptr(description)
+				request.Description = new(description)
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 
 			release, _, err := client.ReleaseService.CreateRelease(cmd.Context(), request)
@@ -97,10 +97,10 @@ func newReleaseViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			releases, _, err := client.ReleaseService.GetReleases(cmd.Context(), &tapd.GetReleasesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          tapd.NewMulti(id),
-				Limit:       tapd.Ptr(1),
-				Page:        tapd.Ptr(1),
+				Limit:       new(1),
+				Page:        new(1),
 			})
 			if err != nil {
 				return err
@@ -208,23 +208,23 @@ func newReleaseUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateReleaseRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				ID:          tapd.Ptr(id),
+				WorkspaceID: new(workspaceID),
+				ID:          new(id),
 			}
 			if name != "" {
-				request.Name = tapd.Ptr(name)
+				request.Name = new(name)
 			}
 			if description != "" {
-				request.Description = tapd.Ptr(description)
+				request.Description = new(description)
 			}
 			if startDate != "" {
-				request.StartDate = tapd.Ptr(startDate)
+				request.StartDate = new(startDate)
 			}
 			if endDate != "" {
-				request.EndDate = tapd.Ptr(endDate)
+				request.EndDate = new(endDate)
 			}
 			if status != "" {
-				request.Status = tapd.Ptr(status)
+				request.Status = new(status)
 			}
 
 			release, _, err := client.ReleaseService.UpdateRelease(cmd.Context(), request)
@@ -280,9 +280,9 @@ func addReleaseQueryFlags(cmd *cobra.Command, flags *releaseQueryFlags, withPagi
 
 func newGetReleasesRequest(flags releaseQueryFlags) (*tapd.GetReleasesRequest, error) {
 	request := &tapd.GetReleasesRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if err := applyReleaseFilters(request, flags); err != nil {
@@ -292,7 +292,7 @@ func newGetReleasesRequest(flags releaseQueryFlags) (*tapd.GetReleasesRequest, e
 }
 
 func newGetReleasesCountRequest(flags releaseQueryFlags) (*tapd.GetReleasesCountRequest, error) {
-	request := &tapd.GetReleasesCountRequest{WorkspaceID: tapd.Ptr(flags.workspaceID)}
+	request := &tapd.GetReleasesCountRequest{WorkspaceID: new(flags.workspaceID)}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("release IDs", flags.ids)
 		if err != nil {
@@ -301,28 +301,28 @@ func newGetReleasesCountRequest(flags releaseQueryFlags) (*tapd.GetReleasesCount
 		request.ID = ids
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	return request, nil
 }
@@ -336,28 +336,28 @@ func applyReleaseFilters(request *tapd.GetReleasesRequest, flags releaseQueryFla
 		request.ID = ids
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.startDate != "" {
-		request.StartDate = tapd.Ptr(flags.startDate)
+		request.StartDate = new(flags.startDate)
 	}
 	if flags.endDate != "" {
-		request.EndDate = tapd.Ptr(flags.endDate)
+		request.EndDate = new(flags.endDate)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	return nil
 }
@@ -415,9 +415,9 @@ func newLaunchFormCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateLaunchFormRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Creator:     tapd.Ptr(flags.creator),
-				TemplateID:  tapd.Ptr(flags.templateID),
+				WorkspaceID: new(flags.workspaceID),
+				Creator:     new(flags.creator),
+				TemplateID:  new(flags.templateID),
 			}
 			applyLaunchFormCreateFlags(request, flags)
 
@@ -514,7 +514,7 @@ func newLaunchFormFieldsCmd(rt *app.Runtime) *cobra.Command {
 
 			settings, _, err := client.ReleaseService.GetLaunchFormCustomFieldsSettings(
 				cmd.Context(),
-				&tapd.GetLaunchFormCustomFieldsSettingsRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+				&tapd.GetLaunchFormCustomFieldsSettingsRequest{WorkspaceID: new(workspaceID)},
 			)
 			if err != nil {
 				return err
@@ -549,7 +549,7 @@ func newLaunchFormTemplatesCmd(rt *app.Runtime) *cobra.Command {
 
 			templates, _, err := client.ReleaseService.GetLaunchFormTemplates(
 				cmd.Context(),
-				&tapd.GetLaunchFormTemplatesRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+				&tapd.GetLaunchFormTemplatesRequest{WorkspaceID: new(workspaceID)},
 			)
 			if err != nil {
 				return err
@@ -588,8 +588,8 @@ func newLaunchFormLogsCmd(rt *app.Runtime) *cobra.Command {
 			logs, _, err := client.ReleaseService.GetLaunchFormActivityLogs(
 				cmd.Context(),
 				&tapd.GetLaunchFormActivityLogsRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					FormID:      tapd.Ptr(formID),
+					WorkspaceID: new(workspaceID),
+					FormID:      new(formID),
 				},
 			)
 			if err != nil {
@@ -637,31 +637,31 @@ type launchFormCreateFlags struct {
 
 func applyLaunchFormCreateFlags(request *tapd.CreateLaunchFormRequest, flags launchFormCreateFlags) {
 	if flags.title != "" {
-		request.Title = tapd.Ptr(flags.title)
+		request.Title = new(flags.title)
 	}
 	if flags.versionType != "" {
-		request.VersionType = tapd.Ptr(flags.versionType)
+		request.VersionType = new(flags.versionType)
 	}
 	if flags.baseline != "" {
-		request.Baseline = tapd.Ptr(flags.baseline)
+		request.Baseline = new(flags.baseline)
 	}
 	if flags.releaseModel != "" {
-		request.ReleaseModel = tapd.Ptr(flags.releaseModel)
+		request.ReleaseModel = new(flags.releaseModel)
 	}
 	if flags.roadmapVersion != "" {
-		request.RoadmapVersion = tapd.Ptr(flags.roadmapVersion)
+		request.RoadmapVersion = new(flags.roadmapVersion)
 	}
 	if flags.releaseType != "" {
-		request.ReleaseType = tapd.Ptr(flags.releaseType)
+		request.ReleaseType = new(flags.releaseType)
 	}
 	if flags.signedBy != "" {
-		request.SignedBy = tapd.Ptr(flags.signedBy)
+		request.SignedBy = new(flags.signedBy)
 	}
 	if flags.archivedBy != "" {
-		request.ArchivedBy = tapd.Ptr(flags.archivedBy)
+		request.ArchivedBy = new(flags.archivedBy)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 }
 
@@ -712,9 +712,9 @@ func addLaunchFormQueryFlags(cmd *cobra.Command, flags *launchFormQueryFlags, wi
 
 func newGetLaunchFormsRequest(flags launchFormQueryFlags) *tapd.GetLaunchFormsRequest {
 	request := &tapd.GetLaunchFormsRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	applyLaunchFormFilters(request, flags)
@@ -722,100 +722,100 @@ func newGetLaunchFormsRequest(flags launchFormQueryFlags) *tapd.GetLaunchFormsRe
 }
 
 func newGetLaunchFormsCountRequest(flags launchFormQueryFlags) *tapd.GetLaunchFormsCountRequest {
-	request := &tapd.GetLaunchFormsCountRequest{WorkspaceID: tapd.Ptr(flags.workspaceID)}
+	request := &tapd.GetLaunchFormsCountRequest{WorkspaceID: new(flags.workspaceID)}
 	if flags.id > 0 {
-		request.ID = tapd.Ptr(flags.id)
+		request.ID = new(flags.id)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.title != "" {
-		request.Title = tapd.Ptr(flags.title)
+		request.Title = new(flags.title)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.versionType != "" {
-		request.VersionType = tapd.Ptr(flags.versionType)
+		request.VersionType = new(flags.versionType)
 	}
 	if flags.baseline != "" {
-		request.Baseline = tapd.Ptr(flags.baseline)
+		request.Baseline = new(flags.baseline)
 	}
 	if flags.releaseModel != "" {
-		request.ReleaseModel = tapd.Ptr(flags.releaseModel)
+		request.ReleaseModel = new(flags.releaseModel)
 	}
 	if flags.roadmapVersion != "" {
-		request.RoadmapVersion = tapd.Ptr(flags.roadmapVersion)
+		request.RoadmapVersion = new(flags.roadmapVersion)
 	}
 	if flags.releaseType != "" {
-		request.ReleaseType = tapd.Ptr(flags.releaseType)
+		request.ReleaseType = new(flags.releaseType)
 	}
 	if flags.changeType != "" {
-		request.ChangeType = tapd.Ptr(flags.changeType)
+		request.ChangeType = new(flags.changeType)
 	}
 	if flags.signedBy != "" {
-		request.SignedBy = tapd.Ptr(flags.signedBy)
+		request.SignedBy = new(flags.signedBy)
 	}
 	if flags.archivedBy != "" {
-		request.ArchivedBy = tapd.Ptr(flags.archivedBy)
+		request.ArchivedBy = new(flags.archivedBy)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.changeNotifier != "" {
-		request.ChangeNotifier = tapd.Ptr(flags.changeNotifier)
+		request.ChangeNotifier = new(flags.changeNotifier)
 	}
 	return request
 }
 
 func applyLaunchFormFilters(request *tapd.GetLaunchFormsRequest, flags launchFormQueryFlags) {
 	if flags.id > 0 {
-		request.ID = tapd.Ptr(flags.id)
+		request.ID = new(flags.id)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.title != "" {
-		request.Title = tapd.Ptr(flags.title)
+		request.Title = new(flags.title)
 	}
 	if flags.status != "" {
-		request.Status = tapd.Ptr(flags.status)
+		request.Status = new(flags.status)
 	}
 	if flags.versionType != "" {
-		request.VersionType = tapd.Ptr(flags.versionType)
+		request.VersionType = new(flags.versionType)
 	}
 	if flags.baseline != "" {
-		request.Baseline = tapd.Ptr(flags.baseline)
+		request.Baseline = new(flags.baseline)
 	}
 	if flags.releaseModel != "" {
-		request.ReleaseModel = tapd.Ptr(flags.releaseModel)
+		request.ReleaseModel = new(flags.releaseModel)
 	}
 	if flags.roadmapVersion != "" {
-		request.RoadmapVersion = tapd.Ptr(flags.roadmapVersion)
+		request.RoadmapVersion = new(flags.roadmapVersion)
 	}
 	if flags.releaseType != "" {
-		request.ReleaseType = tapd.Ptr(flags.releaseType)
+		request.ReleaseType = new(flags.releaseType)
 	}
 	if flags.changeType != "" {
-		request.ChangeType = tapd.Ptr(flags.changeType)
+		request.ChangeType = new(flags.changeType)
 	}
 	if flags.signedBy != "" {
-		request.SignedBy = tapd.Ptr(flags.signedBy)
+		request.SignedBy = new(flags.signedBy)
 	}
 	if flags.archivedBy != "" {
-		request.ArchivedBy = tapd.Ptr(flags.archivedBy)
+		request.ArchivedBy = new(flags.archivedBy)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.changeNotifier != "" {
-		request.ChangeNotifier = tapd.Ptr(flags.changeNotifier)
+		request.ChangeNotifier = new(flags.changeNotifier)
 	}
 }
 

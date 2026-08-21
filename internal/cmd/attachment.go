@@ -51,28 +51,28 @@ func newAttachmentListCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetAttachmentsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			}
 			if id > 0 {
-				request.ID = tapd.Ptr(id)
+				request.ID = new(id)
 			}
 			if entryID > 0 {
-				request.EntryID = tapd.Ptr(entryID)
+				request.EntryID = new(entryID)
 			}
 			if entryType != "" {
-				request.Type = tapd.Ptr(entryType)
+				request.Type = new(entryType)
 			}
 			if filename != "" {
-				request.Filename = tapd.Ptr(filename)
+				request.Filename = new(filename)
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 			if limit > 0 {
-				request.Limit = tapd.Ptr(limit)
+				request.Limit = new(limit)
 			}
 			if page > 0 {
-				request.Page = tapd.Ptr(page)
+				request.Page = new(page)
 			}
 
 			attachments, _, err := client.AttachmentService.GetAttachments(cmd.Context(), request)
@@ -127,15 +127,15 @@ func newAttachmentUploadCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UploadAttachmentRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Type:        tapd.Ptr(entryType),
-				CustomField: tapd.Ptr(customField),
-				EntryID:     tapd.Ptr(entryID),
-				Filename:    tapd.Ptr(filename),
+				WorkspaceID: new(workspaceID),
+				Type:        new(entryType),
+				CustomField: new(customField),
+				EntryID:     new(entryID),
+				Filename:    new(filename),
 				File:        body,
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 
 			attachment, _, err := client.AttachmentService.UploadAttachment(cmd.Context(), request)
@@ -181,14 +181,14 @@ func newAttachmentUploadImageBase64Cmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UploadImageBase64Request{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Base64Data:  tapd.Ptr(data),
-				Type:        tapd.Ptr(entryType),
-				CustomField: tapd.Ptr(customField),
-				EntryID:     tapd.Ptr(entryID),
+				WorkspaceID: new(workspaceID),
+				Base64Data:  new(data),
+				Type:        new(entryType),
+				CustomField: new(customField),
+				EntryID:     new(entryID),
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 
 			attachment, _, err := client.AttachmentService.UploadImageBase64(cmd.Context(), request)
@@ -225,8 +225,8 @@ func newAttachmentDownloadURLCmd(rt *app.Runtime) *cobra.Command {
 			attachment, _, err := client.AttachmentService.GetAttachmentDownloadURL(
 				cmd.Context(),
 				&tapd.GetAttachmentDownloadURLRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					ID:          tapd.Ptr(id),
+					WorkspaceID: new(workspaceID),
+					ID:          new(id),
 				},
 			)
 			if err != nil {
@@ -262,8 +262,8 @@ func newAttachmentImageURLCmd(rt *app.Runtime) *cobra.Command {
 			attachment, _, err := client.AttachmentService.GetImageDownloadURL(
 				cmd.Context(),
 				&tapd.GetImageDownloadURLRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					ImagePath:   tapd.Ptr(imagePath),
+					WorkspaceID: new(workspaceID),
+					ImagePath:   new(imagePath),
 				},
 			)
 			if err != nil {
@@ -299,8 +299,8 @@ func newAttachmentDocumentURLCmd(rt *app.Runtime) *cobra.Command {
 			document, _, err := client.AttachmentService.GetDocumentDownloadURL(
 				cmd.Context(),
 				&tapd.GetDocumentDownloadURLRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					ID:          tapd.Ptr(id),
+					WorkspaceID: new(workspaceID),
+					ID:          new(id),
 				},
 			)
 			if err != nil {

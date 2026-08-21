@@ -34,10 +34,10 @@ func newSettingWorkspaceCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetWorkspaceSettingRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			}
 			if settingType != "" {
-				request.Type = tapd.Ptr(settingType)
+				request.Type = new(settingType)
 			}
 
 			settings, _, err := client.SettingService.GetWorkspaceSetting(cmd.Context(), request)

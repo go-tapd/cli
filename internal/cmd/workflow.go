@@ -35,13 +35,13 @@ func newWorkflowLastStepsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetAllLastStepsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			}
 			if system != "" {
-				request.System = tapd.Ptr(system)
+				request.System = new(system)
 			}
 			if groupKey != "" {
-				request.GroupKey = tapd.Ptr(groupKey)
+				request.GroupKey = new(groupKey)
 			}
 
 			steps, _, err := client.WorkflowService.GetAllLastSteps(cmd.Context(), request)

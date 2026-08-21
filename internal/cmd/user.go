@@ -29,7 +29,7 @@ func newUserRolesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			roles, _, err := client.UserService.GetRoles(cmd.Context(), &tapd.GetRolesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err

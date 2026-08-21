@@ -42,21 +42,21 @@ func newWikiCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateWikiRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Name:        tapd.Ptr(flags.name),
-				Creator:     tapd.Ptr(flags.creator),
+				WorkspaceID: new(flags.workspaceID),
+				Name:        new(flags.name),
+				Creator:     new(flags.creator),
 			}
 			if flags.markdownDescription != "" {
-				request.MarkdownDescription = tapd.Ptr(flags.markdownDescription)
+				request.MarkdownDescription = new(flags.markdownDescription)
 			}
 			if flags.description != "" {
-				request.Description = tapd.Ptr(flags.description)
+				request.Description = new(flags.description)
 			}
 			if flags.note != "" {
-				request.Note = tapd.Ptr(flags.note)
+				request.Note = new(flags.note)
 			}
 			if flags.parentWikiID != "" {
-				request.ParentWikiID = tapd.Ptr(flags.parentWikiID)
+				request.ParentWikiID = new(flags.parentWikiID)
 			}
 
 			wiki, _, err := client.WikiService.CreateWiki(cmd.Context(), request)
@@ -151,23 +151,23 @@ func newWikiUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateWikiRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				ID:          tapd.Ptr(id),
+				WorkspaceID: new(flags.workspaceID),
+				ID:          new(id),
 			}
 			if flags.name != "" {
-				request.Name = tapd.Ptr(flags.name)
+				request.Name = new(flags.name)
 			}
 			if flags.markdownDescription != "" {
-				request.MarkdownDescription = tapd.Ptr(flags.markdownDescription)
+				request.MarkdownDescription = new(flags.markdownDescription)
 			}
 			if flags.description != "" {
-				request.Description = tapd.Ptr(flags.description)
+				request.Description = new(flags.description)
 			}
 			if flags.note != "" {
-				request.Note = tapd.Ptr(flags.note)
+				request.Note = new(flags.note)
 			}
 			if flags.parentWikiID != "" {
-				request.ParentWikiID = tapd.Ptr(flags.parentWikiID)
+				request.ParentWikiID = new(flags.parentWikiID)
 			}
 
 			wiki, _, err := client.WikiService.UpdateWiki(cmd.Context(), request)
@@ -202,11 +202,11 @@ func newWikiDrawioCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetWikiDrawioDataRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				ID:          tapd.Ptr(id),
+				WorkspaceID: new(workspaceID),
+				ID:          new(id),
 			}
 			if token != "" {
-				request.Token = tapd.Ptr(token)
+				request.Token = new(token)
 			}
 
 			data, _, err := client.WikiService.GetWikiDrawioData(cmd.Context(), request)
@@ -300,17 +300,17 @@ func newWikiPermissionsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetWikiEntityPermissionsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				WikiID:      tapd.Ptr(wikiID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				WikiID:      new(wikiID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			}
 			if targetType != "" {
-				request.TargetType = tapd.Ptr(targetType)
+				request.TargetType = new(targetType)
 			}
 			if targetID != "" {
-				request.TargetID = tapd.Ptr(targetID)
+				request.TargetID = new(targetID)
 			}
 
 			permissions, _, err := client.WikiService.GetWikiEntityPermissions(cmd.Context(), request)
@@ -422,27 +422,27 @@ func newWikiAttachmentsCountCmd(rt *app.Runtime) *cobra.Command {
 				return err
 			}
 
-			request := &tapd.GetWikiAttachmentsCountRequest{WorkspaceID: tapd.Ptr(workspaceID)}
+			request := &tapd.GetWikiAttachmentsCountRequest{WorkspaceID: new(workspaceID)}
 			if id > 0 {
-				request.ID = tapd.Ptr(id)
+				request.ID = new(id)
 			}
 			if filename != "" {
-				request.Filename = tapd.Ptr(filename)
+				request.Filename = new(filename)
 			}
 			if size > 0 {
-				request.Size = tapd.Ptr(size)
+				request.Size = new(size)
 			}
 			if owner != "" {
-				request.Owner = tapd.Ptr(owner)
+				request.Owner = new(owner)
 			}
 			if created != "" {
-				request.Created = tapd.Ptr(created)
+				request.Created = new(created)
 			}
 			if modified != "" {
-				request.Modified = tapd.Ptr(modified)
+				request.Modified = new(modified)
 			}
 			if wikiID > 0 {
-				request.WikiID = tapd.Ptr(wikiID)
+				request.WikiID = new(wikiID)
 			}
 
 			count, _, err := client.WikiService.GetWikiAttachmentsCount(cmd.Context(), request)
@@ -525,60 +525,60 @@ func addWikiQueryFlags(cmd *cobra.Command, flags *wikiQueryFlags, withPaging boo
 
 func newGetWikisRequest(flags wikiQueryFlags) *tapd.GetWikisRequest {
 	request := &tapd.GetWikisRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.id > 0 {
-		request.ID = tapd.Ptr(flags.id)
+		request.ID = new(flags.id)
 	}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.note != "" {
-		request.Note = tapd.Ptr(flags.note)
+		request.Note = new(flags.note)
 	}
 	if flags.viewCount != "" {
-		request.ViewCount = tapd.Ptr(flags.viewCount)
+		request.ViewCount = new(flags.viewCount)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	return request
 }
 
 func newGetWikisCountRequest(flags wikiQueryFlags) *tapd.GetWikisCountRequest {
-	request := &tapd.GetWikisCountRequest{WorkspaceID: tapd.Ptr(flags.workspaceID)}
+	request := &tapd.GetWikisCountRequest{WorkspaceID: new(flags.workspaceID)}
 	if flags.name != "" {
-		request.Name = tapd.Ptr(flags.name)
+		request.Name = new(flags.name)
 	}
 	if flags.modifier != "" {
-		request.Modifier = tapd.Ptr(flags.modifier)
+		request.Modifier = new(flags.modifier)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.note != "" {
-		request.Note = tapd.Ptr(flags.note)
+		request.Note = new(flags.note)
 	}
 	if flags.viewCount != "" {
-		request.ViewCount = tapd.Ptr(flags.viewCount)
+		request.ViewCount = new(flags.viewCount)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	return request
 }
@@ -608,39 +608,39 @@ func addWikiFollowerFlags(cmd *cobra.Command, flags *wikiFollowerFlags, withPagi
 
 func newGetWikiFollowersRequest(flags wikiFollowerFlags) *tapd.GetWikiFollowersRequest {
 	request := &tapd.GetWikiFollowersRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.id > 0 {
-		request.ID = tapd.Ptr(flags.id)
+		request.ID = new(flags.id)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.wikiID > 0 {
-		request.WikiID = tapd.Ptr(flags.wikiID)
+		request.WikiID = new(flags.wikiID)
 	}
 	if flags.user != "" {
-		request.User = tapd.Ptr(flags.user)
+		request.User = new(flags.user)
 	}
 	return request
 }
 
 func newGetWikiFollowersCountRequest(flags wikiFollowerFlags) *tapd.GetWikiFollowersCountRequest {
-	request := &tapd.GetWikiFollowersCountRequest{WorkspaceID: tapd.Ptr(flags.workspaceID)}
+	request := &tapd.GetWikiFollowersCountRequest{WorkspaceID: new(flags.workspaceID)}
 	if flags.id > 0 {
-		request.ID = tapd.Ptr(flags.id)
+		request.ID = new(flags.id)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.wikiID > 0 {
-		request.WikiID = tapd.Ptr(flags.wikiID)
+		request.WikiID = new(flags.wikiID)
 	}
 	if flags.user != "" {
-		request.User = tapd.Ptr(flags.user)
+		request.User = new(flags.user)
 	}
 	return request
 }
@@ -668,38 +668,38 @@ func addWikiTagFlags(cmd *cobra.Command, flags *wikiTagFlags, withPaging bool) {
 
 func newGetWikiTagsRequest(flags wikiTagFlags) *tapd.GetWikiTagsRequest {
 	request := &tapd.GetWikiTagsRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 	}
 	if flags.wikiID > 0 {
-		request.WikiID = tapd.Ptr(flags.wikiID)
+		request.WikiID = new(flags.wikiID)
 	}
 	if flags.tag != "" {
-		request.Tag = tapd.Ptr(flags.tag)
+		request.Tag = new(flags.tag)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	return request
 }
 
 func newGetWikiTagsCountRequest(flags wikiTagFlags) *tapd.GetWikiTagsCountRequest {
-	request := &tapd.GetWikiTagsCountRequest{WorkspaceID: tapd.Ptr(flags.workspaceID)}
+	request := &tapd.GetWikiTagsCountRequest{WorkspaceID: new(flags.workspaceID)}
 	if flags.wikiID > 0 {
-		request.WikiID = tapd.Ptr(flags.wikiID)
+		request.WikiID = new(flags.wikiID)
 	}
 	if flags.tag != "" {
-		request.Tag = tapd.Ptr(flags.tag)
+		request.Tag = new(flags.tag)
 	}
 	if flags.creator != "" {
-		request.Creator = tapd.Ptr(flags.creator)
+		request.Creator = new(flags.creator)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	return request
 }
