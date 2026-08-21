@@ -45,20 +45,20 @@ func newCommentCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateCommentRequest{
-				Description: tapd.Ptr(description),
-				Author:      tapd.Ptr(author),
-				EntryType:   tapd.Ptr(tapd.CommentEntryType(entryType)),
-				EntryID:     tapd.Ptr(entryID),
-				WorkspaceID: tapd.Ptr(workspaceID),
+				Description: new(description),
+				Author:      new(author),
+				EntryType:   new(tapd.CommentEntryType(entryType)),
+				EntryID:     new(entryID),
+				WorkspaceID: new(workspaceID),
 			}
 			if title != "" {
-				request.Title = tapd.Ptr(title)
+				request.Title = new(title)
 			}
 			if replyID > 0 {
-				request.ReplyID = tapd.Ptr(replyID)
+				request.ReplyID = new(replyID)
 			}
 			if rootID > 0 {
-				request.RootID = tapd.Ptr(rootID)
+				request.RootID = new(rootID)
 			}
 
 			comment, _, err := client.CommentService.CreateComment(cmd.Context(), request)
@@ -170,12 +170,12 @@ func newCommentUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateCommentRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				ID:          tapd.Ptr(id),
-				Description: tapd.Ptr(description),
+				WorkspaceID: new(workspaceID),
+				ID:          new(id),
+				Description: new(description),
 			}
 			if changeCreator != "" {
-				request.ChangeCreator = tapd.Ptr(changeCreator)
+				request.ChangeCreator = new(changeCreator)
 			}
 
 			comment, _, err := client.CommentService.UpdateComment(cmd.Context(), request)
@@ -231,9 +231,9 @@ func addCommentQueryFlags(cmd *cobra.Command, flags *commentQueryFlags, withPagi
 
 func newGetCommentsRequest(flags commentQueryFlags) (*tapd.GetCommentsRequest, error) {
 	request := &tapd.GetCommentsRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -244,37 +244,37 @@ func newGetCommentsRequest(flags commentQueryFlags) (*tapd.GetCommentsRequest, e
 		request.ID = ids
 	}
 	if flags.title != "" {
-		request.Title = tapd.Ptr(flags.title)
+		request.Title = new(flags.title)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.author != "" {
-		request.Author = tapd.Ptr(flags.author)
+		request.Author = new(flags.author)
 	}
 	if flags.entryType != "" {
-		request.EntryType = tapd.Ptr(tapd.CommentEntryType(flags.entryType))
+		request.EntryType = new(tapd.CommentEntryType(flags.entryType))
 	}
 	if flags.entryID > 0 {
-		request.EntryID = tapd.Ptr(flags.entryID)
+		request.EntryID = new(flags.entryID)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.rootID > 0 {
-		request.RootID = tapd.Ptr(flags.rootID)
+		request.RootID = new(flags.rootID)
 	}
 	if flags.replyID > 0 {
-		request.ReplyID = tapd.Ptr(flags.replyID)
+		request.ReplyID = new(flags.replyID)
 	}
 	return request, nil
 }
 
 func newGetCommentsCountRequest(flags commentQueryFlags) (*tapd.GetCommentsCountRequest, error) {
-	request := &tapd.GetCommentsCountRequest{WorkspaceID: tapd.Ptr(flags.workspaceID)}
+	request := &tapd.GetCommentsCountRequest{WorkspaceID: new(flags.workspaceID)}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("comment IDs", flags.ids)
 		if err != nil {
@@ -283,31 +283,31 @@ func newGetCommentsCountRequest(flags commentQueryFlags) (*tapd.GetCommentsCount
 		request.ID = ids
 	}
 	if flags.title != "" {
-		request.Title = tapd.Ptr(flags.title)
+		request.Title = new(flags.title)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.author != "" {
-		request.Author = tapd.Ptr(flags.author)
+		request.Author = new(flags.author)
 	}
 	if flags.entryType != "" {
-		request.EntryType = tapd.Ptr(tapd.CommentEntryType(flags.entryType))
+		request.EntryType = new(tapd.CommentEntryType(flags.entryType))
 	}
 	if flags.entryID > 0 {
-		request.EntryID = tapd.Ptr(flags.entryID)
+		request.EntryID = new(flags.entryID)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.rootID > 0 {
-		request.RootID = tapd.Ptr(flags.rootID)
+		request.RootID = new(flags.rootID)
 	}
 	if flags.replyID > 0 {
-		request.ReplyID = tapd.Ptr(flags.replyID)
+		request.ReplyID = new(flags.replyID)
 	}
 	return request, nil
 }

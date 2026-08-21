@@ -38,22 +38,22 @@ func newReportListCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetReportsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			}
 			if id > 0 {
-				request.ID = tapd.Ptr(id)
+				request.ID = new(id)
 			}
 			if title != "" {
-				request.Title = tapd.Ptr(title)
+				request.Title = new(title)
 			}
 			if author != "" {
-				request.Author = tapd.Ptr(author)
+				request.Author = new(author)
 			}
 			if created != "" {
-				request.Created = tapd.Ptr(created)
+				request.Created = new(created)
 			}
 
 			reports, _, err := client.ReportService.GetReports(cmd.Context(), request)

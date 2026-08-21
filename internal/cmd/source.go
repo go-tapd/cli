@@ -63,23 +63,23 @@ func newSourceCommitAddCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.AddCodeCommitInfoRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				CommitID:    tapd.Ptr(commitID),
-				Author:      tapd.Ptr(author),
-				Message:     tapd.Ptr(message),
-				Files:       tapd.Ptr(fileItems),
-				Repo:        tapd.Ptr(repo),
-				RepoID:      tapd.Ptr(repoID),
-				CommitTime:  tapd.Ptr(commitTime),
+				WorkspaceID: new(workspaceID),
+				CommitID:    new(commitID),
+				Author:      new(author),
+				Message:     new(message),
+				Files:       new(fileItems),
+				Repo:        new(repo),
+				RepoID:      new(repoID),
+				CommitTime:  new(commitTime),
 			}
 			if gitEnv != "" {
-				request.GitEnv = tapd.Ptr(gitEnv)
+				request.GitEnv = new(gitEnv)
 			}
 			if repoURL != "" {
-				request.RepoURL = tapd.Ptr(repoURL)
+				request.RepoURL = new(repoURL)
 			}
 			if commitURL != "" {
-				request.CommitURL = tapd.Ptr(commitURL)
+				request.CommitURL = new(commitURL)
 			}
 
 			info, _, err := client.SourceService.AddCodeCommitInfo(cmd.Context(), request)
@@ -133,17 +133,17 @@ func newSourceCommitListCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetCodeCommitInfosRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Type:        tapd.Ptr(tapd.EntityType(entityType)),
-				ObjectID:    tapd.Ptr(objectID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Type:        new(tapd.EntityType(entityType)),
+				ObjectID:    new(objectID),
+				Limit:       new(limit),
+				Page:        new(page),
 			}
 			if commitTime != "" {
-				request.CommitTime = tapd.Ptr(commitTime)
+				request.CommitTime = new(commitTime)
 			}
 			if relatedType != "" {
-				request.RelatedType = tapd.Ptr(tapd.CodeCommitRelatedType(relatedType))
+				request.RelatedType = new(tapd.CodeCommitRelatedType(relatedType))
 			}
 
 			infos, _, err := client.SourceService.GetCodeCommitInfos(cmd.Context(), request)
@@ -192,15 +192,15 @@ func newSourceCommitObjectsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetCommitObjectsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				CommitID:    ids,
-				EntityType:  tapd.Ptr(tapd.EntityType(entityType)),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				EntityType:  new(tapd.EntityType(entityType)),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 			}
 			if scmType != "" {
-				request.SCMType = tapd.Ptr(scmType)
+				request.SCMType = new(scmType)
 			}
 
 			objects, _, err := client.SourceService.GetCommitObjects(cmd.Context(), request)

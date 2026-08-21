@@ -65,9 +65,9 @@ func newBugListCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 				Fields:      fieldsMulti(fields),
 				ID:          int64Multi(ids),
 			}
@@ -75,7 +75,7 @@ func newBugListCmd(rt *app.Runtime) *cobra.Command {
 				request.Reporter = tapd.NewMulti(creator)
 			}
 			if owner != "" {
-				request.CurrentOwner = tapd.Ptr(owner)
+				request.CurrentOwner = new(owner)
 			}
 
 			items, _, err := client.BugService.GetBugs(cmd.Context(), request)
@@ -121,8 +121,8 @@ func newBugCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateBugRequest{
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
-				Title:       tapd.Ptr(flags.title),
+				WorkspaceID: new(flags.workspaceID),
+				Title:       new(flags.title),
 			}
 			applyBugCreateFlags(request, flags)
 
@@ -161,10 +161,10 @@ func newBugViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			bugs, _, err := client.BugService.GetBugs(cmd.Context(), &tapd.GetBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          tapd.NewMulti(id),
-				Limit:       tapd.Ptr(1),
-				Page:        tapd.Ptr(1),
+				Limit:       new(1),
+				Page:        new(1),
 			})
 			if err != nil {
 				return err
@@ -199,14 +199,14 @@ func newBugCountCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetBugsCountRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				ID:          int64Multi(ids),
 			}
 			if creator != "" {
 				request.Reporter = tapd.NewMulti(creator)
 			}
 			if owner != "" {
-				request.CurrentOwner = tapd.Ptr(owner)
+				request.CurrentOwner = new(owner)
 			}
 
 			count, _, err := client.BugService.GetBugsCount(cmd.Context(), request)
@@ -249,9 +249,9 @@ func newBugCopyCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			bug, _, err := client.BugService.CopyBug(cmd.Context(), &tapd.CopyBugRequest{
-				WorkspaceID:    tapd.Ptr(workspaceID),
-				SourceBugID:    tapd.Ptr(sourceBugID),
-				DstWorkspaceID: tapd.Ptr(dstWorkspaceID),
+				WorkspaceID:    new(workspaceID),
+				SourceBugID:    new(sourceBugID),
+				DstWorkspaceID: new(dstWorkspaceID),
 				SyncFields:     fieldsMulti(syncFields),
 			})
 			if err != nil {
@@ -287,10 +287,10 @@ func newBugFieldsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetBugFieldsInfoRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			}
 			if allOptions {
-				request.AllOptions = tapd.Ptr(1)
+				request.AllOptions = new(1)
 			}
 
 			fields, _, err := client.BugService.GetBugFieldsInfo(cmd.Context(), request)
@@ -339,7 +339,7 @@ func newBugCustomFieldSettingsCmd(rt *app.Runtime) *cobra.Command {
 
 			settings, _, err := client.BugService.GetBugCustomFieldsSettings(
 				cmd.Context(),
-				&tapd.GetBugCustomFieldsSettingsRequest{WorkspaceID: tapd.Ptr(workspaceID)},
+				&tapd.GetBugCustomFieldsSettingsRequest{WorkspaceID: new(workspaceID)},
 			)
 			if err != nil {
 				return err
@@ -394,8 +394,8 @@ func newBugUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateBugRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(flags.workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(flags.workspaceID),
 			}
 			applyBugUpdateFlags(request, flags)
 
@@ -431,7 +431,7 @@ func newBugUpdateSystemOptionsCmd(rt *app.Runtime) *cobra.Command {
 
 			options := make([]*tapd.BugSystemSelectFieldOption, 0, len(items))
 			for _, item := range items {
-				options = append(options, &tapd.BugSystemSelectFieldOption{Value: tapd.Ptr(item)})
+				options = append(options, &tapd.BugSystemSelectFieldOption{Value: new(item)})
 			}
 
 			client, _, err := rt.NewClient()
@@ -442,8 +442,8 @@ func newBugUpdateSystemOptionsCmd(rt *app.Runtime) *cobra.Command {
 			ok, _, err := client.BugService.UpdateBugSystemSelectFieldOptions(
 				cmd.Context(),
 				&tapd.UpdateBugSystemSelectFieldOptionsRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					Field:       tapd.Ptr(field),
+					WorkspaceID: new(workspaceID),
+					Field:       new(field),
 					Options:     options,
 				},
 			)
@@ -610,7 +610,7 @@ func newBugFieldLabelsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			labels, _, err := client.BugService.GetBugFieldsLabel(cmd.Context(), &tapd.GetBugFieldsLabelRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -642,7 +642,7 @@ func newBugTemplatesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			templates, _, err := client.BugService.GetBugTemplates(cmd.Context(), &tapd.GetBugTemplatesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 			})
 			if err != nil {
 				return err
@@ -678,11 +678,11 @@ func newBugTemplateFieldsCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetBugTemplateFieldsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				TemplateID:  tapd.Ptr(templateID),
+				WorkspaceID: new(workspaceID),
+				TemplateID:  new(templateID),
 			}
 			if usePriorityLabel {
-				request.UsePriorityLabel = tapd.Ptr(1)
+				request.UsePriorityLabel = new(1)
 			}
 
 			fields, _, err := client.BugService.GetBugTemplateFields(cmd.Context(), request)
@@ -728,9 +728,9 @@ func newBugRemovedCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetRemovedBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				Limit:       tapd.Ptr(limit),
-				Page:        tapd.Ptr(page),
+				WorkspaceID: new(workspaceID),
+				Limit:       new(limit),
+				Page:        new(page),
 			}
 			if ids != "" {
 				request.ID, err = strictInt64Multi("bug IDs", ids)
@@ -739,16 +739,16 @@ func newBugRemovedCmd(rt *app.Runtime) *cobra.Command {
 				}
 			}
 			if creator != "" {
-				request.Creator = tapd.Ptr(creator)
+				request.Creator = new(creator)
 			}
 			if created != "" {
-				request.Created = tapd.Ptr(created)
+				request.Created = new(created)
 			}
 			if modified != "" {
-				request.Modified = tapd.Ptr(modified)
+				request.Modified = new(modified)
 			}
 			if includeAll {
-				request.IncludeAll = tapd.Ptr(1)
+				request.IncludeAll = new(1)
 			}
 
 			bugs, _, err := client.BugService.GetRemovedBugs(cmd.Context(), request)
@@ -791,8 +791,8 @@ func newBugLinksCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			relations, _, err := client.BugService.GetBugLinkBugs(cmd.Context(), &tapd.GetBugLinkBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				BugID:       tapd.Ptr(bugID),
+				WorkspaceID: new(workspaceID),
+				BugID:       new(bugID),
 			})
 			if err != nil {
 				return err
@@ -847,7 +847,7 @@ func newBugRelatedStoriesCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			items, _, err := client.BugService.GetBugRelatedStories(cmd.Context(), &tapd.GetBugRelatedStoriesRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
+				WorkspaceID: new(workspaceID),
 				BugID:       ids,
 			})
 			if err != nil {
@@ -891,8 +891,8 @@ func newBugLinkCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			ok, _, err := client.BugService.LinkBugs(cmd.Context(), &tapd.LinkBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				BugID:       tapd.Ptr(bugID),
+				WorkspaceID: new(workspaceID),
+				BugID:       new(bugID),
 				RelateBugs:  ids,
 			})
 			if err != nil {
@@ -934,8 +934,8 @@ func newBugUnlinkCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			ok, _, err := client.BugService.DeleteLinkBugs(cmd.Context(), &tapd.DeleteLinkBugsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				BugID:       tapd.Ptr(bugID),
+				WorkspaceID: new(workspaceID),
+				BugID:       new(bugID),
 				LinkIDs:     ids,
 			})
 			if err != nil {
@@ -978,22 +978,22 @@ func newBugByViewCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.GetBugsByViewConfIDRequest{
-				ViewConfID: tapd.Ptr(viewConfID),
+				ViewConfID: new(viewConfID),
 				GetBugsRequest: tapd.GetBugsRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
-					Limit:       tapd.Ptr(limit),
-					Page:        tapd.Ptr(page),
+					WorkspaceID: new(workspaceID),
+					Limit:       new(limit),
+					Page:        new(page),
 					Fields:      fieldsMulti(fields),
 				},
 			}
 			if currentUser != "" {
-				request.CurrentUser = tapd.Ptr(currentUser)
+				request.CurrentUser = new(currentUser)
 			}
 			if creator != "" {
 				request.Reporter = tapd.NewMulti(creator)
 			}
 			if owner != "" {
-				request.CurrentOwner = tapd.Ptr(owner)
+				request.CurrentOwner = new(owner)
 			}
 			if status != "" {
 				request.Status = tapd.NewEnum(splitCSV(status)...)
@@ -1043,7 +1043,7 @@ func newBugConvertIDsCmd(rt *app.Runtime) *cobra.Command {
 			result, _, err := client.BugService.GetConvertBugIDsToQueryToken(
 				cmd.Context(),
 				&tapd.GetConvertBugIDsToQueryTokenRequest{
-					WorkspaceID: tapd.Ptr(workspaceID),
+					WorkspaceID: new(workspaceID),
 					BugIDs:      bugIDs,
 				},
 			)
@@ -1141,70 +1141,70 @@ func addBugMutationFlags(cmd *cobra.Command, flags *bugMutationFlags, update boo
 
 func applyBugCreateFlags(request *tapd.CreateBugRequest, flags bugMutationFlags) {
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.priorityLabel != "" {
-		request.PriorityLabel = tapd.Ptr(tapd.PriorityLabel(flags.priorityLabel))
+		request.PriorityLabel = new(tapd.PriorityLabel(flags.priorityLabel))
 	}
 	if flags.severity != "" {
-		request.Severity = tapd.Ptr(tapd.BugSeverity(flags.severity))
+		request.Severity = new(tapd.BugSeverity(flags.severity))
 	}
 	if flags.module != "" {
-		request.Module = tapd.Ptr(flags.module)
+		request.Module = new(flags.module)
 	}
 	if flags.currentOwner != "" {
-		request.CurrentOwner = tapd.Ptr(flags.currentOwner)
+		request.CurrentOwner = new(flags.currentOwner)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.reporter != "" {
-		request.Reporter = tapd.Ptr(flags.reporter)
+		request.Reporter = new(flags.reporter)
 	}
 	if flags.te != "" {
-		request.TE = tapd.Ptr(flags.te)
+		request.TE = new(flags.te)
 	}
 	if flags.de != "" {
-		request.DE = tapd.Ptr(flags.de)
+		request.DE = new(flags.de)
 	}
 	if flags.versionReport != "" {
-		request.VersionReport = tapd.Ptr(flags.versionReport)
+		request.VersionReport = new(flags.versionReport)
 	}
 	if flags.iterationID > 0 {
-		request.IterationID = tapd.Ptr(flags.iterationID)
+		request.IterationID = new(flags.iterationID)
 	}
 	if flags.releaseID > 0 {
-		request.ReleaseID = tapd.Ptr(flags.releaseID)
+		request.ReleaseID = new(flags.releaseID)
 	}
 	if flags.source != "" {
-		request.Source = tapd.Ptr(flags.source)
+		request.Source = new(flags.source)
 	}
 	if flags.bugType != "" {
-		request.BugType = tapd.Ptr(flags.bugType)
+		request.BugType = new(flags.bugType)
 	}
 	if flags.label != "" {
-		request.Label = tapd.Ptr(flags.label)
+		request.Label = new(flags.label)
 	}
 	if flags.deadline != "" {
-		request.Deadline = tapd.Ptr(flags.deadline)
+		request.Deadline = new(flags.deadline)
 	}
 }
 
 func applyBugUpdateFlags(request *tapd.UpdateBugRequest, flags bugMutationFlags) { //nolint:gocyclo
 	if flags.title != "" {
-		request.Title = tapd.Ptr(flags.title)
+		request.Title = new(flags.title)
 	}
 	if flags.description != "" {
-		request.Description = tapd.Ptr(flags.description)
+		request.Description = new(flags.description)
 	}
 	if flags.priority != "" {
-		request.Priority = tapd.Ptr(flags.priority)
+		request.Priority = new(flags.priority)
 	}
 	if flags.priorityLabel != "" {
-		request.PriorityLabel = tapd.Ptr(tapd.PriorityLabel(flags.priorityLabel))
+		request.PriorityLabel = new(tapd.PriorityLabel(flags.priorityLabel))
 	}
 	if flags.severity != "" {
 		request.Severity = tapd.NewEnum(tapd.BugSeverity(flags.severity))
@@ -1213,7 +1213,7 @@ func applyBugUpdateFlags(request *tapd.UpdateBugRequest, flags bugMutationFlags)
 		request.Status = stringEnum(flags.status)
 	}
 	if flags.vStatus != "" {
-		request.VStatus = tapd.Ptr(flags.vStatus)
+		request.VStatus = new(flags.vStatus)
 	}
 	if flags.label != "" {
 		request.Label = stringEnum(flags.label)
@@ -1225,28 +1225,28 @@ func applyBugUpdateFlags(request *tapd.UpdateBugRequest, flags bugMutationFlags)
 		request.Module = stringEnum(flags.module)
 	}
 	if flags.releaseID > 0 {
-		request.ReleaseID = tapd.Ptr(int(flags.releaseID))
+		request.ReleaseID = new(int(flags.releaseID))
 	}
 	if flags.versionReport != "" {
 		request.VersionReport = stringEnum(flags.versionReport)
 	}
 	if flags.versionTest != "" {
-		request.VersionTest = tapd.Ptr(flags.versionTest)
+		request.VersionTest = new(flags.versionTest)
 	}
 	if flags.versionFix != "" {
-		request.VersionFix = tapd.Ptr(flags.versionFix)
+		request.VersionFix = new(flags.versionFix)
 	}
 	if flags.versionClose != "" {
-		request.VersionClose = tapd.Ptr(flags.versionClose)
+		request.VersionClose = new(flags.versionClose)
 	}
 	if flags.feature != "" {
-		request.Feature = tapd.Ptr(flags.feature)
+		request.Feature = new(flags.feature)
 	}
 	if flags.currentOwner != "" {
-		request.CurrentOwner = tapd.Ptr(flags.currentOwner)
+		request.CurrentOwner = new(flags.currentOwner)
 	}
 	if flags.cc != "" {
-		request.CC = tapd.Ptr(flags.cc)
+		request.CC = new(flags.cc)
 	}
 	if flags.reporter != "" {
 		request.Reporter = tapd.NewMulti(splitCSV(flags.reporter)...)
@@ -1255,56 +1255,56 @@ func applyBugUpdateFlags(request *tapd.UpdateBugRequest, flags bugMutationFlags)
 		request.Participator = tapd.NewMulti(splitCSV(flags.participator)...)
 	}
 	if flags.te != "" {
-		request.TE = tapd.Ptr(flags.te)
+		request.TE = new(flags.te)
 	}
 	if flags.de != "" {
-		request.DE = tapd.Ptr(flags.de)
+		request.DE = new(flags.de)
 	}
 	if flags.auditer != "" {
-		request.Auditer = tapd.Ptr(flags.auditer)
+		request.Auditer = new(flags.auditer)
 	}
 	if flags.confirmer != "" {
-		request.Confirmer = tapd.Ptr(flags.confirmer)
+		request.Confirmer = new(flags.confirmer)
 	}
 	if flags.fixer != "" {
-		request.Fixer = tapd.Ptr(flags.fixer)
+		request.Fixer = new(flags.fixer)
 	}
 	if flags.closer != "" {
-		request.Closer = tapd.Ptr(flags.closer)
+		request.Closer = new(flags.closer)
 	}
 	if flags.deadline != "" {
-		request.Deadline = tapd.Ptr(flags.deadline)
+		request.Deadline = new(flags.deadline)
 	}
 	if flags.source != "" {
 		request.Source = stringEnum(flags.source)
 	}
 	if flags.bugType != "" {
-		request.BugType = tapd.Ptr(flags.bugType)
+		request.BugType = new(flags.bugType)
 	}
 	if flags.frequency != "" {
 		request.Frequency = stringEnum(flags.frequency)
 	}
 	if flags.originPhase != "" {
-		request.OriginPhase = tapd.Ptr(flags.originPhase)
+		request.OriginPhase = new(flags.originPhase)
 	}
 	if flags.sourcePhase != "" {
-		request.SourcePhase = tapd.Ptr(flags.sourcePhase)
+		request.SourcePhase = new(flags.sourcePhase)
 	}
 	if flags.resolution != "" {
 		request.Resolution = stringEnum(flags.resolution)
 	}
 	if flags.estimate > 0 {
-		request.Estimate = tapd.Ptr(flags.estimate)
+		request.Estimate = new(flags.estimate)
 	}
 }
 
 func decodeBugBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateBugsRequest, error) {
 	var request tapd.BatchUpdateBugsRequest
 	if err := json.Unmarshal(data, &request); err == nil && len(request.Workitems) > 0 {
-		request.ProjectID = tapd.Ptr(workspaceID)
+		request.ProjectID = new(workspaceID)
 		for _, item := range request.Workitems {
 			if item != nil && item.WorkspaceID == nil {
-				item.WorkspaceID = tapd.Ptr(workspaceID)
+				item.WorkspaceID = new(workspaceID)
 			}
 		}
 		return &request, nil
@@ -1319,11 +1319,11 @@ func decodeBugBatchUpdate(workspaceID int, data []byte) (*tapd.BatchUpdateBugsRe
 	}
 	for _, item := range items {
 		if item != nil && item.WorkspaceID == nil {
-			item.WorkspaceID = tapd.Ptr(workspaceID)
+			item.WorkspaceID = new(workspaceID)
 		}
 	}
 	return &tapd.BatchUpdateBugsRequest{
-		ProjectID: tapd.Ptr(workspaceID),
+		ProjectID: new(workspaceID),
 		Workitems: items,
 	}, nil
 }
@@ -1363,9 +1363,9 @@ func addBugChangesFlags(cmd *cobra.Command, flags *bugChangesFlags, withPaging b
 
 func newBugChangesRequest(flags bugChangesFlags) (*tapd.GetBugChangesRequest, error) {
 	request := &tapd.GetBugChangesRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if flags.ids != "" {
@@ -1383,32 +1383,32 @@ func newBugChangesRequest(flags bugChangesFlags) (*tapd.GetBugChangesRequest, er
 		request.BugID = ids
 	}
 	if flags.author != "" {
-		request.Author = tapd.Ptr(flags.author)
+		request.Author = new(flags.author)
 	}
 	if flags.field != "" {
-		request.Field = tapd.Ptr(flags.field)
+		request.Field = new(flags.field)
 	}
 	if flags.oldValue != "" {
-		request.OldValue = tapd.Ptr(flags.oldValue)
+		request.OldValue = new(flags.oldValue)
 	}
 	if flags.newValue != "" {
-		request.NewValue = tapd.Ptr(flags.newValue)
+		request.NewValue = new(flags.newValue)
 	}
 	if flags.memo != "" {
-		request.Memo = tapd.Ptr(flags.memo)
+		request.Memo = new(flags.memo)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.includeAddBug {
-		request.IncludeAddBug = tapd.Ptr(1)
+		request.IncludeAddBug = new(1)
 	}
 	return request, nil
 }
 
 func newBugChangesCountRequest(flags bugChangesFlags) (*tapd.GetBugChangesCountRequest, error) {
 	request := &tapd.GetBugChangesCountRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
+		WorkspaceID: new(flags.workspaceID),
 	}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("change IDs", flags.ids)
@@ -1425,22 +1425,22 @@ func newBugChangesCountRequest(flags bugChangesFlags) (*tapd.GetBugChangesCountR
 		request.BugID = ids
 	}
 	if flags.author != "" {
-		request.Author = tapd.Ptr(flags.author)
+		request.Author = new(flags.author)
 	}
 	if flags.field != "" {
-		request.Field = tapd.Ptr(flags.field)
+		request.Field = new(flags.field)
 	}
 	if flags.oldValue != "" {
-		request.OldValue = tapd.Ptr(flags.oldValue)
+		request.OldValue = new(flags.oldValue)
 	}
 	if flags.newValue != "" {
-		request.NewValue = tapd.Ptr(flags.newValue)
+		request.NewValue = new(flags.newValue)
 	}
 	if flags.memo != "" {
-		request.Memo = tapd.Ptr(flags.memo)
+		request.Memo = new(flags.memo)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	return request, nil
 }

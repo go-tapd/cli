@@ -189,7 +189,7 @@ func loginBaseURL(override string) string {
 
 func validateLoginWithWorkspace(ctx context.Context, client *tapd.Client, workspaceID int) error {
 	_, _, err := client.UserService.GetRoles(ctx, &tapd.GetRolesRequest{
-		WorkspaceID: tapd.Ptr(workspaceID),
+		WorkspaceID: new(workspaceID),
 	})
 	if err != nil {
 		return fmt.Errorf("validate credentials with workspace %d: %w", workspaceID, err)

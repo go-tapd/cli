@@ -48,20 +48,20 @@ func newTimesheetCreateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.CreateTimesheetRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				EntityType:  tapd.Ptr(tapd.EntityType(entityType)),
-				EntityID:    tapd.Ptr(entityID),
-				Timespent:   tapd.Ptr(timespent),
-				Owner:       tapd.Ptr(owner),
+				WorkspaceID: new(workspaceID),
+				EntityType:  new(tapd.EntityType(entityType)),
+				EntityID:    new(entityID),
+				Timespent:   new(timespent),
+				Owner:       new(owner),
 			}
 			if timeremain != "" {
-				request.Timeremain = tapd.Ptr(timeremain)
+				request.Timeremain = new(timeremain)
 			}
 			if spentdate != "" {
-				request.Spentdate = tapd.Ptr(spentdate)
+				request.Spentdate = new(spentdate)
 			}
 			if memo != "" {
-				request.Memo = tapd.Ptr(memo)
+				request.Memo = new(memo)
 			}
 
 			timesheet, _, err := client.TimesheetService.CreateTimesheet(cmd.Context(), request)
@@ -177,17 +177,17 @@ func newTimesheetUpdateCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			request := &tapd.UpdateTimesheetRequest{
-				ID:          tapd.Ptr(id),
-				WorkspaceID: tapd.Ptr(workspaceID),
+				ID:          new(id),
+				WorkspaceID: new(workspaceID),
 			}
 			if timespent != "" {
-				request.Timespent = tapd.Ptr(timespent)
+				request.Timespent = new(timespent)
 			}
 			if timeremain != "" {
-				request.Timeremain = tapd.Ptr(timeremain)
+				request.Timeremain = new(timeremain)
 			}
 			if memo != "" {
-				request.Memo = tapd.Ptr(memo)
+				request.Memo = new(memo)
 			}
 
 			timesheet, _, err := client.TimesheetService.UpdateTimesheet(cmd.Context(), request)
@@ -229,10 +229,10 @@ func newTimesheetDeleteCmd(rt *app.Runtime) *cobra.Command {
 			}
 
 			result, _, err := client.TimesheetService.DeleteTimesheets(cmd.Context(), &tapd.DeleteTimesheetsRequest{
-				WorkspaceID: tapd.Ptr(workspaceID),
-				EntityType:  tapd.Ptr(tapd.EntityType(entityType)),
-				EntityID:    tapd.Ptr(entityID),
-				CostIDs:     tapd.Ptr(ids),
+				WorkspaceID: new(workspaceID),
+				EntityType:  new(tapd.EntityType(entityType)),
+				EntityID:    new(entityID),
+				CostIDs:     new(ids),
 			})
 			if err != nil {
 				return err
@@ -296,9 +296,9 @@ func addTimesheetQueryFlags(cmd *cobra.Command, flags *timesheetQueryFlags, with
 
 func newGetTimesheetsRequest(flags timesheetQueryFlags) (*tapd.GetTimesheetsRequest, error) {
 	request := &tapd.GetTimesheetsRequest{
-		WorkspaceID: tapd.Ptr(flags.workspaceID),
-		Limit:       tapd.Ptr(flags.limit),
-		Page:        tapd.Ptr(flags.page),
+		WorkspaceID: new(flags.workspaceID),
+		Limit:       new(flags.limit),
+		Page:        new(flags.page),
 		Fields:      fieldsMulti(flags.fields),
 	}
 	if err := applyTimesheetFilters(request, flags); err != nil {
@@ -308,7 +308,7 @@ func newGetTimesheetsRequest(flags timesheetQueryFlags) (*tapd.GetTimesheetsRequ
 }
 
 func newGetTimesheetsCountRequest(flags timesheetQueryFlags) (*tapd.GetTimesheetsCountRequest, error) {
-	request := &tapd.GetTimesheetsCountRequest{WorkspaceID: tapd.Ptr(flags.workspaceID)}
+	request := &tapd.GetTimesheetsCountRequest{WorkspaceID: new(flags.workspaceID)}
 	if flags.ids != "" {
 		ids, err := strictInt64Multi("timesheet IDs", flags.ids)
 		if err != nil {
@@ -317,34 +317,34 @@ func newGetTimesheetsCountRequest(flags timesheetQueryFlags) (*tapd.GetTimesheet
 		request.ID = ids
 	}
 	if flags.entityType != "" {
-		request.EntityType = tapd.Ptr(tapd.EntityType(flags.entityType))
+		request.EntityType = new(tapd.EntityType(flags.entityType))
 	}
 	if flags.entityID > 0 {
-		request.EntityID = tapd.Ptr(flags.entityID)
+		request.EntityID = new(flags.entityID)
 	}
 	if flags.timespent != "" {
-		request.Timespent = tapd.Ptr(flags.timespent)
+		request.Timespent = new(flags.timespent)
 	}
 	if flags.spentdate != "" {
-		request.Spentdate = tapd.Ptr(flags.spentdate)
+		request.Spentdate = new(flags.spentdate)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.excludeParentStory {
-		request.IncludeParentStoryTimesheet = tapd.Ptr(0)
+		request.IncludeParentStoryTimesheet = new(0)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.memo != "" {
-		request.Memo = tapd.Ptr(flags.memo)
+		request.Memo = new(flags.memo)
 	}
 	if flags.includeDeleted {
-		request.IsDelete = tapd.Ptr(1)
+		request.IsDelete = new(1)
 	}
 	return request, nil
 }
@@ -358,34 +358,34 @@ func applyTimesheetFilters(request *tapd.GetTimesheetsRequest, flags timesheetQu
 		request.ID = ids
 	}
 	if flags.entityType != "" {
-		request.EntityType = tapd.Ptr(tapd.EntityType(flags.entityType))
+		request.EntityType = new(tapd.EntityType(flags.entityType))
 	}
 	if flags.entityID > 0 {
-		request.EntityID = tapd.Ptr(flags.entityID)
+		request.EntityID = new(flags.entityID)
 	}
 	if flags.timespent != "" {
-		request.Timespent = tapd.Ptr(flags.timespent)
+		request.Timespent = new(flags.timespent)
 	}
 	if flags.spentdate != "" {
-		request.Spentdate = tapd.Ptr(flags.spentdate)
+		request.Spentdate = new(flags.spentdate)
 	}
 	if flags.modified != "" {
-		request.Modified = tapd.Ptr(flags.modified)
+		request.Modified = new(flags.modified)
 	}
 	if flags.owner != "" {
-		request.Owner = tapd.Ptr(flags.owner)
+		request.Owner = new(flags.owner)
 	}
 	if flags.excludeParentStory {
-		request.IncludeParentStoryTimesheet = tapd.Ptr(0)
+		request.IncludeParentStoryTimesheet = new(0)
 	}
 	if flags.created != "" {
-		request.Created = tapd.Ptr(flags.created)
+		request.Created = new(flags.created)
 	}
 	if flags.memo != "" {
-		request.Memo = tapd.Ptr(flags.memo)
+		request.Memo = new(flags.memo)
 	}
 	if flags.includeDeleted {
-		request.IsDelete = tapd.Ptr(1)
+		request.IsDelete = new(1)
 	}
 	return nil
 }
