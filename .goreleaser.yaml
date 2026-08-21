@@ -4,7 +4,7 @@ project_name: tapd
 
 before:
   hooks:
-    - go mod tidy -compat=1.25.0
+    - go mod tidy -compat=1.26.0
 
 builds:
   - id: tapd
